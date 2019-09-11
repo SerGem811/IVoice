@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="c47351e1bb6c44dfab049e69f072271d" Name="Diagram1" ZoomLevel="68">
+        <EntityTypeShape EntityType="eoneModel.Category" Width="1.5" PointX="3" PointY="35.75" />
+        <EntityTypeShape EntityType="eoneModel.Country" Width="1.5" PointX="11.25" PointY="44.375" />
+        <EntityTypeShape EntityType="eoneModel.Feature" Width="1.5" PointX="0.75" PointY="36.625" />
+        <EntityTypeShape EntityType="eoneModel.ForumAnswer" Width="1.5" PointX="10.5" PointY="36.75" />
+        <EntityTypeShape EntityType="eoneModel.ForumAnswersAttach" Width="1.5" PointX="15.75" PointY="37.375" />
+        <EntityTypeShape EntityType="eoneModel.ForumAnswerVote" Width="1.5" PointX="15.75" PointY="34.125" />
+        <EntityTypeShape EntityType="eoneModel.ForumTopic" Width="1.5" PointX="5.25" PointY="36.375" />
+        <EntityTypeShape EntityType="eoneModel.ForumTopicsView" Width="1.5" PointX="10.5" PointY="33.25" />
+        <EntityTypeShape EntityType="eoneModel.Gender" Width="1.5" PointX="11.25" PointY="30" />
+        <EntityTypeShape EntityType="eoneModel.IPTag" Width="1.5" PointX="8.25" PointY="43.625" />
+        <EntityTypeShape EntityType="eoneModel.User" Width="1.5" PointX="13.5" PointY="29" />
+        <EntityTypeShape EntityType="eoneModel.UsersActivity" Width="1.5" PointX="21.75" PointY="37.125" />
+        <EntityTypeShape EntityType="eoneModel.UsersAttachment" Width="1.5" PointX="18" PointY="45.75" />
+        <EntityTypeShape EntityType="eoneModel.UsersAttachmentsAlbum" Width="1.5" PointX="15.75" PointY="62.75" />
+        <EntityTypeShape EntityType="eoneModel.UsersConnection" Width="1.5" PointX="15.75" PointY="76.375" />
+        <EntityTypeShape EntityType="eoneModel.UsersCPMBalance" Width="1.5" PointX="18" PointY="51" />
+        <EntityTypeShape EntityType="eoneModel.UsersHobby" Width="1.5" PointX="13.5" PointY="26.625" />
+        <EntityTypeShape EntityType="eoneModel.UsersHobbyUser" Width="1.5" PointX="15.75" PointY="31.375" />
+        <EntityTypeShape EntityType="eoneModel.UsersIP" Width="1.5" PointX="8.25" PointY="34.75" />
+        <EntityTypeShape EntityType="eoneModel.UsersIPAd" Width="1.5" PointX="10.5" PointY="56.5" />
+        <EntityTypeShape EntityType="eoneModel.UsersIPComment" Width="1.5" PointX="18.75" PointY="36.75" />
+        <EntityTypeShape EntityType="eoneModel.UsersIPEPPoint" Width="1.5" PointX="21.75" PointY="41.25" />
+        <EntityTypeShape EntityType="eoneModel.UsersIPFilter" Width="1.5" PointX="10.5" PointY="61.5" />
+        <EntityTypeShape EntityType="eoneModel.UsersIPLike" Width="1.5" PointX="18.75" PointY="33.125" />
+        <EntityTypeShape EntityType="eoneModel.UsersIPSpread" Width="1.5" PointX="18.75" PointY="41.125" />
+        <EntityTypeShape EntityType="eoneModel.UsersIPSurf" Width="1.5" PointX="21.75" PointY="33.25" />
+        <EntityTypeShape EntityType="eoneModel.UsersIPTag" Width="1.5" PointX="10.5" PointY="41.375" />
+        <EntityTypeShape EntityType="eoneModel.UsersOccupation" Width="1.5" PointX="13.5" PointY="48.5" />
+        <EntityTypeShape EntityType="eoneModel.UsersOccupationsUser" Width="1.5" PointX="15.75" PointY="40.375" />
+        <EntityTypeShape EntityType="eoneModel.UsersPayment" Width="1.5" PointX="15.75" PointY="73.125" />
+        <EntityTypeShape EntityType="eoneModel.UsersRole" Width="1.5" PointX="11.25" PointY="46.875" />
+        <EntityTypeShape EntityType="eoneModel.Whisper" Width="1.5" PointX="15.75" PointY="44.75" />
+        <EntityTypeShape EntityType="eoneModel.WhisperAttachment" Width="1.5" PointX="20.25" PointY="46.125" />
+        <AssociationConnector Association="eoneModel.FK_Categories_Features" />
+        <AssociationConnector Association="eoneModel.FK_Categories_ForumTopics" />
+        <AssociationConnector Association="eoneModel.FK_Categories_Users" />
+        <AssociationConnector Association="eoneModel.FK_Categories_Users1" />
+        <AssociationConnector Association="eoneModel.FK_ForumTopics_Categories" />
+        <AssociationConnector Association="eoneModel.FK_UsersIP_Categories" />
+        <AssociationConnector Association="eoneModel.FK_Users_Countries" />
+        <AssociationConnector Association="eoneModel.FK_UsersIP_Features" />
+        <AssociationConnector Association="eoneModel.FK_ForumAnswers_ForumTopics" />
+        <AssociationConnector Association="eoneModel.FK_ForumAnswers_Users" />
+        <AssociationConnector Association="eoneModel.FK_ForumAnswersAttach_ForumAnswers" />
+        <AssociationConnector Association="eoneModel.FK_ForumAnswerVotes_ForumAnswers" />
+        <AssociationConnector Association="eoneModel.FK_ForumTopics_ForumAnswers" />
+        <AssociationConnector Association="eoneModel.FK_ForumAnswersAttach_UsersAttachments" />
+        <AssociationConnector Association="eoneModel.FK_ForumAnswerVotes_Users" />
+        <AssociationConnector Association="eoneModel.FK_ForumAnswersViews_ForumTopics" />
+        <AssociationConnector Association="eoneModel.FK_ForumTopics_Users" />
+        <AssociationConnector Association="eoneModel.FK_ForumAnswersViews_Users" />
+        <AssociationConnector Association="eoneModel.FK_Users_Genders" />
+        <AssociationConnector Association="eoneModel.FK_UserIPTags_IPTag" />
+        <AssociationConnector Association="eoneModel.FK_UserIPSpreads_Users" />
+        <AssociationConnector Association="eoneModel.FK_UserIPSpreads_Users1" />
+        <AssociationConnector Association="eoneModel.FK_Users_UsersIP" />
+        <AssociationConnector Association="eoneModel.FK_Users_UsersRoles" />
+        <AssociationConnector Association="eoneModel.FK_UsersActivity_Users" />
+        <AssociationConnector Association="eoneModel.FK_UsersAttachments_Users" />
+        <AssociationConnector Association="eoneModel.FK_UsersAttachmentsAlbums_Users" />
+        <AssociationConnector Association="eoneModel.FK_UsersConnections_Users" />
+        <AssociationConnector Association="eoneModel.FK_UsersConnections_Users1" />
+        <AssociationConnector Association="eoneModel.FK_UsersCPMBalance_Users" />
+        <AssociationConnector Association="eoneModel.FK_UsersEPPoints_Users" />
+        <AssociationConnector Association="eoneModel.FK_UsersHobbyUsers_Users" />
+        <AssociationConnector Association="eoneModel.FK_UsersIP_Users" />
+        <AssociationConnector Association="eoneModel.FK_UsersIPComments_Users" />
+        <AssociationConnector Association="eoneModel.FK_UsersIPLikes_Users" />
+        <AssociationConnector Association="eoneModel.FK_UsersIPSurf_Users" />
+        <AssociationConnector Association="eoneModel.FK_UsersOccupationsUsers_Users" />
+        <AssociationConnector Association="eoneModel.FK_UsersPayments_Users" />
+        <AssociationConnector Association="eoneModel.FK_Whisper_Users" />
+        <AssociationConnector Association="eoneModel.FK_Whisper_Users1" />
+        <AssociationConnector Association="eoneModel.FK_UsersActivity_UsersIP" />
+        <AssociationConnector Association="eoneModel.FK_UsersAttachments_UsersAttachmentsAlbums" />
+        <AssociationConnector Association="eoneModel.FK_UsersIP_UsersAttachments" />
+        <AssociationConnector Association="eoneModel.FK_WhisperAttachments_UsersAttachments" />
+        <AssociationConnector Association="eoneModel.FK_UsersAttachmentsAlbums_UsersAttachmentsAlbums" />
+        <AssociationConnector Association="eoneModel.FK_UsersCPMBalance_UsersIP" />
+        <AssociationConnector Association="eoneModel.FK_UsersCPMBalance_UsersPayments" />
+        <AssociationConnector Association="eoneModel.FK_UsersHobbyUsers_UsersHobby" />
+        <AssociationConnector Association="eoneModel.FK_UserIPSpreads_UsersIP" />
+        <AssociationConnector Association="eoneModel.FK_UserIPTags_UsersIP" />
+        <AssociationConnector Association="eoneModel.FK_UsersEPPoints_UsersIP" />
+        <AssociationConnector Association="eoneModel.FK_UsersIPAds_UsersIP" />
+        <AssociationConnector Association="eoneModel.FK_UsersIPComments_UsersIP" />
+        <AssociationConnector Association="eoneModel.FK_UsersIPFilter_UsersIP" />
+        <AssociationConnector Association="eoneModel.FK_UsersIPLikes_UsersIP" />
+        <AssociationConnector Association="eoneModel.FK_UsersIPSurf_UsersIP" />
+        <AssociationConnector Association="eoneModel.FK_UsersIPComments_UsersIPComments" />
+        <AssociationConnector Association="eoneModel.FK_UsersOccupationsUsers_UsersOccupations" />
+        <AssociationConnector Association="eoneModel.FK_WhisperAttachments_Whisper" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
