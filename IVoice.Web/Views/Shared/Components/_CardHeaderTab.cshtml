@@ -18,7 +18,7 @@
                             }
                             @if(item._open_folder)
                             {
-                                <object>&nbsp;&nbsp;&nbsp;<a href="@item._open_folder_link"><i class="fa fa-window-restore"></i></a></object>
+                                <span onclick="redirectTo('@item._open_folder_link')" style="cursor:pointer;">&nbsp;&nbsp;<i class="fa fa-external-link-alt"></i></span>
                             }
                         </div>
                     </a>
@@ -27,3 +27,9 @@
         }
     </ul>
 </div>
+
+<script>
+    function redirectTo(link) {
+        location.href = link
+    }
+</script>

@@ -218,3 +218,49 @@ body {
 .box-album {
     background-color: #003648!important;
 }
+
+
+.btn-ip-search {
+    color: #ffffff;
+    background-color: #303030;
+    border-color: #303030;
+    outline: none;
+}
+
+    .btn-ip-search:hover,
+    .btn-ip-search:focus,
+    .btn-ip-search:active,
+    .btn-ip-search.active,
+    .open .dropdown-toggle.btn-ip-search {
+        color: #ffffff;
+        background-color: #424242;
+        border-color: #424242;
+        outline:none;
+    }
+
+    .btn-ip-search:active,
+    .btn-ip-search.active,
+    .open .dropdown-toggle.btn-ip-search {
+        background-image: none;
+        outline: none;
+    }
+
+    .btn-ip-search.disabled,
+    .btn-ip-search[disabled],
+    fieldset[disabled] .btn-ip-search,
+    .btn-ip-search.disabled:hover,
+    .btn-ip-search[disabled]:hover,
+    fieldset[disabled] .btn-ip-search:hover,
+    .btn-ip-search.disabled:focus,
+    .btn-ip-search[disabled]:focus,
+    fieldset[disabled] .btn-ip-search:focus,
+    .btn-ip-search.disabled:active,
+    .btn-ip-search[disabled]:active,
+    fieldset[disabled] .btn-ip-search:active,
+    .btn-ip-search.disabled.active,
+    .btn-ip-search[disabled].active,
+    fieldset[disabled] .btn-ip-search.active {
+        background-color: #1d2124;
+        border-color: #1d2124;
+        outline: none;
+    }
