@@ -1,0 +1,25 @@
+﻿@model IVoice.Models.Components.Tabs.CardBodyTabsTableModel
+<div class="panel-body">
+    <div class="tab-content">
+        @{
+            var i = 1;
+            foreach (var item in Model._body)
+            {
+                <div class="tab-pane fade in @item._class" id="@item._html_id">
+                    <table class="table table-dark table-striped table-hover box-default table-no-padding responsive" id="table_@i" style="width: 100%">
+                        <thead>
+                            <tr>
+                                @foreach (var col in item._cols)
+                                {
+                                    <th scope="@col._scope" class="@col._class">@col._name</th>
+                                }
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+                i++;
+            }
+        }
+    </div>
+</div>

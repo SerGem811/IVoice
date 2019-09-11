@@ -1,0 +1,15 @@
+﻿@model IVoice.Models.Components.Common.CardHeaderModel
+
+<div class="viewcard-title @Model._class">
+    <a href="@Model._link" title="@Model._tooltip">
+        @if(Model._icon != "")
+        {
+            <i class="@Model._icon"></i>
+        }
+        <span>&nbsp;@Model._label</span>
+    </a>
+    @if(Model._num != "")
+    {
+        <span class="viewcard-num">@Model._num</span>
+    }
+</div>

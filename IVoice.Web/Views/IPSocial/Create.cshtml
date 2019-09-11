@@ -1,0 +1,80 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section href {
+    <link href="~/Content/IPSocial.css" rel="stylesheet" />
+}
+
+<div class="fluid-content ip-creator">
+    <div class="left-pane" style="position:relative;">
+        <div class="sh-side-options">
+            <div class="sh-side-options-container">
+                <a class="sh-side-options-item center-item">
+                    <div class="sh-side-options-item-container">
+                        Panel
+                    </div>
+                    <div class="sh-side-options-hover">
+                        <div class="button-group">
+                            <div class="btn btn-tool" id="creator-panel-shape" data-toggle="tooltip" data-placement="bottom" title="Add shape"><i class="fa fa-plus"></i></div>
+                            <div class="btn btn-tool" id="creator-panel-file" data-val="file" data-toggle="tooltip" data-placement="bottom" title="Upload file"><i class="fa fa-file-upload"></i></div>
+                            <div class="btn btn-tool" id="creator-panel-media" data-toggle="tooltip" data-placement="bottom" title="Upload media"><i class="fa fa-music"></i></div>
+                            <div class="btn btn-tool" id="creator-panel-image" data-toggle="tooltip" data-placement="bottom" title="Upload image"><i class="fa fa-camera"></i></div>
+                            <div class="btn btn-tool" id="creator-panel-text" data-toggle="tooltip" data-placement="bottom" title="Add text"><i class="fa fa-font"></i></div>
+                            <div class="btn btn-tool" id="creator-panel-url" data-toggle="tooltip" data-placement="bottom" title="Add Url"><i class="fa fa-arrow-right"></i></div>
+                        </div>
+                    </div>
+                </a>
+                <a class="sh-side-options-item center-item">
+                    <div class="sh-side-options-item-container">
+                        Background
+                    </div>
+                    <div class="sh-side-options-hover">
+                        <div class="button-group">
+                            <div class="btn btn-tool" id="creator-background-clear" data-toggle="tooltip" data-placement="bottom" title="Clear background"><i class="fa fa-trash-alt"></i></div>
+                            <div class="btn btn-tool" id="creator-background-color" data-toggle="tooltip" data-placement="bottom" title="Background color"><i class="fa fa-palette"></i></div>
+                            <div class="btn btn-tool" id="creator-background-image" data-toggle="tooltip" data-placement="bottom" title="Background image"><i class="fa fa-file-upload"></i></div>
+                            <input type="file" style="display:none;" id="file_upload_creator" />
+                            <div class="btn btn-tool" id="creator-background-url" data-toggle="tooltip" data-placement="bottom" title="Add Url"><i class="fa fa-arrow-right"></i></div>
+                        </div>
+                    </div>
+                </a>
+                <a class="sh-side-options-item center-item">
+                    <div class="sh-side-options-item-container">
+                        IP
+                    </div>
+                    <div class="sh-side-options-hover">
+                        <div class="button-group">
+                            <div class="btn btn-tool" id="creator-ip-comment" data-toggle="tooltip" data-placement="bottom" title="Add Comment"><i class="fa fa-comment-alt"></i></div>
+                            <div class="btn btn-tool" id="creator-ip-save" data-toggle="tooltip" data-placement="bottom" title="Save IP"><i class="fa fa-check"></i></div>
+                            <div class="btn btn-tool" id="creator-ip-cancel" data-toggle="tooltip" data-placement="bottom" title="Close"><i class="fa fa-times"></i></div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="work-area">
+        <div class="ipcreator-board" id="ipcreator-board">
+            <div class="colPicker">
+                <div class="col-picker">
+                </div>
+            </div>
+            <div class="" style="position: absolute; left:0; top: 0; width: 100%; height: 100%; overflow: auto;">
+                <div class="" style="position: relative; height: auto; background-color: transparent">
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+@section scripts {
+    <script>
+        var urlUploadIPImage = "@Url.Action("UploadIPImage", "IPSocial")";
+        var optionURL = '@Url.Action("_SaveIP", "IPSocial", new { Id = -1})';
+        var detailURL = '@Url.Action("Details", "User", new { Id = ViewBag.userId})';
+        var guid = "@Guid.NewGuid()";
+    </script>
+    <script src="~/Scripts/views/ip/ipcreate.js"></script>
+}

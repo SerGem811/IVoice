@@ -1,0 +1,18 @@
+﻿@model IVoice.Models.Whisper.CardWhisperModel
+
+<div class="container fluid-content">
+    <div class="panel with-nav-tabs panel-default custom-panel-default" style="margin-top:20px;margin-bottom:20px;">
+        @Html.Partial("~/Views/Shared/Components/_CardHeaderTab.cshtml", Model._header)
+        @Html.Partial("~/Views/Shared/Components/Tabs/_CardBodyTabsTable.cshtml", Model._body)
+    </div>
+</div>
+
+@section scripts {
+    <script>
+        var getTableListURL = '@Url.Action("GetTableList")';
+        var detailsURL = '@Url.Action("Details")';
+        var removeURL = '@Url.Action("Remove")';
+
+    </script>
+    <script src="~/Scripts/views/whisper/index.js"></script>
+}

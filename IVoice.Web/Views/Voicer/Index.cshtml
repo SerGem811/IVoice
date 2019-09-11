@@ -1,0 +1,74 @@
+﻿@using IVoice.Models.Components.Tabs
+@using IVoice.Models.Components.Common
+
+@model  IVoice.Models.Voicer.VoicersModel
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section href {
+    <link href="~/Content/Voicer.css" rel="stylesheet" />
+    <link href="~/Content/CardView.css" rel="stylesheet" />
+}
+
+<div class="container fluid-content">
+
+    <div class="row" style="margin-top: 20px; margin-bottom:20px;">
+        <!-- Search Form-->
+            @Html.Partial("_SearchVoicersForm", Model)
+
+        <!--  -->
+        <div class="panel with-nav-tabs panel-default">
+            @Html.Partial("~/Views/Shared/Components/_CardHeaderTab.cshtml", new CardHeaderTabsModel() { _header = new List<CardHeaderModel>(){
+                                        new CardHeaderModel() { _class = "active", _link = "#tabConncectedVoicers", _label = "Connected Voicers"},
+                                        new CardHeaderModel() { _label = "Blocked Voicers", _link = "#tabBlockedVoicers"},
+                                        new CardHeaderModel() { _label = "Waiting Voicers", _link = "#tabWaitingVoicers"},
+                                        new CardHeaderModel() { _label = "Requested Voicers", _link = "#tabRequestedVoicers"}} })
+            <div class="panel-body">
+                <div class="tab-content" style="min-height:30px;">
+                    <div class="tab-pane fade in active" id="tabConncectedVoicers">
+                        @foreach (var item in Model._connected)
+                        {
+                            <div class="col-md-3 col-xs-6">
+                                @Html.Partial("~/Views/Voicer/_VoicerCard.cshtml", item)
+                            </div>
+                        }
+                    </div>
+                    <div class="tab-pane fade" id="tabBlockedVoicers">
+                        @foreach (var item in Model._blocked)
+                        {
+                            <div class="col-md-3 col-xs-6">
+                                @Html.Partial("~/Views/Voicer/_VoicerCard.cshtml", item)
+                            </div>
+                        }
+                    </div>
+                    <div class="tab-pane fade" id="tabWaitingVoicers">
+                        @foreach (var item in Model._waiting)
+                        {
+                            <div class="col-md-3 col-xs-6">
+                                @Html.Partial("~/Views/Voicer/_VoicerCard.cshtml", item)
+                            </div>
+                        }
+                    </div>
+                    <div class="tab-pane fade" id="tabRequestedVoicers">
+                        @foreach (var item in Model._requested)
+                        {
+                            <div class="col-md-3 col-xs-6">
+                                @Html.Partial("~/Views/Voicer/_VoicerCard.cshtml", item)
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts {
+    <script src="~/Scripts/views/voicer/index.js"></script>
+    <script>
+        var urlCommand = '@Url.Action("cmdConnection", "Voicer")';
+        var currentUserId = @ViewBag.currentUserId;
+        var userId = @ViewBag.userId;
+    </script>
+}

@@ -1,0 +1,48 @@
+﻿@model IVoice.Models.Gallery.GalleryCardModel
+@{ 
+    var currentUserId = ViewBag.currentUserId;
+    var userId = ViewBag.userId;
+    var albumId = ViewBag.AlbumId;
+}
+<div class="box-default @Model._class" style="@Model._style width:100%; padding:25px;" id="media-@Model._item._id">
+    <div style="min-height:200px;">
+        <a href="#" onclick="OpenFolder(@Model._item._id, '@Model._item._type', '@currentUserId')" title="@Model._item._name">
+            <img src="@Model._item._path" style="width:100%; max-height: 200px; border-radius: 7px;" />
+        </a>
+    </div>
+    <div style="display:flex;align-items:center;position:relative;">
+        <h4>
+            <a href="#" onclick="OpenFolder(@Model._item._id, '@Model._item._type', '@currentUserId')" title="@Model._item._name" style="color:#fff;">
+                @Model._truncate
+            </a>
+        </h4>
+        @if (userId == currentUserId)
+        {
+            <div class="dropdown show pull-right" style="position:absolute;right:0">
+
+                <a class="dropdown-toggle pull-right" href="#" role="button" id="folderMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color:#fff;">
+                    <i class="fa fa-caret-square-right pull-right pointer-hand" data-val="@Model._item._id" data-type="@Model._item._type"></i>
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="folderMenu" id="PopupMedia" style="background-color:#252525!important;">
+                    <li><a href="#r" data-id="0" data-type="MOVE"><i class="fa fa-folder"></i>&nbsp;Root</a></li>
+                    @foreach (var folder in Model._folders)
+                    {
+                        <li><a href="#m" data-id="@folder.Id" data-type="MOVE"><i class="fa fa-folder"></i>&nbsp;@folder.Description</a></li>
+                    }
+                    <li><a href="#d" class="remove-gallery" data-id="0" data-type="DELETE"><i class="fa fa-times"></i>&nbsp;DELETE</a></li>
+                </ul>
+            </div>
+        }
+
+    </div>
+    <div>
+        <span>@Model._item._date_add</span>
+    </div>
+    @if(userId == currentUserId)
+    {
+        <div style="margin-top:10px;">
+        <input type="checkbox" @(Model._item._visibility == "PUBLIC" ? "checked" : "") class="toggle-public" data-val="@Model._item._id" data-type="@Model._item._type" />
+    </div>
+    }
+    
+</div>

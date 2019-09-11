@@ -1,0 +1,90 @@
+﻿@model IVoice.Models.Users.RegisterModel
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section href{
+    <link href="~/Content/User.css" rel="stylesheet" />
+}
+<div class="fluid-content">
+    <div class="login-form" style="margin-top:20px; margin-bottom:20px;">
+        <div class="col-md-4">
+            <div class="box-default">
+                @using (Html.BeginForm("Register", "User"))
+                {
+                    @Html.AntiForgeryToken();
+                    <fieldset>
+                        <legend class="text-center text-light">Register</legend>
+                        <div class="form-group">
+                            <label for="_phone"><span>*Phone Number</span></label>
+                            @Html.TextBoxFor(m => m._phone, new { @class = "form-control login-input", required = "required", placeholder = "Not used for marketing" })
+                            @Html.ValidationMessageFor(m => m._phone, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="form-group">
+                            <label for="_first"><span>*First Name</span></label>
+                            @Html.TextBoxFor(m => m._first, new { @class = "form-control login-input", required = "required", placeholder = "Example : John" })
+                            @Html.ValidationMessageFor(m => m._first, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="form-group">
+                            <label for="_last"><span>*Last Name</span></label>
+                            @Html.TextBoxFor(m => m._last, new { @class = "form-control login-input", required = "required", placeholder = "Example : Volten" })
+                            @Html.ValidationMessageFor(m => m._last, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="form-group">
+                            <label for="_email"><span>*Email</span></label>
+                            @Html.TextBoxFor(m => m._email, new { @class = "form-control login-input", required = "required", placeholder = "Example : admin@admin.com" })
+                            @Html.ValidationMessageFor(m => m._email, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="form-group">
+                            <label for="_email"><span>*Voier Name</span></label>
+                            @Html.TextBoxFor(m => m._voicer, new { @class = "form-control login-input", required = "required", placeholder = "Example : JohnV" })
+                            @Html.ValidationMessageFor(m => m._voicer, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="form-group">
+                            <label for="_email"><span>*Password</span></label>
+                            @Html.TextBoxFor(m => m._pwd, new { type = "password", @class = "form-control login-input", required = "required", placeholder = "" })
+                            @Html.ValidationMessageFor(m => m._pwd, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="form-group">
+                            <label for="_email"><span>*Confirm Password</span></label>
+                            @Html.TextBoxFor(m => m._confirm, new { type = "password", @class = "form-control login-input", required = "required", placeholder = "" })
+                            @Html.ValidationMessageFor(m => m._confirm, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="form-group">
+                            <label for="_email"><span>*Secret Question</span></label>
+                            @Html.TextBoxFor(m => m._question, new { @class = "form-control login-input", required = "required", placeholder = "Make your own security question" })
+                            @Html.ValidationMessageFor(m => m._question, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="form-group">
+                            <label for="_email"><span>*Secret Answer</span></label>
+                            @Html.TextBoxFor(m => m._answer, new { @class = "form-control login-input", required = "required", placeholder = "Make your own security answer" })
+                            @Html.ValidationMessageFor(m => m._question, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="form-group">
+                            @Html.CheckBoxFor(m => m._onlyadult)
+                            <label for="_onlyadult">Add over 18 Age restriction</label>
+                            @Html.ValidationMessageFor(m => m._onlyadult, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="form-group">
+                            @Html.CheckBoxFor(m => m._agree, new { required = "required" })
+                            <label for="terms">I agree with the <a href="#" title="You may read our terms and conditions by clicking on this link">terms and conditions</a> for registration.</label><span class="req">* </span>
+                            @Html.ValidationMessageFor(m => m._agree, "", new { @class = "text-danger" })
+                        </div>
+                        @if (ViewBag.error != "" && ViewBag.error != null)
+                        {
+                            <div class="form-group">
+                                <hr />
+                                <label class="text-danger"><spn>@ViewBag.error</spn></label>
+                            </div>
+                        }
+                        <div class="form-group">
+                            <hr />
+                        </div>
+                        <div class="form-group">
+                            <input class="btn btn-success" type="submit" value="Register" style="width:100%;" />
+                        </div>
+                    </fieldset>
+                }
+            </div>
+        </div>
+    </div>
+</div>

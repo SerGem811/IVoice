@@ -1,0 +1,17 @@
+﻿@model IVoice.Models.Features.FeatureList
+
+@section href {
+    <link href="~/Content/ImageCardListView.css" rel="stylesheet" />
+    <link href="~/Content/Components/imagecard.css" rel="stylesheet" />
+}
+
+<div class="container fluid-content imagecard-list">
+    <div class="row" style="margin-top:30px;">
+        @{
+            foreach (var item in Model._lst)
+            {
+                @Html.Partial("~/Views/Shared/Components/ImageCard/_ImageCard.cshtml", item)
+            }
+        }
+    </div>
+</div> 

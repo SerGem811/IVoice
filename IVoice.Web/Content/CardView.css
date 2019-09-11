@@ -1,0 +1,64 @@
+﻿.viewcard-title {
+    background-color: #252525;
+    padding: 10px;
+    border-radius: 3px;
+}
+    .viewcard-title a {
+        color: #fff;
+        margin-left: 10px;
+    }
+
+.viewcard-tab-header {
+    background-color : #252525;
+}
+    .viewcard-tab-header a:hover{
+        background-color : #424242 !important;
+        color:antiquewhite;
+    }
+    .viewcard-tab-header a:active {
+        background-color: #424242!important;
+    }
+
+.viewcard-title-right {
+    float: right;
+}
+
+.viewcard-body {
+    min-height: 20px;
+    background-color: #424242;
+    border-radius: 3px;
+}
+.personal-btn {
+    padding: 5px;
+    background: #252525;
+    color: #fff;
+    vertical-align: middle;
+    text-align: center;
+    margin-bottom: 5px;
+}
+
+    .personal-btn:hover {
+        background: #353535;
+        color: #ccc;
+    }
+
+.personal-btn-disabled {
+    padding: 5px;
+    background: #252525;
+    color: #333;
+    vertical-align: middle;
+    text-align: center;
+    margin-bottom: 5px;
+}
+.personal-small-btn {
+    width : 30%;
+}
+
+.viewcard-item {
+    padding: 10px;
+    border-bottom: 1px dotted #333;
+    margin-left: 10px;
+}
+.viewcard-num {
+    background-color: #424242;
+}

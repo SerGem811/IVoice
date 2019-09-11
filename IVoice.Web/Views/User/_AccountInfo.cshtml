@@ -1,0 +1,107 @@
+﻿@model IVoice.Models.Users.AccountInfoModel
+
+@using (Ajax.BeginForm("SaveAccountInfo", "User", new AjaxOptions { OnComplete = "onSaveAccountInfo" }, new { Id = $"SaveAccountInfo" }))
+{
+    @Html.AntiForgeryToken();
+    @Html.HiddenFor(m => m._active)
+    <div class="form-group col-md-6 col-xs-12">
+        <label for="email"><span class="req">* Email:</span></label>
+        @Html.TextBoxFor(m => m._email, new { @class = "form-control", required = "required" })
+    </div>
+    <div class="form-group col-md-6 col-xs-12">
+        <label for="email"><span class="req">* Voicer Name:</span></label>
+        @Html.TextBoxFor(m => m._voicer, new { @class = "form-control", required = "required" })
+    </div>
+    <div class="form-group col-md-6 col-xs-12">
+        <label for="firstname"><span class="req">* First Name:</span></label>
+        @Html.TextBoxFor(m => m._first, new { @class = "form-control", required = "required" })
+    </div>
+    <div class="form-group col-md-6 col-xs-12">
+        <label for="lastname"><span class="req">* Last Name:</span></label>
+        @Html.TextBoxFor(m => m._last, new { @class = "form-control", required = "required" })
+    </div>
+    <div class="form-group col-md-12 float-left">
+        <label for="secretquestion"><span class="req">* Secret Question:</span></label>
+        @Html.TextBoxFor(m => m._secret_question, new { @class = "form-control", required = "required" })
+    </div>
+    <div class="form-group col-md-12 float-left">
+        <label for="secretanswer"><span class="req">* Secret Anser:</span></label>
+        @Html.TextBoxFor(m => m._secret_answer, new { @class = "form-control", required = "required" })
+    </div>
+    <div class="form-group col-md-12 float-left">
+        <label><span class="req">Visibility & Accessibility</span></label>
+        <hr />
+    </div>
+    <div class="form-group col-md-3 col-xs-12">
+        <label for="whisper"><span class="req">Whisper Active </span></label>
+        <br />
+        @Html.CheckBoxFor(m => m._active_whisper, new { @class = "toggle-options" })
+    </div>
+    <div class="form-group col-md-3 col-xs-12">
+        <label for="voicerupdate"><span class="req">Voicer Updates </span></label>
+        <br />
+        @Html.CheckBoxFor(m => m._active_voicer_update, new { @class = "toggle-options" })
+    </div>
+    <div class="form-group col-md-3 col-xs-12">
+        <label for="adultonly"><span class="req">Allow Adult Only </span></label>
+        <br />
+        @Html.CheckBoxFor(m => m._adult_only, new { @class = "toggle-options" })
+    </div>
+    <div class="form-group col-md-3 col-xs-12">
+        <label for="accountpublic"><span class="req">Users Accessibility </span></label>
+        <br />
+        @Html.CheckBoxFor(m => m._public, new { @class = "toggle-options" })
+    </div>
+
+    <div class="form-group col-md-3 col-xs-12">
+        <label for="gallery"><span class="req">Public Gallery </span></label>
+        <br />
+        @Html.CheckBoxFor(m => m._active_gallery, new { @class = "toggle-options" })
+    </div>
+    <div class="form-group col-md-3 col-xs-12">
+        <label for="spread"><span class="req">Public Spreads </span></label>
+        <br />
+        @Html.CheckBoxFor(m => m._active_spread, new { @class = "toggle-options" })
+    </div>
+    <div class="form-group col-md-2 col-xs-12">
+        <label for="ipfeeds"><span class="req">IP Feeds </span></label>
+        <br />
+        @Html.CheckBoxFor(m => m._active_feeds, new { @class = "toggle-options" })
+    </div>
+    <div class="form-group col-md-2 col-xs-12">
+        <label for="gallery"><span class="req">Public EP </span></label>
+        <br />
+        @Html.CheckBoxFor(m => m._active_ep, new { @class = "toggle-options" })
+    </div>
+    <div class="form-group col-md-2 col-xs-12">
+        <label for="voicers"><span class="req">Public Voicers </span></label>
+        <br />
+        @Html.CheckBoxFor(m => m._active_voicer, new { @class = "toggle-options" })
+    </div>
+
+
+
+    <div class="form-group col-md-12 col-xs-12 float-left">
+        <hr />
+    </div>
+    <div class="form-group col-md-12 col-xs-12 float-left">
+        <label for="pwd"><span class="req"> Current Password</span></label>
+        <br />
+        @Html.TextBoxFor(m => m._pwd, new { @class = "form-control" })
+    </div>
+    <div class="form-group col-md-6 col-xs-12">
+        <label for="pwd_new"><span class="req"> New Password</span></label>
+        <br />
+        @Html.TextBoxFor(m => m._pwd_new, new { @class = "form-control" })
+    </div>
+    <div class="form-group col-md-6 col-xs-12">
+        <label for="pwd_new"><span class="req"> Retype Password</span></label>
+        <br />
+        @Html.TextBoxFor(m => m._pwd_new_re, new { @class = "form-control" })
+    </div>
+    <div class="form-group col-md-12">
+        <input class="btn btn-success pull-right" type="submit" name="submit_reg" value="Save" id="btnSubmitAccount">
+        <input class="btn btn-warning pull-left" type="submit" name="submit_reg" value="Deactivate Account" id="btnDeactivateAccount">
+        <input class="btn btn-danger pull-left margin-left-10" type="submit" name="submit_reg" value="Delete Account" id="btnDeleteAccount">
+    </div>
+}

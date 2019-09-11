@@ -1,0 +1,18 @@
+﻿@using IVoice.Models.Common
+@using IVoice.Extensions
+@model IVoice.Models.Users.PersonalInfoModel
+
+<div style="display:grid;">
+    <div class="col-md-2 col-md-offset-5">
+        <img src="@Model._img" style="height: 150px; width: 100%; margin-bottom:10px;" id="pinfo_avatar" />
+    </div>
+    <div class="col-md-12" style="margin-bottom:20px;">
+        @Html.Partial("~/Views/Shared/Components/_UploadFile.cshtml", new UploadModel() { UniqueId = Guid.NewGuid(), _function = "ChangeAvatar",
+                                                                                            _div_id = "upload", _input_file = "file"})
+    </div>
+
+    @using (Ajax.BeginForm("SavePersonalInfo", "User", new AjaxOptions { OnComplete = "onSavePersonalInfo" }, new { id=$"SavePersonalInfo" } ))
+    {
+        @Html.Partial("_VoicerFilter", Model.info)
+    }
+</div>

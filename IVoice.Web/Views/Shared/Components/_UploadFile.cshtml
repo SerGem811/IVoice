@@ -1,0 +1,23 @@
+﻿@model IVoice.Models.Common.UploadModel
+
+<link href="/Scripts/fileupload/css/style.css" rel="stylesheet" />
+<script src="/Scripts/fileupload/js/jquery.knob.js"></script>
+
+<!-- jQuery File Upload Dependencies -->
+<script src="/Scripts/fileupload/js/jquery.ui.widget.js"></script>
+<script src="/Scripts/fileupload/js/jquery.iframe-transport.js"></script>
+<script src="/Scripts/fileupload/js/jquery.fileupload.js"></script>
+
+<form id="@Model._div_id" method="post" action="@Url.Action(Model._function, new { Id= 0})" enctype="multipart/form-data">
+    @Html.HiddenFor(m => m.UniqueId)
+    @{
+        if (Model._hiddens != null)
+        {
+            foreach (var item in Model._hiddens)
+            {
+                <input type="hidden" name="@item._name" id="@item._name" value="@item._value" />
+            }
+        }
+    }
+    <input type="file" name="@Model._input_file" id="@Model._input_file" class="form-control form-input form-style-base" accept="image/*">
+</form>

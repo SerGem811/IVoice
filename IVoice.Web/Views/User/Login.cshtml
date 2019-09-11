@@ -1,0 +1,38 @@
+﻿@model IVoice.Models.Users.LoginModel
+
+@section href{
+    <link href="~/Content/User.css" rel="stylesheet" />
+}
+<div class="fluid-content center-item">
+    <div class="login-form">
+        <div class="col-sm-3">
+            <div class="box-default">
+                @using (Html.BeginForm("Login", "User"))
+                {
+                    @Html.AntiForgeryToken();
+                    <fieldset>
+                        <legend class="text-center text-light">Sign In</legend>
+                        <div class="form-group">
+                            <label for="_email"><span>*Email Address : </span></label>
+                            @Html.TextBoxFor(m => m._email, new { @class = "form-control login-input", required = "required", placeholder = "*Email Address" })
+                        </div>
+                        <div class="form-group">
+                            <label for="_pwd"><span>*Password : </span></label>
+                            @Html.TextBoxFor(m => m._pwd, new { type = "password", @class = "form-control login-input", required = "required", placeholder = "*Password" })
+                        </div>
+                        @if (ViewBag.error != "" && ViewBag.error != null)
+                        {
+                            <div class="form-group">
+                                <label class="text-danger"><spn>@ViewBag.error</spn></label>
+                            </div>
+                        }
+                        <div class="form-group"><hr /></div>
+                        <div class="form-group">
+                            <input class="btn btn-success" type="submit" value="Sign In" style="width:100%" />
+                        </div>
+                    </fieldset>
+                }
+            </div>
+        </div>
+    </div>
+</div>

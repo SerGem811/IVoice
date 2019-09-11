@@ -1,0 +1,108 @@
+﻿@using IVoice.Extensions
+@using IVoice.Models.Components.Tabs
+@using IVoice.Models.Components.Common
+@using IVoice.Models.Common
+@model IVoice.Models.Gallery.GalleryViewModel
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    var currentUserId = ViewBag.currentUserId;
+    var userId = ViewBag.userId;
+    var albumId = ViewBag.AlbumId;
+}
+
+<div class="container fluid-content">
+    <div class="row" style="margin-top:20px; margin-bottom:20px;">
+        <div class="form-control">
+            <a href="@Url.Action("Index", "Gallery", new {UserId = currentUserId, Id = ""})" style="color:#fff;">Root</a>
+            @foreach (var item in Model._path)
+            {
+                if (item != null)
+                {
+                    @Html.Raw(@">")
+                    <a href="@Url.Action("Index", "Gallery", new { UserId = currentUserId, AlbumId = item.Id })" style="color:#fff;">@item.Description</a>
+                }
+            }
+        </div>
+        <div class="panel with-nav-tabs panel-default">
+            @Html.Partial("~/Views/Shared/Components/_CardHeaderTab.cshtml",
+                        new CardHeaderTabsModel() { _header = new List<CardHeaderModel>() { new CardHeaderModel() { _link = "#tabGallery", _class = "active", _label = "User Gallery" } } })
+            <div class="panel-body">
+                <div class="tab-content">
+                    <div class="tab-pane fade in active" id="tabGallery">
+                        @foreach (var item in Model._items)
+                        {
+                            if (item._item._visibility == "PUBLIC" || (currentUserId == userId))
+                            {
+                                <div class="col-md-3 col-xs-6" style="padding:10px;">
+                                    @Html.Partial("~/Views/Gallery/GalleryCard.cshtml", item)
+                                </div>
+                            }
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- upload and album-->
+    @if (userId == currentUserId)
+    {
+        <div class="row">
+            <div class="panel with-nav-tabs panel-default">
+                @Html.Partial("~/Views/Shared/Components/_CardHeaderTab.cshtml",
+                            new CardHeaderTabsModel()
+                            {
+                                _header = new List<CardHeaderModel>() { new CardHeaderModel() { _link = "#tabAttachments", _class = "active", _label = "Upload File" },
+                                                                                                new CardHeaderModel() { _link = "#tabCreateAlbum", _label = "Create Album" } }
+                            })
+                <div class="panel-body">
+                    <div class="tab-content">
+                        <div class="tab-pane fade in active" id="tabAttachments">
+                            @if (albumId > 0)
+                            {
+                                <input type="checkbox" class="toggle-options-gallery" id="isCover" />
+                            }
+                            @Html.Partial("~/Views/Shared/Components/_uploadFile.cshtml", new IVoice.Models.Common.UploadModel()
+                            {
+                                UniqueId = Guid.NewGuid(),
+                                _hiddens = new List<HiddenModel>() { new HiddenModel() { _name = "AlbumId", _value = albumId},
+                                                                                    new HiddenModel() { _name = "type", _value = "img" }},
+                                _function = "UploadMedia",
+                                _div_id = "upload",
+                                _input_file = "file"
+                            })
+                        </div>
+                        <div class="tab-pane" id="tabCreateAlbum">
+                            @using (Ajax.BeginForm("CreateAlbum", "Gallery", new AjaxOptions() { OnComplete = "onAlbumCreated", OnFailure = "onAlbumFailed" }, new { id = "CreateAlbum" }))
+                            {
+                                <div class="form-group col-md-12 col-xs-12 pull-left">
+                                    <input type="hidden" name="path" id="path" value="@Model._current.Id" />
+                                    <label for="album"><span class="req">*</span>Album name : </label>
+                                    <input required type="text" name="album" id="album" class="form-control" />
+                                </div>
+                                <div class="form-group col-md-12 padding-bottom-10 text-right float-left">
+                                    <input class="btn btn-success" tabindex="submit" name="submit_reg" value="Create album" id="CreateAlbum" type="submit" />
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+
+</div>
+
+@section scripts {
+    <script>
+        var gallery_path = '@Url.Action("Index", "Gallery")';
+        var view_path = '@Url.Action("ViewMedia", "Gallery")';
+        var media_path = '@Url.Action("MoveMedia")';
+    </script>
+    <script src="~/Scripts/views/gallery/gallery.js"></script>
+    @if (currentUserId == userId)
+    {
+        <script src="~/Scripts/views/gallery/gallery_upload.js"></script>
+    }
+
+}

@@ -1,0 +1,119 @@
+﻿@model IVoice.Models.BaseModel
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - EOne</title>
+    <link rel="stylesheet" href="~/Scripts/fontawesome-5.10.2-web/css/all.css" />
+
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/plugins")
+    @RenderSection("href", required: false)
+</head>
+<body>
+    <div class="overlay-loading">
+        <div class="fa fa-spinner fa-spin"></div>
+    </div>
+    <div class="main-container">
+        <div class="header">
+            <div class="header-left">
+                <a href="@Url.Action("Index", "Home")"><img src="~/Images/icons/logo.png" /></a>
+                @if (Model._user.Id > 0)
+                {
+                    <a href="@Url.Action("Details", "User", new {Id = Model._user.Id})"><img src="~/Images/icons/profile.png" style="height:20px;" /></a>
+                }
+            </div>
+            <div class="header-right">
+                <div class="collapse navbar-collapse">
+                    <ul class="nav navbar-nav">
+                        <li>
+                            <a href="@Url.Action("Index","Features")"><i class="fa fa-book-open"></i>&nbsp;PIP</a>
+                        </li>
+                        @if (Model._user.Id > 0)
+                        {
+                            <li>
+                                <a href="@Url.Action("Index","Whisper")"><i class="fa fa-comments"></i>&nbsp;Whisper</a>
+                            </li>
+                            <li>
+                                <a href="@Url.Action("Index","Gallery")"><i class="fa fa-play"></i>&nbsp;Gallery</a>
+                            </li>
+                            <li>
+                                <a href="@Url.Action("Index","Voicer")"><i class="fa fa-user"></i>&nbsp;Voicers</a>
+                            </li>
+                            <li>
+                                <a href="@Url.Action("Spreads","User")"><i class="fa fa-share-alt"></i>&nbsp;Spreads</a>
+                            </li>
+                            <li>
+                                <a href="#"><span id="notiCount"></span><i class="fa fa-bell"></i></a>
+                            </li>
+                            <li class="dropdown dropdown-header-custom">
+                                <a class="dropdown-toggle" id="navUserMenu" data-toggle="dropdown" aria-haspopup="true">
+                                    <i class="fa fa-user"></i>&nbsp;@Model._user.Voicer
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-lg-right dropdown-custom" aria-labelledby="navUserMenu">
+                                    <li><a class="pd-10" href="@Url.Action("Details", "User", new { Id = Model._user.Id})"><i class="fa fa-user"></i>&nbsp;Details</a></li>
+                                    <li><a class="pd-10" href="@Url.Action("Index","User")"><i class="fa fa-user-circle"></i>&nbsp;Settings</a></li>
+                                    <li><a class="pd-10" href="@Url.Action("Logout","User")"><i class="fa fa-sign-out-alt"></i>&nbsp;Logout</a></li>
+                                </ul>
+                            </li>
+                        }
+                        else
+                        {
+                            <li>
+                                <a href="@Url.Action("Login","User")"><i class="fa fa-sign-in-alt"></i>&nbsp;Sign In</a>
+                            </li>
+                            <li>
+                                <a href="@Url.Action("Register","User")"><i class="fa fa-user"></i>&nbsp;Sign Up</a>
+                            </li>
+                        }
+
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="body-content">
+            @RenderBody()
+        </div>
+        <div class="footer">
+            <!--<img src="~/Images/icons/ivoice-logo.png" class="pull-left" />-->
+            <div>
+                <a href="@Url.Action("Index", "Forum")">Community forum</a>
+                |<a href="@Url.Action("Payments", "Pages")">Payments</a>
+                |<a href="@Url.Action("Contact", "Pages")">Contact</a>
+                |<a href="@Url.Action("TermsConditions", "Pages")">Terms & Conditions</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade modalBootstrapShared" data-backdrop="static" role="dialog" style="margin-top:50px;margin-bottom:50px;">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header modal-header-custom">
+                    <h5 class="modal-title">Title</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+
+                </div>
+                <div class="modal-footer">
+                    <span class="erorMsg ErrorMsgNoWrap"></span>
+                    <button type="button" class="btn btn-primary" id="btnSuccessBootstrapShared">Ok</button>
+                    <button type="button" class="btn  btn-secondary" id="btnDismissBootstrapShared">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/functions")
+    @RenderSection("scripts", required: false)
+
+</body>
+
+</html>

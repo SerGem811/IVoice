@@ -1,0 +1,112 @@
+﻿.ip-creator{
+    height: calc(100vh - 100px);
+    min-height: calc(100vh - 100px);
+}
+.left-pane {
+    height: 100%;
+    width: 50px;
+    /*background-color:#353535;*/
+}
+.work-area {
+    height: 100%;
+    width: 100%;
+    padding: 50px;
+}
+.fluid-content.ip-creator {
+    display: flex;
+}
+
+.btn-tool {
+    width:50px;
+    background-color:transparent!important;
+    color: #fff;
+    font-size:20px;
+}
+.btn-tool:hover {
+    color:#aaa!important;
+    background-color:#424242!important;
+}
+
+.sh-side-options {
+    position: absolute;
+    top: 50px;
+    bottom: 0;
+    z-index: 5000;
+    transition: 0.3s all ease;
+    transition: 0.2s all;
+    padding: 0 0;
+    width: 50px;
+    left: 0;
+}
+
+.sh-side-options-container {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 50px;
+    margin-left: 0px;
+}
+
+.sh-side-options-item:not(:hover):not(:focus) {
+    color: #9396a5 !important;
+}
+
+.sh-side-options-item:not(:last-child) {
+}
+
+.sh-side-options-item {
+    text-align: center;
+    margin: 0px;
+    width: 50px;
+    transition: 0.3s all ease-in-out;
+    position: relative;
+    padding: 7px;
+    cursor: pointer;
+    margin-top:15px;
+    box-shadow: 1px 0px 4px 2px rgba(0,0,0,.3);
+    border-radius: 3px;
+}
+
+    .sh-side-options-item:hover,
+    .sh-side-options-item:focus {
+        text-decoration: none;
+    }
+
+.sh-side-options-item-container {
+    border-radius: 4px;
+    padding: 8px 0;
+    text-orientation: upright;
+    writing-mode: vertical-lr
+}
+
+.sh-side-options-hover {
+    position: absolute;
+    left: 50px;
+    top: 0;
+    display: none;
+}
+
+.sh-side-options-item:hover .sh-side-options-hover {
+    display: block;
+    transform: translateX(0%);
+    text-decoration: none;
+}
+
+.ipcreator-board {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background-color: #fff;
+    position: relative;
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+}
+
+.colPicker {
+    position: absolute;
+    left: 50%;
+    top: 30%;
+    z-index:3000;
+    display:none;   
+}
+

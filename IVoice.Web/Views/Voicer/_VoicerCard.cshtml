@@ -1,0 +1,45 @@
+﻿@model IVoice.Models.Common.VoicerModel
+
+@{ 
+    var url = Url.Action("Details", "User", new { Id = Model.Id });
+}
+@section script {
+
+}
+<div class="box-default" style="padding:15px;margin-top:20px;">
+    <div>
+        @if (Model.Type == "BLOCKED")
+        {
+            <a href="#" class="pull-left secondary-link" onclick="cmdConnection(this, '@Model.Id', 'CONNECTED')"><i class="fa fa-unlock"></i>&nbsp;unblock</a>
+        }
+        else if (Model.Type == "CONNECTED")
+        {
+            <a href="#" class="pull-left secondary-link" onclick="cmdConnection(this, '@Model.Id', 'BLOCKED')"><i class="fa fa-ban"></i>&nbsp;block</a>
+            <a href="#" class="pull-right secondary-link" onclick="cmdConnection(this, '@Model.Id', 'REMOVED')"><i class="fa fa-user-times"></i>&nbsp;remove</a>
+        }
+        else if (Model.Type == "WAITING")
+        {
+            <a href="#" class="pull-left secondary-link" onclick="cmdConnection(this, '@Model.Id', 'CONNECTED')"><i class="fa fa-check"></i>&nbsp;accept</a>
+            <a href="#" class="pull-right secondary-link" onclick="cmdConnection(this, '@Model.Id', 'REMOVED')"><i class="fa fa-times"></i>&nbsp;decline</a>
+        }
+        else if (Model.Type == "REQUESTED")
+        {
+            <a href="#" class="pull-right secondary-link" onclick="cmdConnection(this, '@Model.Id', 'REMOVED')"><i class="fa fa-times"></i>&nbsp;cancel</a>
+        }
+        else
+        {
+            <a href="#" class="pull-right secondary-link" onclick="cmdConnection(this, '@Model.Id', 'WAITING')"><i class="fa fa-plus"></i>&nbsp;connect</a>
+        }
+    </div>
+    <div>
+        <a href="@url"><img  style="height:200px;width:100%;border-radius:7px;" src="@Model.ImagePath" /></a>
+    </div>
+    <div>
+        <h4>
+            <a href="@url">@Model.Voicer</a>
+            <i class="fa fa-ellipsis-v" style="font-size:12px;"></i><span style="font-size:12px;">&nbsp;@Model.Points</span>
+            <a href="#" class="pull-right" data-toggle="tooltip" data-placement="top" title="Directory Index">DI</a>
+        </h4>
+        <!--<span class="econdary-link">profile added @Model.Data</span>-->
+    </div>
+</div>

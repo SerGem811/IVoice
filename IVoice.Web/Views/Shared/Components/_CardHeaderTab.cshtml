@@ -1,0 +1,29 @@
+﻿@model IVoice.Models.Components.Tabs.CardHeaderTabsModel
+<div class="panel-heading">
+    <ul class="nav nav-tabs">
+        @{
+            foreach (var item in Model._header)
+            {
+                <li class="@item._class">
+                    <a href="@item._link" data-toggle="@((item._isbutton == false) ? "tab" : "")">
+                        <div class="box">
+                            @if (item._icon != "")
+                            {
+                                <i class="@item._icon"></i>
+                            }
+                            <span st>&nbsp;@item._label</span>
+                            @if (item._num != "")
+                            {
+                                <span class="viewcard-num">&nbsp;@item._num</span>
+                            }
+                            @if(item._open_folder)
+                            {
+                                <object>&nbsp;&nbsp;&nbsp;<a href="@item._open_folder_link"><i class="fa fa-window-restore"></i></a></object>
+                            }
+                        </div>
+                    </a>
+                </li>
+            }
+        }
+    </ul>
+</div>

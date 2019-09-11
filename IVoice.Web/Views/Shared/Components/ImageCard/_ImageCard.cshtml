@@ -1,0 +1,12 @@
+﻿@model IVoice.Models.Common.ImageCardModel
+
+<div class="clearfix col-md-4" style="margin-bottom:20px;">
+    <a href="@Model._link">
+        <div class="image-card-img">
+            <img src="@Model._img" class="" alt="@Model._label" />
+        </div>
+        <div class="image-card-description">
+            <span>@Model._label</span>
+        </div>
+    </a>
+</div>

@@ -1,0 +1,131 @@
+﻿@model IVoice.Models.Common.VoicerFilterModel
+@using IVoice.Extensions
+@using IVoice.Helpers
+
+@{
+    var countires = (SelectList)ViewData["countries"];
+    var genders = (SelectList)ViewData["genders"];
+    var hobbies = (SelectList)ViewData["hobbies"];
+    var occupations = (SelectList)ViewData["occupations"];
+}
+<div id="@Model._frm_id">
+    <!-- Birthday / Date -->
+    <div class="form-group col-md-6 col-xs-12">
+        @if (Model._frm_type == 3)
+        {
+            <label for="_birthday">Date : </label>
+        }
+        else
+        {
+            <label for="_birthday">Birthday : </label>
+        }
+        @if (Model._frm_type == 1)
+        {
+            <div class="pull-right">
+                <span>Public : </span>
+                @Html.CheckBoxFor(m => m._pub_birthday, new { @class = "toggle-options" })
+            </div>
+        }
+        @Html.TextBoxFor(m => m._birthday, new { @class = "form-control" })
+    </div>
+    <!-- Gender -->
+    <div class="form-group col-md-6 col-xs-12">
+        <label for="_gender">Gender : </label>
+        @if (Model._frm_type == 1)
+        {
+            <div class="pull-right">
+                <span>Public : </span>
+                @Html.CheckBoxFor(m => m._pub_gender, new { @class = "toggle-options" })
+            </div>
+        }
+        @Html.DropDownListAutoCompleteFor(m => m._gender_id, genders, "", new { @class = "form-control" })
+    </div>
+    <!-- Country -->
+    <div class="form-group col-md-6 col-xs-12">
+        <label for="_country">Country : </label>
+        @if (Model._frm_type == 1)
+        {
+            <div class="pull-right">
+                <span>Public : </span>
+                @Html.CheckBoxFor(m => m._pub_country, new { @class = "toggle-options" })
+            </div>
+        }
+        @Html.DropDownListAutoCompleteFor(m => m._country_id, countires, "", new { @class = "form-control" })
+    </div>
+    <!-- Region -->
+    <div class="form-group col-md-6 col-xs-12">
+        <label for="_region">Region : </label>
+        @if (Model._frm_type == 1)
+        {
+            <div class="pull-right">
+                <span>Public : </span>
+                @Html.CheckBoxFor(m => m._pub_region, new { @class = "toggle-options" })
+            </div>
+        }
+        @Html.TextBoxFor(m => m._region, new { @class = "form-control" })
+    </div>
+    <!-- Language -->
+    <div class="form-group col-md-6 col-xs-12">
+        <label for="_language">Language : </label>
+        @if (Model._frm_type == 1)
+        {
+            <div class="pull-right">
+                <span>Public : </span>
+                @Html.CheckBoxFor(m => m._pub_language, new { @class = "toggle-options" })
+            </div>
+        }
+        @Html.TextBoxFor(m => m._language, new { @class = "form-control" })
+    </div>
+    <!-- Occupation / Profession-->
+    <div class="form-group col-md-6 col-xs-12">
+        <label for="_occupation">Occupation / Profession : </label>
+        @if (Model._frm_type == 1)
+        {
+            <div class="pull-right">
+                <span>Public : </span>
+                @Html.CheckBoxFor(m => m._pub_occupations, new { @class = "toggle-options" })
+            </div>
+        }
+        @Html.DropDownListMultipleChoiceFor(m => m._occupation_ids, occupations, "", new { @class = "form-control" })
+    </div>
+    <!-- Relationship status -->
+    <div class="form-group col-md-6 col-xs-12">
+        <label for="_relation">Relationship status : </label>
+        @if (Model._frm_type == 1)
+        {
+            <div class="pull-right">
+                <span>Public : </span>
+                @Html.CheckBoxFor(m => m._pub_relation, new { @class = "toggle-options" })
+            </div>
+        }
+        @Html.TextBoxFor(m => m._relation, new { @class = "form-control" })
+    </div>
+    <!-- Interest and hobbies -->
+    <div class="form-group col-md-6 col-xs-12">
+        <label for="_hobby">Interest and hobbies : </label>
+        @if (Model._frm_type == 1)
+        {
+            <div class="pull-right">
+                <span>Public : </span>
+                @Html.CheckBoxFor(m => m._pub_hobby, new { @class = "toggle-options" })
+            </div>
+        }
+        @Html.DropDownListMultipleChoiceFor(m => m._hobby_ids, hobbies, "", new { @class = "form-control" })
+    </div>
+
+    <!-- Button -->
+    @if (Model._frm_type != 0)
+    {
+        // Save
+        <div class="form-group col-md-12 float-left">
+            @if (Model._frm_type == 2)
+            {
+                <button type="submit" class="btn btn-default pull-right">Search</button>
+            }
+            else if (Model._frm_type == 1)
+            {
+                <button type="submit" class="btn btn-default btn-success pull-right">Save</button>
+            }
+        </div>
+    }
+</div>

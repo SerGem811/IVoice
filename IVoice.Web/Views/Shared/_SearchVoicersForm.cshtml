@@ -1,0 +1,28 @@
+﻿@model IVoice.Models.Voicer.VoicersModel
+@using IVoice.Models.Components.Tabs
+@using IVoice.Models.Components.Common
+
+@using (Html.BeginForm("SearchVoicers", "Voicer", FormMethod.Post))
+{
+    <div class="panel with-nav-tabs panel-default">
+        @Html.Partial("~/Views/Shared/Components/_CardHeaderTab.cshtml", new CardHeaderTabsModel() { _header = new List<CardHeaderModel>()
+   {
+       new CardHeaderModel() { _class = "active", _link = "#tabSearchVoicer", _label = "Search Voicers"},
+       new CardHeaderModel() { _link = "#tabVoicerFilter", _label = "Field Search Voicers"}
+   } })
+        <div class="panel-body">
+            <div class="tab-content">
+                <div class="tab-pane active" id="tabSearchVoicer">
+                    <div class="search col-md-12 col-xs-12" style="justify-content:center; align-items: center;">
+                        @Html.TextBoxFor(m => m._free, new { @class = "form-control", placeholder = "Search" })
+                        <button type="submit" class="btn btn-default btn-search box-default">Search</button>
+                    </div>
+                </div>
+
+                <div class="tab-pane" id="tabVoicerFilter">
+                    @Html.Partial("_VoicerFilter", Model._filter)
+                </div>
+            </div>
+        </div>
+    </div>
+}

@@ -1,0 +1,255 @@
+﻿@using IVoice.Extensions
+@using IVoice.Models.Components.Tabs
+@using IVoice.Models.Components.Common
+@using IVoice.Models.Common
+@model IVoice.Models.IPSocial.SaveIPOptionModel
+
+@{
+    var features = (SelectList)ViewData["features"];
+    var categories = (SelectList)ViewData["categories"];
+
+    var v_event = new ViewDataDictionary()
+    {
+        TemplateInfo = new TemplateInfo()
+        {
+            HtmlFieldPrefix = "_event"
+        }
+    };
+
+    v_event.Add("countries", ViewData["countries"]);
+    v_event.Add("genders", ViewData["genders"]);
+    v_event.Add("hobbies", ViewData["hobbies"]);
+    v_event.Add("occupations", ViewData["occupations"]);
+
+    var v_filter = new ViewDataDictionary()
+    {
+        TemplateInfo = new TemplateInfo()
+        {
+            HtmlFieldPrefix = "_filter"
+        }
+    };
+    v_filter.Add("countries", ViewData["countries"]);
+    v_filter.Add("genders", ViewData["genders"]);
+    v_filter.Add("hobbies", ViewData["hobbies"]);
+    v_filter.Add("occupations", ViewData["occupations"]);
+
+}
+@using (Ajax.BeginForm("SaveIP", "IPSocial", new AjaxOptions { OnComplete = "onCompleteSave" }, new { id = $"SaveIP" }))
+{
+    <div class="form-group col-md-12">
+        Name<br />
+        @Html.TextBoxFor(m => m._name, new { @class = "form-control" })
+    </div>
+
+    <div class="form-group col-md-12">
+        Feature<br />
+        @Html.DropDownListAutoCompleteFor(m => m._feature_id, features, "", new { @class = "form-control", onchange = "getCategories(this)" })
+    </div>
+
+    <div class="form-group col-md-12" style="display:none" id="frmCategory">
+        Category<br />
+        @Html.DropDownListAutoCompleteFor(m => m._category_id, categories, "", new { @class = "form-control" })
+    </div>
+
+    <div class="form-group col-md-12" id="frmTag" style="display:none;">
+        Tab<br />
+        <input type="text" class="form-control input-sm" id="tagInput" placeholder="Insert Tag" />
+    </div>
+
+    <div class="form-group col-md-12 row">
+        <div class="col-md-4 col-sm-6">
+            Public<br />
+            @Html.CheckBoxFor(m => m._public, new { @class = "form-control toggle-options" })
+        </div>
+        <div class="col-md-4 col-sm-6">
+            Directory Index<br />
+            @Html.CheckBoxFor(m => m._di, new { @class = "form-control toggle-options" })
+        </div>
+        <div class="col-md-4 col-sm-6">
+            Over 18 age restriction <br />
+            @Html.CheckBoxFor(m => m._adult, new { @class = "form-control toggle-options" })
+        </div>
+    </div>
+    <div class="form-group col-md-12" id="frmEvent" style="display:none">
+        <div class="panel with-nav-tabs panel-default">
+            @Html.Partial("~/Views/Shared/Components/_CardHeaderTab.cshtml", new CardHeaderTabsModel() { _header = new List<CardHeaderModel>() {
+                                                                                        new CardHeaderModel() { _class = "active", _link="#tabEvent", _label="Event Filter IP" } } })
+            <div class="panel-body">
+                <div class="tab-content">
+                    <div class="tab-pane active" id="tabEvent">
+                        @Html.Partial("~/Views/Shared/_VoicerFilter.cshtml", Model._event, v_event)
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="form-group col-md-12" id="frmSpread" style="display:none">
+        <div class="panel with-nav-tabs panel-default">
+            @Html.Partial("~/Views/Shared/Components/_CardHeaderTab.cshtml", new CardHeaderTabsModel() { _header = new List<CardHeaderModel>() {
+                                                                                        new CardHeaderModel() { _class = "active", _link = "#tabFieldSearchVoicers", _label="Field Search Voicers" },
+                                                                                        new CardHeaderModel() { _link = "#tabConnectedVoicer", _label = "Connected Voicers" } } })
+            <div class="panel-body">
+                <div class="tab-content">
+                    <div class="tab-pane active" id="tabFieldSearchVoicers">
+                        @Html.Partial("~/Views/Shared/_VoicerFilter.cshtml", Model._filter, v_filter)
+
+                    </div>
+                    <div class="tab-pane" id="tabConnectedVoicer">
+                        @{
+                            var index = 0;
+                            foreach (var item in Model._connected)
+                            {
+                                <div class="col-md-3 padding-bottom-10">
+                                    <div class="panel" style="padding:7px">
+                                        <div><span>@item.Voicer</span></div>
+                                        <img src="@item.ImagePath" style="width:100%;" />
+                                        @Html.CheckBoxFor(m => m._selected[index], new { @class = "toggle-options-full-width"})
+                                    </div>
+                                </div>
+                                index++;
+                            }
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    @Html.HiddenFor(m => m._body)
+    @Html.HiddenFor(m => m._style)
+    @Html.HiddenFor(m => m._cover_id)
+    @Html.HiddenFor(m => m._img)
+}
+<div class="form-group col-md-12" id="divCover" style="display:grid;margin-top:20px;">
+    <div class="panel with-nav-tabs panel-default">
+        @Html.Partial("~/Views/Shared/Components/_CardHeaderTab.cshtml", new CardHeaderTabsModel() { _header = new List<CardHeaderModel>() {
+                                                                                new CardHeaderModel() { _class = "active", _link = "#tabUploadCover", _label = "Upload Cover"} } })
+        <div class="panel-body">
+            <div class="tab-content">
+                <div class="tab-pane active" id="tabUploadCover">
+                    <div class="form-group" style="display:grid">
+                        <div class="col-md-4 col-md-offset-4">
+                            <img src="@Model._img" style="height: 100%; width:100%; margin-top:10px; margin-bottom:10px;" id="ip_cover" />
+                        </div>
+                        <div class="col-md-12">
+                            @Html.Partial("~/Views/Shared/Components/_UploadFile.cshtml", new UploadModel() { UniqueId = Model._guid, _function = "addCoverImage",
+                                                                                                                _div_id = "upload", _input_file = "file" })
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    $(document).ready(function () {
+        $('.selectpicker').selectpicker();
+        $('.toggle-options').bootstrapToggle({
+            on: 'On',
+            off: 'Off'
+        });
+
+        $('.toggle-options-full-width').bootstrapToggle({
+            on: 'Selected',
+            off: 'Click to select',
+            style: 'full-width'
+        })
+    });
+
+    function getCategories(element) {
+        //hide all forms
+        $("#frmCategory").hide();
+        $("#frmEvent").hide();
+        $("#frmSpread").hide();
+        $("#frmTag").hide();
+        if ($(element).val() == "") {
+            return;
+        }
+        $("#frmSpread").show();
+        if ($(element).val() == 8) {
+            $("#frmTag").show();
+            return;
+        }
+        $("#frmCategory").show();
+
+        // in the future should be changed with ViewType
+        if ($(element).val() == @IVoice.Helpers.Constants.EVENT_ID) {
+            $("#frmEvent").show();
+        }
+        if ($(element).val() == 25) {
+
+        }
+    }
+
+    $(function () {
+        // Initialize the jQuery File Upload plugin
+        $('#upload').fileupload({
+
+            // This element will accept file drag/drop uploading
+            dropZone: $('#upload'),
+
+            // This function is called when a file is added to the queue;
+            // either via the browse button, or via drag/drop:
+            add: function (e, data) {
+
+                // Automatically upload the file once it is added to the queue
+                var jqXHR = data.submit();
+            },
+
+            progress: function (e, data) {
+
+            },
+
+            done: function (e, data) {
+                if (data.result != null) {
+                    var id = data.result['id'];
+                    var path = data.result['cover'];
+
+                    $('#ip_cover').attr('src', path);
+                    $('[name="_cover_id"]').attr('value', id);
+                    $('[name="_img"]').attr('value', path);
+                }
+                //$("#ip_cover").attr("src", data.result);
+            },
+
+            fail: function (e, data) {
+                alert("error");
+            }
+        });
+
+        // Prevent the default action when a file is dropped on the window
+        $(document).on('drop dragover', function (e) {
+            e.preventDefault();
+        });
+    });
+
+    $('#btnSuccessBootstrapShared').click(function () {
+        var style = $('#ipcreator-board').attr('style');
+        var body = $('#ipcreator-board').html();
+        var colorPicker = $('.colPicker')[0].outerHTML;
+
+        body = body.replace(colorPicker, "");
+        body = body.trim();
+        if (style == undefined) {
+            style = '';
+        }
+
+        $('[name="_body"]').attr('value', body);
+        $('[name="_style"').attr('value', style);
+        $('#SaveIP').submit();
+    });
+
+    function onCompleteSave(e) {
+        var v = e.responseText.replace(/['"]+/g, '');
+        if (v == 'Success') {
+            performOk();
+            window.location = detailURL;
+        } else {
+            //alertMessage('notice', e.responseText);
+            alert(v);
+        }
+    }
+
+</script>
