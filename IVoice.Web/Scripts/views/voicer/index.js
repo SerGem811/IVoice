@@ -14,7 +14,7 @@ function cmdConnection(element, id, func) {
         data: { VoicerID: id, Func: func },
         type: 'POST',
         complete: function (request, status) {
-            popupBootstrap('Notice', null, 'Request sent', {}, true, 'Ok', afterCmd, false, '', null, '30%', null, '30%');
+            popupBootstrap('Notice', null, 'Done', {}, true, 'Ok', afterCmd, false, '', null, '30%', null, '30%');
         }
     })
 }
