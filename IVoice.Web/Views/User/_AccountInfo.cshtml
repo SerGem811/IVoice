@@ -25,7 +25,7 @@
         @Html.TextBoxFor(m => m._secret_question, new { @class = "form-control", required = "required" })
     </div>
     <div class="form-group col-md-12 float-left">
-        <label for="secretanswer"><span class="req">* Secret Anser:</span></label>
+        <label for="secretanswer"><span class="req">* Secret Answer:</span></label>
         @Html.TextBoxFor(m => m._secret_answer, new { @class = "form-control", required = "required" })
     </div>
     <div class="form-group col-md-12 float-left">
@@ -43,7 +43,7 @@
         @Html.CheckBoxFor(m => m._active_voicer_update, new { @class = "toggle-options" })
     </div>
     <div class="form-group col-md-3 col-xs-12">
-        <label for="adultonly"><span class="req">Allow Adult Only </span></label>
+        <label for="adultonly"><span class="req">18+ restriction </span></label>
         <br />
         @Html.CheckBoxFor(m => m._adult_only, new { @class = "toggle-options" })
     </div>
@@ -54,7 +54,7 @@
     </div>
 
     <div class="form-group col-md-3 col-xs-12">
-        <label for="gallery"><span class="req">Public Gallery </span></label>
+        <label for="gallery"><span class="req">User Gallery </span></label>
         <br />
         @Html.CheckBoxFor(m => m._active_gallery, new { @class = "toggle-options" })
     </div>
@@ -74,7 +74,7 @@
         @Html.CheckBoxFor(m => m._active_ep, new { @class = "toggle-options" })
     </div>
     <div class="form-group col-md-2 col-xs-12">
-        <label for="voicers"><span class="req">Public Voicers </span></label>
+        <label for="voicers"><span class="req">Voicers List </span></label>
         <br />
         @Html.CheckBoxFor(m => m._active_voicer, new { @class = "toggle-options" })
     </div>

@@ -23,7 +23,7 @@
         {
             <div class="pull-right">
                 <span>Public : </span>
-                @Html.CheckBoxFor(m => m._pub_birthday, new { @class = "toggle-options" })
+                @Html.CheckBoxFor(m => m._pub_birthday)
             </div>
         }
         @Html.TextBoxFor(m => m._birthday, new { @class = "form-control" })
@@ -35,7 +35,7 @@
         {
             <div class="pull-right">
                 <span>Public : </span>
-                @Html.CheckBoxFor(m => m._pub_gender, new { @class = "toggle-options" })
+                @Html.CheckBoxFor(m => m._pub_gender)
             </div>
         }
         @Html.DropDownListAutoCompleteFor(m => m._gender_id, genders, "", new { @class = "form-control" })
@@ -47,7 +47,7 @@
         {
             <div class="pull-right">
                 <span>Public : </span>
-                @Html.CheckBoxFor(m => m._pub_country, new { @class = "toggle-options" })
+                @Html.CheckBoxFor(m => m._pub_country)
             </div>
         }
         @Html.DropDownListAutoCompleteFor(m => m._country_id, countires, "", new { @class = "form-control" })
@@ -59,7 +59,7 @@
         {
             <div class="pull-right">
                 <span>Public : </span>
-                @Html.CheckBoxFor(m => m._pub_region, new { @class = "toggle-options" })
+                @Html.CheckBoxFor(m => m._pub_region)
             </div>
         }
         @Html.TextBoxFor(m => m._region, new { @class = "form-control" })
@@ -71,7 +71,7 @@
         {
             <div class="pull-right">
                 <span>Public : </span>
-                @Html.CheckBoxFor(m => m._pub_language, new { @class = "toggle-options" })
+                @Html.CheckBoxFor(m => m._pub_language)
             </div>
         }
         @Html.TextBoxFor(m => m._language, new { @class = "form-control" })
@@ -83,7 +83,7 @@
         {
             <div class="pull-right">
                 <span>Public : </span>
-                @Html.CheckBoxFor(m => m._pub_occupations, new { @class = "toggle-options" })
+                @Html.CheckBoxFor(m => m._pub_occupations)
             </div>
         }
         @Html.DropDownListMultipleChoiceFor(m => m._occupation_ids, occupations, "", new { @class = "form-control" })
@@ -95,7 +95,7 @@
         {
             <div class="pull-right">
                 <span>Public : </span>
-                @Html.CheckBoxFor(m => m._pub_relation, new { @class = "toggle-options" })
+                @Html.CheckBoxFor(m => m._pub_relation)
             </div>
         }
         @Html.TextBoxFor(m => m._relation, new { @class = "form-control" })
@@ -107,7 +107,7 @@
         {
             <div class="pull-right">
                 <span>Public : </span>
-                @Html.CheckBoxFor(m => m._pub_hobby, new { @class = "toggle-options" })
+                @Html.CheckBoxFor(m => m._pub_hobby)
             </div>
         }
         @Html.DropDownListMultipleChoiceFor(m => m._hobby_ids, hobbies, "", new { @class = "form-control" })

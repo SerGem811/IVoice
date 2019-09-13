@@ -21,7 +21,7 @@ function onAlbumFailed(e) {
 
 $(document).on('ready', function () {
     $('.toggle-public').bootstrapToggle({
-        on: 'Public',
+        on: 'Open',
         off: 'Private'
     });
 

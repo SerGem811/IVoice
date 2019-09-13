@@ -121,7 +121,7 @@ namespace IVoice.Controllers
 
             ViewData["features"] = _featureRepository.LoadSortAndSelect(x => x.ForIP,
                                                                     x => new SelectListItem_Custom { Id = x.Id, Description = x.Name },
-                                                                    Sorter<Feature>.Get(x => x.Name, true)).ToSelectList(x => x.Description);
+                                                                    Sorter<Feature>.Get(x => x.Id, true)).ToSelectList(x => x.Description);
             ViewData["categories"] = _categoryRepository.LoadAndSelect(x => x.Active,
                                                                 x => new SelectListItem_Custom { Id = x.Id, Description = x.Name }, false).ToSelectList(x => x.Description);
 
@@ -184,7 +184,7 @@ namespace IVoice.Controllers
                     Active = false,
                     DateAdded = DateTime.Now,
                     FileName = file.FileName, //the real FS file name has UniqueId
-                    Path = "/upload/cover/" + fileName,
+                    Path = "/upload/ip/cover/" + fileName,
                     UserId = _userID,
                     Visibity = "Private",
                     UniqueId = UniqueId,
@@ -192,7 +192,7 @@ namespace IVoice.Controllers
 
                 var res = new JObject();
                 res["id"] = id;
-                res["cover"] = "/upload/cover/" + fileName;
+                res["cover"] = "/upload/ip/cover/" + fileName;
 
                 return Json(res, JsonRequestBehavior.AllowGet);
             }
