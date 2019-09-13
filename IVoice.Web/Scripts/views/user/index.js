@@ -1,7 +1,7 @@
 ﻿$(document).ready(function () {
     $('.toggle-options').bootstrapToggle({
-        on: 'On',
-        off: 'Off'
+        on: 'Enable',
+        off: 'Disable'
     });
 });
 

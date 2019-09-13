@@ -405,7 +405,6 @@
     <Content Include="Scripts\bootstrap-select\js\i18n\defaults-zh_TW.min.js" />
     <Content Include="Scripts\bootstrap-toggle\bootstrap-toggle.min.css" />
     <Content Include="Scripts\bootstrap-toggle\bootstrap-toggle.min.js" />
-    <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\datatable\datatables.css" />
     <Content Include="Scripts\datatable\datatables.js" />

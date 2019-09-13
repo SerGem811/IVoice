@@ -13,7 +13,8 @@
             BLOCKED,
             CONNECTED,
             WAITING,
-            REMOVE
+            REMOVE,
+            REQUESTED
         }
 
         public enum SearchFormType

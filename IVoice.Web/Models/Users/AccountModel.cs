@@ -29,6 +29,7 @@ namespace IVoice.Models.Users
         public bool _active_voicer { get; set; }
         public bool _active_spread { get; set; }
         public bool _active_ep { get; set; }
+        public bool _active_connect { get; set; }
         public string _first { get; set; }
         public string _last { get; set; }
         public bool _is_adult { get; set; }
@@ -53,6 +54,7 @@ namespace IVoice.Models.Users
             _active_voicer = wrapper.ActiveVoicer;
             _active_spread = wrapper.ActiveSpread;
             _active_ep = wrapper.ActiveEP;
+            _active_connect = wrapper.ActiveConnect;
             _first = wrapper.FirstName;
             _last = wrapper.LastName;
             _is_adult = wrapper.IsAdult;
@@ -64,27 +66,28 @@ namespace IVoice.Models.Users
 
         public User ToEntity(User model)
         {
-            model.Active = this._active;
-            model.Email = this._email;
-            model.Nickname = this._voicer;
-            model.ActiveWhisper = this._active_whisper;
-            model.ActiveVoicerUpdates = this._active_voicer_update;
-            model.ActiveIPFeeds = this._active_feeds;
-            model.ActiveGallery = this._active_gallery;
-            model.ActiveVoicer = this._active_voicer;
-            model.ActiveSpread = this._active_spread;
-            model.ActiveEP = this._active_ep;
-            model.FirstName = this._first;
-            model.LastName = this._last;
-            model.OnlyAdult = this._adult_only;
-            model.IsAdult = this._is_adult;
-            model.SecretQuestion = this._secret_question;
-            model.SecretAnswer = this._secret_answer;
-            model.isPublic = this._public;
+            model.Active = _active;
+            model.Email = _email;
+            model.Nickname = _voicer;
+            model.ActiveWhisper = _active_whisper;
+            model.ActiveVoicerUpdates = _active_voicer_update;
+            model.ActiveIPFeeds = _active_feeds;
+            model.ActiveGallery = _active_gallery;
+            model.ActiveVoicer = _active_voicer;
+            model.ActiveSpread = _active_spread;
+            model.ActiveEP = _active_ep;
+            model.ActiveConnect = _active_connect;
+            model.FirstName = _first;
+            model.LastName = _last;
+            model.OnlyAdult = _adult_only;
+            model.IsAdult = _is_adult;
+            model.SecretQuestion = _secret_question;
+            model.SecretAnswer = _secret_answer;
+            model.isPublic = _public;
 
             if (_pwd == model.Password && _pwd_new.Length > 1)
             {
-                model.Password = this._pwd_new;
+                model.Password = _pwd_new;
             }
 
             return model;

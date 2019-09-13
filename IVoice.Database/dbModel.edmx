@@ -136,6 +136,7 @@
           <Property Name="ActiveSpread" Type="bit" Nullable="false" />
           <Property Name="ActiveVoicer" Type="bit" Nullable="false" />
           <Property Name="ActiveEP" Type="bit" Nullable="false" />
+          <Property Name="ActiveConnect" Type="bit" Nullable="false" />
           <Property Name="FirstName" Type="varchar" MaxLength="512" Nullable="false" />
           <Property Name="LastName" Type="varchar" MaxLength="512" Nullable="false" />
           <Property Name="Password" Type="varchar" MaxLength="512" Nullable="false" />
@@ -224,7 +225,7 @@
           <Property Name="Visibility" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Created" Type="datetime" Nullable="false" />
           <Property Name="Active" Type="bit" Nullable="false" />
-          <Property Name="Cover" Type="varchar" MaxLength="255" />
+          <Property Name="Cover" Type="ntext" />
         </EntityType>
         <EntityType Name="UsersConnections">
           <Key>
@@ -1885,6 +1886,7 @@
           <NavigationProperty Name="Whispers" Relationship="eoneModel.FK_Whisper_Users" FromRole="User" ToRole="Whisper" />
           <NavigationProperty Name="Whispers1" Relationship="eoneModel.FK_Whisper_Users1" FromRole="User" ToRole="Whisper" />
           <Property Name="ActiveEP" Type="Boolean" Nullable="false" />
+          <Property Name="ActiveConnect" Type="Boolean" Nullable="false" />
         </EntityType>
         <EntityType Name="UsersActivity">
           <Key>
@@ -1929,7 +1931,7 @@
           <Property Name="Visibility" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Created" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="Active" Type="Boolean" Nullable="false" />
-          <Property Name="Cover" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Cover" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="User" Relationship="eoneModel.FK_UsersAttachmentsAlbums_Users" FromRole="UsersAttachmentsAlbum" ToRole="User" />
           <NavigationProperty Name="UsersAttachments" Relationship="eoneModel.FK_UsersAttachments_UsersAttachmentsAlbums" FromRole="UsersAttachmentsAlbum" ToRole="UsersAttachment" />
           <NavigationProperty Name="UsersAttachmentsAlbums1" Relationship="eoneModel.FK_UsersAttachmentsAlbums_UsersAttachmentsAlbums" FromRole="UsersAttachmentsAlbum" ToRole="UsersAttachmentsAlbum1" />
@@ -3041,6 +3043,7 @@
           <EntitySetMapping Name="Users">
             <EntityTypeMapping TypeName="eoneModel.User">
               <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="ActiveConnect" ColumnName="ActiveConnect" />
                 <ScalarProperty Name="ActiveEP" ColumnName="ActiveEP" />
                 <ScalarProperty Name="isPublic" ColumnName="isPublic" />
                 <ScalarProperty Name="FullAdActiveUntil" ColumnName="FullAdActiveUntil" />

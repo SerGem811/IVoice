@@ -124,9 +124,9 @@ namespace IVoice.Controllers
             }
             else if (func == VoicerConnectionType.WAITING.ToString())
             {
-                var conn1 = makeConnection(_userID, VoicerID, "REQUESTED");
+                var conn1 = makeConnection(_userID, VoicerID, VoicerConnectionType.REQUESTED.ToString());
                 _usersConnectionRepository.Save(conn1);
-                var conn2 = makeConnection(VoicerID, _userID, "WAITING");
+                var conn2 = makeConnection(VoicerID, _userID, VoicerConnectionType.WAITING.ToString());
                 _usersConnectionRepository.Save(conn2);
             }
             else if (func == VoicerConnectionType.BLOCKED.ToString())
@@ -157,6 +157,8 @@ namespace IVoice.Controllers
         {
             var connection = _usersConnectionRepository.FirstOrDefault(x => x.UserId == Id && x.User1.Id == VoicerID, x => x, null);
 
+            var user = _userRepository.FirstOrDefault(x => x.Id == VoicerID, x => x, null);
+
             if (connection != null)
             {
                 if (connection.Type != type)
@@ -169,6 +171,11 @@ namespace IVoice.Controllers
             }
             else
             {
+                if (!user.ActiveConnect && (type == VoicerConnectionType.WAITING.ToString() || type == VoicerConnectionType.REQUESTED.ToString()))
+                {
+                    type = VoicerConnectionType.CONNECTED.ToString();
+                }
+
                 connection = new UsersConnection()
                 {
                     UserId = Id,

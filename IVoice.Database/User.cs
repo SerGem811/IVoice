@@ -108,6 +108,7 @@ namespace IVoice.Database
         public Nullable<System.DateTime> FullAdActiveUntil { get; set; }
         public bool isPublic { get; set; }
         public bool ActiveEP { get; set; }
+        public bool ActiveConnect { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Category> Categories { get; set; }

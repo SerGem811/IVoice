@@ -32,52 +32,64 @@
         <label><span class="req">Visibility & Accessibility</span></label>
         <hr />
     </div>
-    <div class="form-group col-md-3 col-xs-12">
-        <label for="whisper"><span class="req">Whisper Active </span></label>
-        <br />
-        @Html.CheckBoxFor(m => m._active_whisper, new { @class = "toggle-options" })
-    </div>
-    <div class="form-group col-md-3 col-xs-12">
-        <label for="voicerupdate"><span class="req">Voicer Updates </span></label>
-        <br />
-        @Html.CheckBoxFor(m => m._active_voicer_update, new { @class = "toggle-options" })
-    </div>
-    <div class="form-group col-md-3 col-xs-12">
-        <label for="adultonly"><span class="req">18+ restriction </span></label>
-        <br />
-        @Html.CheckBoxFor(m => m._adult_only, new { @class = "toggle-options" })
-    </div>
-    <div class="form-group col-md-3 col-xs-12">
-        <label for="accountpublic"><span class="req">Users Accessibility </span></label>
-        <br />
-        @Html.CheckBoxFor(m => m._public, new { @class = "toggle-options" })
-    </div>
 
-    <div class="form-group col-md-3 col-xs-12">
-        <label for="gallery"><span class="req">User Gallery </span></label>
-        <br />
-        @Html.CheckBoxFor(m => m._active_gallery, new { @class = "toggle-options" })
+    <div class="form-group col-md-12 col-xs-12">
+        <div class="form-group col-md-2 col-xs-12">
+            <label for="whisper"><span class="req">Whisper Active</span></label>
+            <br />
+            @Html.CheckBoxFor(m => m._active_whisper, new { @class = "toggle-options" })
+        </div>
+        <div class="form-group col-md-2 col-xs-12">
+            <label for="voicerupdate"><span class="req">Voicer Updates</span></label>
+            <br />
+            @Html.CheckBoxFor(m => m._active_voicer_update, new { @class = "toggle-options" })
+        </div>
+        <div class="form-group col-md-2 col-xs-12">
+            <label for="adultonly"><span class="req">18+ restriction</span></label>
+            <br />
+            @Html.CheckBoxFor(m => m._adult_only, new { @class = "toggle-options" })
+        </div>
+        <div class="form-group col-md-3 col-xs-12">
+            <label for="accountpublic"><span class="req">Users Accessibility</span></label>
+            <br />
+            @Html.CheckBoxFor(m => m._public, new { @class = "toggle-options" })
+        </div>
+        <div class="form-group col-md-3 col-xs-12">
+            <label for="connectrequest"><span class="req">Connect Request</span></label>
+            <br />
+            @Html.CheckBoxFor(m => m._active_connect, new { @class = "toggle-options" })
+        </div>
     </div>
-    <div class="form-group col-md-3 col-xs-12">
-        <label for="spread"><span class="req">Public Spreads </span></label>
-        <br />
-        @Html.CheckBoxFor(m => m._active_spread, new { @class = "toggle-options" })
+    <div class="form-group col-md-12 col-xs-12">
+        <div class="form-group col-md-2 col-xs-12">
+            <label for="ipfeeds"><span class="req">IP Feeds </span></label>
+            <br />
+            @Html.CheckBoxFor(m => m._active_feeds, new { @class = "toggle-options" })
+        </div>
+
+        <div class="form-group col-md-2 col-xs-12">
+            <label for="gallery"><span class="req">Open Gallery </span></label>
+            <br />
+            @Html.CheckBoxFor(m => m._active_gallery, new { @class = "toggle-options" })
+        </div>
+        <div class="form-group col-md-2 col-xs-12">
+            <label for="spread"><span class="req">Open Spreads </span></label>
+            <br />
+            @Html.CheckBoxFor(m => m._active_spread, new { @class = "toggle-options" })
+        </div>
+
+        <div class="form-group col-md-3 col-xs-12">
+            <label for="gallery"><span class="req">Open EP </span></label>
+            <br />
+            @Html.CheckBoxFor(m => m._active_ep, new { @class = "toggle-options" })
+        </div>
+        <div class="form-group col-md-3 col-xs-12">
+            <label for="voicers"><span class="req">Open Voicers List </span></label>
+            <br />
+            @Html.CheckBoxFor(m => m._active_voicer, new { @class = "toggle-options" })
+        </div>
     </div>
-    <div class="form-group col-md-2 col-xs-12">
-        <label for="ipfeeds"><span class="req">IP Feeds </span></label>
-        <br />
-        @Html.CheckBoxFor(m => m._active_feeds, new { @class = "toggle-options" })
-    </div>
-    <div class="form-group col-md-2 col-xs-12">
-        <label for="gallery"><span class="req">Public EP </span></label>
-        <br />
-        @Html.CheckBoxFor(m => m._active_ep, new { @class = "toggle-options" })
-    </div>
-    <div class="form-group col-md-2 col-xs-12">
-        <label for="voicers"><span class="req">Voicers List </span></label>
-        <br />
-        @Html.CheckBoxFor(m => m._active_voicer, new { @class = "toggle-options" })
-    </div>
+    
 
 
 
