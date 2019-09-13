@@ -198,6 +198,7 @@
     <Compile Include="Models\IPSocial\Create.cs" />
     <Compile Include="Models\IPSocial\SaveIPOptionModel.cs" />
     <Compile Include="Models\IPSocial\TableRowModel.cs" />
+    <Compile Include="Models\IP\IPListModel.cs" />
     <Compile Include="Models\IP\IPViewModel.cs" />
     <Compile Include="Models\Components\PersonalCard\CardBodyPersonalModel.cs" />
     <Compile Include="Models\Components\PersonalCard\CardHeaderPersonalModel.cs" />
@@ -226,13 +227,12 @@
     <Compile Include="Services\WhisperRepository.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
-    <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\CardView.css" />
     <Content Include="Content\ImageCardListView.css" />
     <Content Include="Content\Home.css" />
     <Content Include="Content\Components\imagecard.css" />
+    <Content Include="Content\IP.css" />
     <Content Include="Content\IPSocial.css" />
     <Content Include="Content\User.css" />
     <Content Include="Content\Voicer.css" />
@@ -253,11 +253,11 @@
     <Content Include="Images\categories\dance.jpg" />
     <Content Include="Images\categories\education.jpg" />
     <Content Include="Images\categories\fashion.jpg" />
-    <Content Include="Images\categories\film.png" />
+    <Content Include="Images\categories\film.jpg" />
     <Content Include="Images\categories\games.jpg" />
     <Content Include="Images\categories\health-beauty.jpg" />
     <Content Include="Images\categories\homelife.jpg" />
-    <Content Include="Images\categories\mortors-vehicles.jpg" />
+    <Content Include="Images\categories\motors-vehicles.jpg" />
     <Content Include="Images\categories\music.jpg" />
     <Content Include="Images\categories\nature.jpg" />
     <Content Include="Images\categories\news.jpg" />
@@ -275,6 +275,7 @@
     <Content Include="Images\categories\science.jpg" />
     <Content Include="Images\categories\seminar.jpg" />
     <Content Include="Images\categories\shopping.jpg" />
+    <Content Include="Images\categories\social.jpg" />
     <Content Include="Images\categories\society.jpg" />
     <Content Include="Images\categories\sport.jpg" />
     <Content Include="Images\categories\talkshow.jpg" />
@@ -283,6 +284,7 @@
     <Content Include="Images\categories\video-blog.jpg" />
     <Content Include="Images\categories\youth.jpg" />
     <Content Include="Images\common\back.png" />
+    <Content Include="Images\common\folder.png" />
     <Content Include="Images\common\no-image.jpg" />
     <Content Include="Images\home\home-back.jpg" />
     <Content Include="Images\home\home-pip.jpg" />
@@ -293,7 +295,7 @@
     <Content Include="Images\icons\logo.png" />
     <Content Include="Images\icons\profile.png" />
     <Content Include="Images\icons\user.png" />
-    <Content Include="Images\private_features\ask-and-advice.jpg" />
+    <Content Include="Images\private_features\ask-advice.jpg" />
     <Content Include="Images\private_features\campaign.jpg" />
     <Content Include="Images\private_features\converter.jpg" />
     <Content Include="Images\private_features\debate.jpg" />
@@ -307,7 +309,7 @@
     <Content Include="Images\private_features\urban-dictionary.jpg" />
     <Content Include="Images\private_features\voice-out.jpg" />
     <Content Include="Images\private_features\wave.jpg" />
-    <Content Include="Images\public_features\ask-and-advice.jpg" />
+    <Content Include="Images\public_features\ask-advice.jpg" />
     <Content Include="Images\public_features\campaign.jpg" />
     <Content Include="Images\public_features\converter.jpg" />
     <Content Include="Images\public_features\debate.jpg" />
@@ -403,6 +405,7 @@
     <Content Include="Scripts\bootstrap-select\js\i18n\defaults-zh_TW.min.js" />
     <Content Include="Scripts\bootstrap-toggle\bootstrap-toggle.min.css" />
     <Content Include="Scripts\bootstrap-toggle\bootstrap-toggle.min.js" />
+    <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\datatable\datatables.css" />
     <Content Include="Scripts\datatable\datatables.js" />
@@ -419,6 +422,7 @@
     <Content Include="Scripts\pickr\pickr.min.js" />
     <Content Include="Scripts\views\gallery\gallery_upload.js" />
     <Content Include="Scripts\views\ip\ipcreate.js" />
+    <Content Include="Scripts\views\ip\iplist.js" />
     <Content Include="Scripts\views\user\avatar_upload.js" />
     <Content Include="Scripts\views\whisper\whisper_upload.js" />
     <Content Include="Scripts\fileupload\js\uploadAvatar.js" />
@@ -479,7 +483,6 @@
     <Content Include="Scripts\fontawesome-5.10.2-web\webfonts\fa-solid-900.woff" />
     <Content Include="Scripts\fontawesome-5.10.2-web\webfonts\fa-solid-900.woff2" />
     <Content Include="libman.json" />
-    <Content Include="fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
