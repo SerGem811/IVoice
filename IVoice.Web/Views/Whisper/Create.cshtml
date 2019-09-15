@@ -6,7 +6,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <div class="container fluid-content">
-    <div class="row margin-top-30 margin-bottom-20">
+    <div class="row margin-top-20 margin-bottom-20">
         @using (Ajax.BeginForm("Create", "Whisper", new AjaxOptions { OnComplete = "onPostFunction" }, new { id = $"CreateWhisper" }))
         {
             @Html.AntiForgeryToken();

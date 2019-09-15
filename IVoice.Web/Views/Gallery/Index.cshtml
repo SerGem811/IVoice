@@ -16,7 +16,7 @@
     <link href="~/Content/GalleryCard.css" rel="stylesheet" />
 }
 <div class="container fluid-content">
-    <div class="row margin-top-30 margin-bottom-20">
+    <div class="row margin-top-20 margin-bottom-20">
         <div class="form-control">
             <a class="white-link" href="@Url.Action("Index", "Gallery", new {UserId = currentUserId, Id = ""})">Root</a>
             @foreach (var item in Model._path)
@@ -38,7 +38,7 @@
                         {
                             if (item._item._visibility == "PUBLIC" || (currentUserId == userId))
                             {
-                                <div class="col-md-3 col-xs-6 pd-10">
+                                <div class="col-md-3 col-xs-6">
                                     @Html.Partial("~/Views/Gallery/GalleryCard.cshtml", item)
                                 </div>
                             }

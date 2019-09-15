@@ -40,6 +40,7 @@ namespace IVoice.Controllers
                 _category_id = secondid,
                 _feature_id = id,
             };
+            
             FillBaseModel(model);
             return View(model);
         }
@@ -64,7 +65,7 @@ namespace IVoice.Controllers
 //            filter = filter.And(x => x.UserId == _userID);
 
             lst = _usersIPRepository.GetAllIPSForUser(filter, PageNum, 9, _userID);
-
+            ViewBag.userID = _userID;
             return PartialView(lst);
         }
     }

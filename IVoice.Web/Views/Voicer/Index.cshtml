@@ -12,9 +12,9 @@
 
 <div class="container fluid-content">
 
-    <div class="row margin-top-30 margin-bottom-20">
+    <div class="row margin-top-20 margin-bottom-20">
         <!-- Search Form-->
-            @Html.Partial("~/Views/Voicer/_SearchVoicersForm.cshtml", Model)
+        @Html.Partial("~/Views/Voicer/_SearchVoicersForm.cshtml", Model)
 
         <!--  -->
         <div class="panel with-nav-tabs panel-default">
@@ -29,7 +29,9 @@
                         @foreach (var item in Model._connected)
                         {
                             <div class="col-md-3 col-xs-6">
-                                @Html.Partial("~/Views/Voicer/_VoicerCard.cshtml", item)
+                                <div class="pd-tb-15">
+                                    @Html.Partial("~/Views/Voicer/_VoicerCard.cshtml", item)
+                                </div>
                             </div>
                         }
                     </div>
@@ -37,7 +39,9 @@
                         @foreach (var item in Model._blocked)
                         {
                             <div class="col-md-3 col-xs-6">
-                                @Html.Partial("~/Views/Voicer/_VoicerCard.cshtml", item)
+                                <div class="pd-tb-15">
+                                    @Html.Partial("~/Views/Voicer/_VoicerCard.cshtml", item)
+                                </div>
                             </div>
                         }
                     </div>
@@ -45,7 +49,9 @@
                         @foreach (var item in Model._waiting)
                         {
                             <div class="col-md-3 col-xs-6">
-                                @Html.Partial("~/Views/Voicer/_VoicerCard.cshtml", item)
+                                <div class="pd-tb-15">
+                                    @Html.Partial("~/Views/Voicer/_VoicerCard.cshtml", item)
+                                </div>
                             </div>
                         }
                     </div>
@@ -53,7 +59,9 @@
                         @foreach (var item in Model._requested)
                         {
                             <div class="col-md-3 col-xs-6">
-                                @Html.Partial("~/Views/Voicer/_VoicerCard.cshtml", item)
+                                <div class="pd-tb-15">
+                                    @Html.Partial("~/Views/Voicer/_VoicerCard.cshtml", item)
+                                </div>
                             </div>
                         }
                     </div>

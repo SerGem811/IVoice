@@ -1,6 +1,11 @@
 ﻿@model IEnumerable<IVoice.Models.IP.IPViewModel>
 
-@foreach(var item in Model.ToList())
+@foreach (var item in Model.ToList())
 {
-    @Html.Partial("~/Views/Shared/_IPCard.cshtml", item)
+    <div class="col-md-4">
+        <div class="pd-tb-15">
+            @Html.Partial("_IPCard", item)
+        </div>
+
+    </div>
 }

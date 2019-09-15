@@ -77,7 +77,7 @@
             <div class="panel-body">
                 <div class="tab-content">
                     <div class="tab-pane active" id="tabEvent">
-                        @Html.Partial("~/Views/Shared/_VoicerFilter.cshtml", Model._event, v_event)
+                        @Html.Partial("_VoicerFilter", Model._event, v_event)
                     </div>
                 </div>
             </div>
@@ -91,7 +91,7 @@
             <div class="panel-body">
                 <div class="tab-content">
                     <div class="tab-pane active" id="tabFieldSearchVoicers">
-                        @Html.Partial("~/Views/Shared/_VoicerFilter.cshtml", Model._filter, v_filter)
+                        @Html.Partial("_VoicerFilter", Model._filter, v_filter)
 
                     </div>
                     <div class="tab-pane" id="tabConnectedVoicer">

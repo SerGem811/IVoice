@@ -274,49 +274,44 @@ body {
     }
 
 
-
+/* Text size */
 .text-small {
     font-size: 12px;
 }
-
-.ip-card-line {
-    position: relative;
-    width: 100%;
-    margin-top: 2px;
-    display: inline-block;
+.text-large {
+    font-size: 18px;
 }
 
-
-.ip-card-body {
-}
-
-    .ip-card-body a {
-        color: #8aa9da !important;
-    }
-
-        .ip-card-body a:hover {
-            color: #fff !important;
-            text-decoration: none !important;
-        }
 
 /* common a link */
 a.white-link {
-    color: #fff!important;
+    color: #fff;
     text-decoration: none;
 }
     a.white-link:hover,
     a.white-link:active
     {
-        color: #aaa!important;
+        color: #aaa;
         text-decoration: none;
     }
 
 .secondary-link {
     color: #c3c3c3;
+    text-decoration: none;
 }
 
     .secondary-link:hover {
-        color: white;
+        color: #fff;
+        text-decoration: none;
+    }
+.blue-link {
+    color: #8AA9DA;
+    text-decoration: none;
+}
+    .blue-link:hover,
+    .blue-link:active {
+        color: #fff;
+        text-decoration: none;
     }
 
 
@@ -329,50 +324,57 @@ a.white-link {
     color: white;
 }
 
-
 /* common margin and paddings */
 /* used in nearly all pages*/
 .margin-top-10 {
-    margin-top: 10px!important;
+    margin-top: 10px;
 }
 .margin-top-20 {
-    margin-top: 20px!important;
+    margin-top: 20px;
 }
 .margin-top-30 {
-    margin-top: 30px!important;
+    margin-top: 30px;
 }
 .margin-bottom-10 {
-    margin-bottom: 10px !important;
+    margin-bottom: 10px;
 }
 .margin-bottom-20 {
-    margin-bottom: 20px!important;
+    margin-bottom: 20px;
 }
 
 .pd-0 {
-    padding:0px !important;
+    padding:0px;
 }
 .pd-10 {
-    padding: 10px !important;
+    padding: 10px;
+}
+.pd-15 {
+    padding: 15px;
 }
 .pd-20 {
-    padding: 15px !important;
+    padding: 20px;
 }
 .pd-25 {
-    padding: 25px !important;
+    padding: 25px;
 }
 .padding-bottom-10 {
     padding-bottom: 10px;
 }
 .padding-left-10 {
-    padding-left: 10px!important;
+    padding-left: 10px;
+}
+
+.pd-tb-15 {
+    padding-top: 15px;
+    padding-bottom : 15px;
 }
 
 /* width height */
 .w-100 {
-    width: 100%!important;
+    width: 100%;
 }
 .h-100 {
-    height: 100%!important;
+    height: 100%;
 }
 
 /* Card Design for Feature, Category -- Image Card*/
@@ -402,6 +404,25 @@ a.white-link {
     text-align: center;
     background-color: #222;
 }
+
+.ip-card-content {
+    border-radius: 7px;
+}
+.ip-card-img {
+    height:200px;
+}
+    .ip-card-img img {
+        width: 100%;
+        max-height: 200px;
+        border-radius: 7px;
+    }
+.ip-card-body-line {
+    position: relative;
+    width: 100%;
+    margin-top: 2px;
+    display: inline-block;
+}
+
 
 /* Normal Card */
 

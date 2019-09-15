@@ -9,6 +9,7 @@
 
 @section hrefs {
     <link href="~/Content/VoicerCard.css" rel="stylesheet" />
+    <link href="~/Content/CardView.css" rel="stylesheet" />
 }
 
 <div class="container fluid-content">
@@ -18,7 +19,7 @@
             @Html.Partial("~/Views/Voicer/_SearchVoicersForm.cshtml", Model)
         }
         <div class="panel with-nav-tabs panel-default">
-            @Html.Partial("~/Views/Shared/Components/_CardHeaderTab.cshtml", new CardHeaderTabsModel()
+            @Html.Partial("~/Views/Shared/Components/Tabs/_CardHeaderTab.cshtml", new CardHeaderTabsModel()
                            { _header = new List<CardHeaderModel>(){
                                         new CardHeaderModel() { _class = "active", _link = "#tabVoicers", _label = "Search result"}}})
             <div class="panel-body">
@@ -27,7 +28,9 @@
                         @foreach (var item in Model._result)
                         {
                             <div class="col-md-3 col-xs-6">
-                                @Html.Partial("~/Views/Voicer/_VoicerCard.cshtml", item)
+                                <div class="pd-tb-15">
+                                    @Html.Partial("~/Views/Voicer/_VoicerCard.cshtml", item)
+                                </div>
                             </div>
                         }
                     </div>
@@ -38,8 +41,7 @@
 </div>
 
 @section scripts {
-    <link href="~/Content/Voicer.css" rel="stylesheet" />
-    <link href="~/Content/CardView.css" rel="stylesheet" />
+
     <script src="~/Scripts/views/voicer/index.js"></script>
     <script>
         var urlCommand = '@Url.Action("cmdConnection", "Voicer")';

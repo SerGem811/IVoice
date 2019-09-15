@@ -12,12 +12,14 @@
 }
 
 <div class="container fluid-content">
-    <div class="row" style="margin-top:20px; margin-bottom:20px;">
-        <div class="search col-md-8 col-md-offset-2 col-xs-12" style="justify-content:center; align-items: center;">
-            @Html.TextBoxFor(m => m._search_content, new { @class = "form-control", placeholder = "IP name" })
-            @Html.HiddenFor(m => m._category_id)
-            @Html.HiddenFor(m => m._feature_id)
-            <button id="btn-ip-search" type="button" class="btn btn-default btn-search box-default">Search</button>
+    <div class="row margin-top-20 margin-bottom-20">
+        <div class="search col-md-8 col-md-offset-2 col-xs-12">
+            <div class="w-100 center-item">
+                @Html.TextBoxFor(m => m._search_content, new { @class = "form-control", placeholder = "IP name" })
+                @Html.HiddenFor(m => m._category_id)
+                @Html.HiddenFor(m => m._feature_id)
+                <button id="btn-ip-search" type="button" class="btn btn-default btn-search box-default margin-left-10">Search</button>
+            </div>
         </div>
         
         <div class="container" id="ip-container">

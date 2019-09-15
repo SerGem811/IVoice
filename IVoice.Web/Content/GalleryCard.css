@@ -1,9 +1,9 @@
 ﻿.gallery-card-img {
-    min-height: 200px;
+    min-height: 150px;
 }
     .gallery-card-img img{
         width : 100%;
-        max-height: 200px;
+        max-height: 150px;
         border-radius: 7px;
     }
 

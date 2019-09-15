@@ -1,12 +1,13 @@
 ﻿@model IVoice.Models.Common.VoicerModel
 
-@{ 
+@{
     var url = Url.Action("Details", "User", new { Id = Model.Id });
 }
 @section script {
 
 }
-<div class="box-default margin-top-20 pd-20">
+
+<div class="box-default pd-10">
     <div>
         @if (Model.Type == "BLOCKED")
         {
@@ -43,3 +44,4 @@
         <!--<span class="econdary-link">profile added @Model.Data</span>-->
     </div>
 </div>
+
