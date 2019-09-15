@@ -7,33 +7,25 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-@section href {
+@section hrefs {
     <link href="~/Content/IP.css" rel="stylesheet" />
 }
 
 <div class="container fluid-content">
     <div class="row" style="margin-top:20px; margin-bottom:20px;">
-        <div style="text-align:center;">
-            <button type="button" class="btn btn-ip-search" style="min-width:300px;"><i id="ico-ip-search" class="fa fa-angle-double-down"></i></button>
+        <div class="search col-md-8 col-md-offset-2 col-xs-12" style="justify-content:center; align-items: center;">
+            @Html.TextBoxFor(m => m._search_content, new { @class = "form-control", placeholder = "IP name" })
+            @Html.HiddenFor(m => m._category_id)
+            @Html.HiddenFor(m => m._feature_id)
+            <button id="btn-ip-search" type="button" class="btn btn-default btn-search box-default">Search</button>
         </div>
         
-        <div class="box-default div-ip-search" style="background-color:#252525!important; display:flex;">
-            <div class=" box-default" style="padding-top:20px;">
-                @using (Ajax.BeginForm("GetList", "IP", new AjaxOptions() { OnComplete = "OnCompleteGetList" }))
-                {
-                    @Html.Partial("~/Views/Shared/_VoicerFilter.cshtml", Model._filter)
-                    @Html.HiddenFor(m => m._category_id)
-                    @Html.HiddenFor(m => m._feature_id)
-                }
-
-            </div>
-        </div>
         <div class="container" id="ip-container">
 
         </div>
 
         <div style="text-align:center;">
-            <button type="button" class="btn btn-primary btn-ip-more" style="min-width:300px;margin-top: 50px;">Load more...</button>
+            <button id="btn-ip-more" type="submit" class="btn btn-primary btn-ip-more" style="min-width:300px;margin-top: 50px;">Load more...</button>
         </div>
     </div>
 </div>
@@ -45,37 +37,50 @@
         var categoryId = @Model._category_id;
         var featureId = @Model._feature_id;
 
-
         $(document).ready(function () {
-            $('.div-ip-search').hide();
+            
         })
 
-        $('.btn-ip-search').click(function () {
-            if ($('#ico-ip-search').hasClass('fa-angle-double-down')) {
-                $('#ico-ip-search').removeClass();
-                $('#ico-ip-search').addClass('fa fa-angle-double-up');
-                $('.div-ip-search').show();
-            } else {
-                $('#ico-ip-search').removeClass();
-                $('#ico-ip-search').addClass('fa fa-angle-double-down');
-                $('.div-ip-search').hide();
-            }
-        });
-
-        $('.btn-ip-more').click(function () {
+        $('#btn-ip-more').click(function () {
             $.ajax({
-                url: urlGetMore,
+                url: '@Url.Action("_GetList", "IP")',
                 data: {
-                    pageNum: pageNum,
-                    categoryId: categoryId,
-                    featureId: featureId,
-                    
+                    PageNum: pageNum,
+                    CategoryId: categoryId,
+                    FeatureId: featureId,
+                },
+                type: 'POST',
+                complete: function (request, status) {
+                    if (request.responseText == null || request.responseText == "") {
+                        return;
+                    }
+                    pageNum++;
+                    $("#ip-container").append(request.responseText);
                 }
             });
         });
 
+        $('#btn-ip-search').click(function () {
+            pageNum = 0;
+            $.ajax({
+                url: '@Url.Action("_GetList", "IP")',
+                data: {
+                    PageNum: pageNum,
+                    CategoryId: categoryId,
+                    FeatureId: featureId,
+                },
+                type: 'POST',
+                complete: function (request, status) {
+                    if (request.responseText == null || request.responseText == "") {
+                        return;
+                    }
+                    pageNum++;
+                    $("#ip-container").append(request.responseText);
+                }
+            });
+        });
 
-
+        $('#btn-ip-more').click();
     </script>
     <script src="~/Scripts/views/ip/iplist.js"></script>
 }

@@ -3,11 +3,11 @@
 @model IVoice.Models.Users.PersonalInfoModel
 
 <div style="display:grid;">
-    <div class="col-md-2 col-md-offset-5">
-        <img src="@Model._img" style="height: 150px; width: 100%; margin-bottom:10px;" id="pinfo_avatar" />
+    <div class="col-md-2 col-md-offset-5 user-upload-avatar">
+        <img src="@Model._img" id="pinfo_avatar" />
     </div>
-    <div class="col-md-12" style="margin-bottom:20px;">
-        @Html.Partial("~/Views/Shared/Components/_UploadFile.cshtml", new UploadModel() { UniqueId = Guid.NewGuid(), _function = "ChangeAvatar",
+    <div class="col-md-12 margin-bottom-20">
+        @Html.Partial("_UploadFile", new UploadModel() { UniqueId = Guid.NewGuid(), _function = "ChangeAvatar",
                                                                                             _div_id = "upload", _input_file = "file"})
     </div>
 

@@ -4,7 +4,7 @@
         dropZone: $('#upload'),
 
         add: function (e, data) {
-            if ($('.toggle-options-gallery').prop('checked') == true) {
+            if ($('.toggle-gallery-cover').prop('checked') == true) {
                 $('#type').val('cover');
             } 
             var jqXHR = data.submit();

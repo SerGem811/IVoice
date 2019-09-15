@@ -1,0 +1,6 @@
+﻿@model IEnumerable<IVoice.Models.IP.IPViewModel>
+
+@foreach(var item in Model.ToList())
+{
+    @Html.Partial("~/Views/Shared/_IPCard.cshtml", item)
+}

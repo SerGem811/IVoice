@@ -5,6 +5,6 @@ namespace IVoice.Models.Components.Tabs
 {
     public class CardBodyTabsListModel
     {
-        public List<CardBodyModel> _body;
+        public List<CardBodyListModel> _body;
     }
 }

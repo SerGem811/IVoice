@@ -7,20 +7,15 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-@section scripts {
-    <link href="~/Content/Voicer.css" rel="stylesheet" />
-    <link href="~/Content/CardView.css" rel="stylesheet" />
-    <script src="~/Scripts/views/voicer/index.js"></script>
-    <script>
-        var urlCommand = '@Url.Action("cmdConnection", "Voicer")';
-    </script>
+@section hrefs {
+    <link href="~/Content/VoicerCard.css" rel="stylesheet" />
 }
 
 <div class="container fluid-content">
-    <div class="row" style="margin-top: 20px; margin-bottom:20px;">
+    <div class="row margin-top-20 margin-bottom-20">
         @using (Html.BeginForm("SearchVoicers", "Voicer", FormMethod.Post))
         {
-            @Html.Partial("_SearchVoicersForm", Model)
+            @Html.Partial("~/Views/Voicer/_SearchVoicersForm.cshtml", Model)
         }
         <div class="panel with-nav-tabs panel-default">
             @Html.Partial("~/Views/Shared/Components/_CardHeaderTab.cshtml", new CardHeaderTabsModel()
@@ -41,3 +36,12 @@
         </div>
     </div>
 </div>
+
+@section scripts {
+    <link href="~/Content/Voicer.css" rel="stylesheet" />
+    <link href="~/Content/CardView.css" rel="stylesheet" />
+    <script src="~/Scripts/views/voicer/index.js"></script>
+    <script>
+        var urlCommand = '@Url.Action("cmdConnection", "Voicer")';
+    </script>
+}

@@ -10,6 +10,6 @@ namespace IVoice.Models.IP
     {
         public int _feature_id { get; set; }
         public int _category_id { get; set; }
-        public VoicerFilterModel _filter { get; set; }
+        public string _search_content { get; set; }
     }
 }

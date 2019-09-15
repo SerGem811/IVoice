@@ -9,7 +9,7 @@
 
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/plugins")
-    @RenderSection("href", required: false)
+    @RenderSection("hrefs", required: false)
 </head>
 <body>
     <div class="overlay-loading">
@@ -28,43 +28,43 @@
                 <div class="collapse navbar-collapse">
                     <ul class="nav navbar-nav">
                         <li>
-                            <a href="@Url.Action("Index","Features")"><i class="fa fa-book-open"></i>&nbsp;PIP</a>
+                            <a class="white-link" href="@Url.Action("Index","Features")"><i class="fa fa-book-open"></i>&nbsp;PIP</a>
                         </li>
                         @if (Model._user.Id > 0)
                         {
                             <li>
-                                <a href="@Url.Action("Index","Whisper")"><i class="fa fa-comments"></i>&nbsp;Whisper</a>
+                                <a class="white-link" href="@Url.Action("Index","Whisper")"><i class="fa fa-comments"></i>&nbsp;Whisper</a>
                             </li>
                             <li>
-                                <a href="@Url.Action("Index","Gallery")"><i class="fa fa-play"></i>&nbsp;Gallery</a>
+                                <a class="white-link" href="@Url.Action("Index","Gallery")"><i class="fa fa-play"></i>&nbsp;Gallery</a>
                             </li>
                             <li>
-                                <a href="@Url.Action("Index","Voicer")"><i class="fa fa-user"></i>&nbsp;Voicers</a>
+                                <a class="white-link" href="@Url.Action("Index","Voicer")"><i class="fa fa-user"></i>&nbsp;Voicers</a>
                             </li>
                             <li>
-                                <a href="@Url.Action("Spreads","User")"><i class="fa fa-share-alt"></i>&nbsp;Spreads</a>
+                                <a class="white-link" href="@Url.Action("Spreads","User")"><i class="fa fa-share-alt"></i>&nbsp;Spreads</a>
                             </li>
                             <li>
-                                <a href="#"><span id="notiCount"></span><i class="fa fa-bell"></i></a>
+                                <a class="white-link" href="#"><span id="notiCount"></span><i class="fa fa-bell"></i></a>
                             </li>
                             <li class="dropdown dropdown-header-custom">
-                                <a class="dropdown-toggle" id="navUserMenu" data-toggle="dropdown" aria-haspopup="true">
+                                <a class="dropdown-toggle white-link" id="navUserMenu" data-toggle="dropdown" aria-haspopup="true">
                                     <i class="fa fa-user"></i>&nbsp;@Model._user.Voicer
                                 </a>
                                 <ul class="dropdown-menu dropdown-menu-lg-right dropdown-custom" aria-labelledby="navUserMenu">
-                                    <li><a class="pd-10" href="@Url.Action("Details", "User", new { Id = Model._user.Id})"><i class="fa fa-user"></i>&nbsp;Details</a></li>
-                                    <li><a class="pd-10" href="@Url.Action("Index","User")"><i class="fa fa-user-circle"></i>&nbsp;Settings</a></li>
-                                    <li><a class="pd-10" href="@Url.Action("Logout","User")"><i class="fa fa-sign-out-alt"></i>&nbsp;Logout</a></li>
+                                    <li><a class="pd-10 white-link" href="@Url.Action("Details", "User", new { Id = Model._user.Id})"><i class="fa fa-user"></i>&nbsp;Details</a></li>
+                                    <li><a class="pd-10 white-link" href="@Url.Action("Index","User")"><i class="fa fa-user-circle"></i>&nbsp;Settings</a></li>
+                                    <li><a class="pd-10 white-link" href="@Url.Action("Logout","User")"><i class="fa fa-sign-out-alt"></i>&nbsp;Logout</a></li>
                                 </ul>
                             </li>
                         }
                         else
                         {
                             <li>
-                                <a href="@Url.Action("Login","User")"><i class="fa fa-sign-in-alt"></i>&nbsp;Sign In</a>
+                                <a class="white-link" href="@Url.Action("Login","User")"><i class="fa fa-sign-in-alt"></i>&nbsp;Sign In</a>
                             </li>
                             <li>
-                                <a href="@Url.Action("Register","User")"><i class="fa fa-user"></i>&nbsp;Sign Up</a>
+                                <a class="white-link" href="@Url.Action("Register","User")"><i class="fa fa-user"></i>&nbsp;Sign Up</a>
                             </li>
                         }
 
@@ -78,9 +78,9 @@
         <div class="footer">
             <!--<img src="~/Images/icons/ivoice-logo.png" class="pull-left" />-->
             <div>
-                <a href="@Url.Action("Payments", "Pages")">Payments</a>
-                |<a href="@Url.Action("Contact", "Pages")">Contact</a>
-                |<a href="@Url.Action("TermsConditions", "Pages")">Terms & Conditions</a>
+                <a class="white-link" href="@Url.Action("Payments", "Pages")">Payments</a>
+                |<a class="white-link" href="@Url.Action("Contact", "Pages")">Contact</a>
+                |<a class="white-link" href="@Url.Action("TermsConditions", "Pages")">Terms & Conditions</a>
             </div>
         </div>
     </div>

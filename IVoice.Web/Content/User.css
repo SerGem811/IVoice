@@ -20,3 +20,25 @@
 .vert {
     height: 80vh!important;
 }
+
+.user-upload-avatar img {
+    height: 150px;
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+/* user details part*/
+.user-detail-feature {
+    height: 100%;
+    max-height: 500px;
+}
+
+.user-detail-personal {
+    display: grid;
+    padding: 0;
+    padding-right: 15px !important;
+}
+
+.user-detail-tab {
+    background-color: #252525;
+}

@@ -1,8 +1,11 @@
 ﻿@model IVoice.Models.Whisper.CardWhisperModel
 
 <div class="container fluid-content">
-    <div class="panel with-nav-tabs panel-default" style="margin-top:20px;margin-bottom:20px;">
-        @Html.Partial("~/Views/Shared/Components/_CardHeaderTab.cshtml", Model._header)
+    <div class="panel with-nav-tabs panel-default margin-top-30 margin-bottom-20">
+        @Html.Partial("~/Views/Shared/Components/Tabs/_CardHeaderTab.cshtml", Model._header)
+
+
+
         @Html.Partial("~/Views/Shared/Components/Tabs/_CardBodyTabsTable.cshtml", Model._body)
     </div>
 </div>

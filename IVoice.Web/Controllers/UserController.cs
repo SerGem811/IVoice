@@ -236,10 +236,11 @@ namespace IVoice.Controllers
             CardHeaderModel ip_feeds_header = new CardHeaderModel() { _label = "IP Feeds", _icon = "fa fa-flag", _num = lastSpreadList.Count().ToString(), _link = "#tab_3",
                                                                             _open_folder = true, _open_folder_link = Url.Action("IPFeedView", "IPSocial")};
             tabs.header = new CardHeaderTabsModel() { _header = new List<CardHeaderModel>() { action_update_header, voicer_update_header, ip_feeds_header } };
+
             CardBodyListModel action_update_body = new CardBodyListModel() { _lst = lastActivityList, _class = "tab-pane active" };
             CardBodyListModel voicer_update_body = new CardBodyListModel() { _lst = lastVoicerUpdateList, _class = "tab-pane" };
             CardBodyListModel ip_feeds_body = new CardBodyListModel() { _lst = lastSpreadList, _class = "tab-pane" };
-            tabs.body = new CardBodyTabsListModel() { _body = new List<CardBodyModel>() { action_update_body, voicer_update_body, ip_feeds_body } };
+            tabs.body = new List<CardBodyListModel>() { action_update_body, voicer_update_body, ip_feeds_body };
             model._tabs = tabs;
 
             // Ad stream

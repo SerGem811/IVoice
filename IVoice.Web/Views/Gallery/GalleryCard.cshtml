@@ -4,32 +4,33 @@
     var userId = ViewBag.userId;
     var albumId = ViewBag.AlbumId;
 }
-<div class="box-default @Model._class" style="@Model._style width:100%; padding:25px;" id="media-@Model._item._id">
-    <div style="min-height:200px;">
+
+<div class="box-default pd-25 w-100 @Model._class " style="@Model._style" id="media-@Model._item._id">
+    <div class="gallery-card-img">
         <a href="#" onclick="OpenFolder(@Model._item._id, '@Model._item._type', '@currentUserId')" title="@Model._item._name">
-            <img src="@Model._item._path" style="width:100%; max-height: 200px; border-radius: 7px;" />
+            <img src="@Model._item._path" />
         </a>
     </div>
-    <div style="display:flex;align-items:center;position:relative;">
+    <div class="gallery-card-body">
         <h4>
-            <a href="#" onclick="OpenFolder(@Model._item._id, '@Model._item._type', '@currentUserId')" title="@Model._item._name" style="color:#fff;">
+            <a class="white-link" href="#" onclick="OpenFolder(@Model._item._id, '@Model._item._type', '@currentUserId')" title="@Model._item._name">
                 @Model._truncate
             </a>
         </h4>
         @if (userId == currentUserId)
         {
-            <div class="dropdown show pull-right" style="position:absolute;right:0">
+            <div class="dropdown show pull-right gallery-card-content">
 
-                <a class="dropdown-toggle pull-right" href="#" role="button" id="folderMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color:#fff;">
+                <a class="dropdown-toggle pull-right white-link" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <i class="fa fa-caret-square-right pull-right pointer-hand" data-val="@Model._item._id" data-type="@Model._item._type"></i>
                 </a>
-                <ul class="dropdown-menu" aria-labelledby="folderMenu" id="PopupMedia" style="background-color:#252525!important;">
-                    <li><a href="#r" data-id="0" data-type="MOVE"><i class="fa fa-folder"></i>&nbsp;Root</a></li>
+                <ul class="dropdown-menu" aria-labelledby="folderMenu" id="PopupMedia">
+                    <li><a class="white-link" href="#r" data-id="0" data-type="MOVE"><i class="fa fa-folder"></i>&nbsp;Root</a></li>
                     @foreach (var folder in Model._folders)
                     {
-                        <li><a href="#m" data-id="@folder.Id" data-type="MOVE"><i class="fa fa-folder"></i>&nbsp;@folder.Description</a></li>
+                        <li><a class="white-link" href="#m" data-id="@folder.Id" data-type="MOVE"><i class="fa fa-folder"></i>&nbsp;@folder.Description</a></li>
                     }
-                    <li><a href="#d" class="remove-gallery" data-id="0" data-type="DELETE"><i class="fa fa-times"></i>&nbsp;DELETE</a></li>
+                    <li><a href="#d" class="white-link" data-id="0" data-type="DELETE"><i class="fa fa-times"></i>&nbsp;DELETE</a></li>
                 </ul>
             </div>
         }
@@ -40,8 +41,8 @@
     </div>
     @if(userId == currentUserId)
     {
-        <div style="margin-top:10px;">
-        <input type="checkbox" @(Model._item._visibility == "PUBLIC" ? "checked" : "") class="toggle-public" data-val="@Model._item._id" data-type="@Model._item._type" />
+        <div class="margin-top-10">
+        <input type="checkbox" @(Model._item._visibility == "PUBLIC" ? "checked" : "") class="toggle-gallery" data-val="@Model._item._id" data-type="@Model._item._type" />
     </div>
     }
     

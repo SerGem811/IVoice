@@ -100,7 +100,7 @@ namespace IVoice.Controllers
             }
 
             model._filter = new VoicerFilterModel();
-            model._filter._frm_type = 1;
+            model._filter._frm_type = 2;
 
             FillViewData();
 
@@ -208,6 +208,8 @@ namespace IVoice.Controllers
             {
                 model._filter = new VoicerFilterModel();
             }
+
+            model._filter._frm_type = 2;
 
             FillViewData();
             FillBaseModel(model);

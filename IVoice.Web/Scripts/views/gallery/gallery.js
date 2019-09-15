@@ -20,17 +20,17 @@ function onAlbumFailed(e) {
 }
 
 $(document).on('ready', function () {
-    $('.toggle-public').bootstrapToggle({
+    $('.toggle-gallery').bootstrapToggle({
         on: 'Open',
         off: 'Private'
     });
 
-    $('.toggle-options-gallery').bootstrapToggle({
+    $('.toggle-gallery-cover').bootstrapToggle({
         on: 'Cover',
         off: 'Gallery'
     });
 
-    $('.toggle-public').change(function (e) {
+    $('.toggle-gallery').change(function (e) {
         event.stopPropagation();
 
         $.ajax({

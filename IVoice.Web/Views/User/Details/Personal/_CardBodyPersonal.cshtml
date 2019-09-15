@@ -1,0 +1,28 @@
+﻿@model IVoice.Models.Components.PersonalCard.CardBodyPersonalModel
+
+<div class="card-body" style="@Model._style">
+    <div class="card-body-image">
+        <img src="@Model._img" style="width:100%" />
+    </div>
+    @if (Model._current)
+    {
+        <div class="w-100 center-item">
+            <button type="button" class="btn btn-search btn-card-btn box-default">EP Points: @Model._ep</button>
+        </div>
+    }
+    else
+    {
+        <div class="w-100 center-item">
+            <button type="button" class="btn btn-search btn-card-btn box-default"><i class="fade fa-plus"></i>&nbsp;Connect to voicer</button>
+        </div>
+    }
+        <div class="w-100 center-item margin-top-10">
+            <button type="button" class="btn btn-search btn-card-btn box-default"><i class="fa fa-user"></i>&nbsp;Personal Info</button>
+        </div>
+
+        <div class="margin-bottom-10 margin-top-10 center-item">
+            <button type="button" class="btn btn-search btn-card-btn-small box-default" @(Model._gallery == true ? "" : "disabled")><i class="fa fa-play"></i></button>
+            <button type="button" class="btn btn-search btn-card-btn-small box-default" @(Model._voicers == true ? "" : "disabled")><i class="fa fa-user-alt" title="User Voicers List"></i></button>
+            <button type="button" class="btn btn-search btn-card-btn-small box-default" @(Model._spreads == true ? "" : "disabled")><i class="fa fa-share-alt" title="User Spreads"></i></button>
+        </div>
+</div>

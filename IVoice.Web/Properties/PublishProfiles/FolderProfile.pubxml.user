@@ -37,10 +37,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>08/29/2019 11:32:31</publishTime>
     </File>
     <File Include="bin/EliteOne.Helpers.dll">
-      <publishTime>09/13/2019 01:58:28</publishTime>
+      <publishTime>09/13/2019 13:57:08</publishTime>
     </File>
     <File Include="bin/EliteOne.Helpers.pdb">
-      <publishTime>09/13/2019 01:58:28</publishTime>
+      <publishTime>09/13/2019 13:57:08</publishTime>
     </File>
     <File Include="bin/EliteOne.pdb">
       <publishTime>08/29/2019 11:32:31</publishTime>
@@ -52,19 +52,19 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>10/23/2017 13:15:20</publishTime>
     </File>
     <File Include="bin/IVoice.Database.dll">
-      <publishTime>09/13/2019 01:58:28</publishTime>
+      <publishTime>09/13/2019 13:57:09</publishTime>
     </File>
     <File Include="bin/IVoice.Database.dll.config">
       <publishTime>09/11/2019 03:16:31</publishTime>
     </File>
     <File Include="bin/IVoice.Database.pdb">
-      <publishTime>09/13/2019 01:58:28</publishTime>
+      <publishTime>09/13/2019 13:57:09</publishTime>
     </File>
     <File Include="bin/IVoice.dll">
-      <publishTime>09/13/2019 04:13:55</publishTime>
+      <publishTime>09/14/2019 23:54:17</publishTime>
     </File>
     <File Include="bin/IVoice.pdb">
-      <publishTime>09/13/2019 04:13:55</publishTime>
+      <publishTime>09/14/2019 23:54:17</publishTime>
     </File>
     <File Include="bin/Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll">
       <publishTime>05/24/2018 13:38:22</publishTime>
@@ -262,16 +262,19 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>09/13/2019 03:05:07</publishTime>
     </File>
     <File Include="Content/CardView.css">
-      <publishTime>08/25/2019 22:35:34</publishTime>
+      <publishTime>09/14/2019 23:32:38</publishTime>
     </File>
     <File Include="Content/Components/carousel_custom.css">
-      <publishTime>09/12/2019 23:30:30</publishTime>
+      <publishTime>09/13/2019 11:37:18</publishTime>
     </File>
     <File Include="Content/Components/imagecard.css">
       <publishTime>09/01/2019 10:38:49</publishTime>
     </File>
     <File Include="Content/Features.css">
       <publishTime>08/25/2019 03:57:19</publishTime>
+    </File>
+    <File Include="Content/GalleryCard.css">
+      <publishTime>09/14/2019 19:49:37</publishTime>
     </File>
     <File Include="Content/Home.css">
       <publishTime>08/20/2019 13:24:47</publishTime>
@@ -286,13 +289,16 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>09/06/2019 08:01:15</publishTime>
     </File>
     <File Include="Content/Site.css">
-      <publishTime>09/13/2019 04:03:14</publishTime>
+      <publishTime>09/14/2019 22:13:01</publishTime>
     </File>
     <File Include="Content/User.css">
-      <publishTime>08/21/2019 02:37:57</publishTime>
+      <publishTime>09/14/2019 21:43:25</publishTime>
     </File>
     <File Include="Content/Voicer.css">
-      <publishTime>08/30/2019 02:16:34</publishTime>
+      <publishTime>09/13/2019 13:35:32</publishTime>
+    </File>
+    <File Include="Content/VoicerCard.css">
+      <publishTime>09/14/2019 20:52:10</publishTime>
     </File>
     <File Include="favicon.ico">
       <publishTime>08/18/2019 20:34:02</publishTime>
@@ -865,7 +871,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>09/13/2019 03:05:07</publishTime>
     </File>
     <File Include="Scripts/bootstrap.min.js">
-      <publishTime>09/13/2019 03:05:07</publishTime>
+      <publishTime>09/13/2019 11:40:54</publishTime>
     </File>
     <File Include="Scripts/datatable/datatables.css">
       <publishTime>11/22/2018 10:34:00</publishTime>
@@ -5878,10 +5884,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>09/03/2019 06:22:17</publishTime>
     </File>
     <File Include="Scripts/views/gallery/gallery.js">
-      <publishTime>09/12/2019 22:42:08</publishTime>
+      <publishTime>09/14/2019 20:10:38</publishTime>
     </File>
     <File Include="Scripts/views/gallery/gallery_upload.js">
-      <publishTime>09/11/2019 02:37:41</publishTime>
+      <publishTime>09/14/2019 20:10:20</publishTime>
     </File>
     <File Include="Scripts/views/ip/ipcreate.js">
       <publishTime>09/10/2019 10:33:30</publishTime>
@@ -5893,7 +5899,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>08/30/2019 22:54:11</publishTime>
     </File>
     <File Include="Scripts/views/user/index.js">
-      <publishTime>09/10/2019 02:51:00</publishTime>
+      <publishTime>09/13/2019 12:27:29</publishTime>
     </File>
     <File Include="Scripts/views/voicer/index.js">
       <publishTime>09/11/2019 03:26:17</publishTime>
@@ -5920,34 +5926,37 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>08/26/2019 14:12:21</publishTime>
     </File>
     <File Include="Views/Category/Index.cshtml">
-      <publishTime>09/03/2019 06:23:31</publishTime>
+      <publishTime>09/14/2019 21:16:14</publishTime>
     </File>
     <File Include="Views/Features/Index.cshtml">
-      <publishTime>09/03/2019 08:42:17</publishTime>
+      <publishTime>09/14/2019 21:16:27</publishTime>
     </File>
     <File Include="Views/Features/_FeatureCard.cshtml">
       <publishTime>08/25/2019 03:56:29</publishTime>
     </File>
     <File Include="Views/Gallery/GalleryCard.cshtml">
-      <publishTime>09/11/2019 02:14:49</publishTime>
+      <publishTime>09/14/2019 22:05:41</publishTime>
     </File>
     <File Include="Views/Gallery/Index.cshtml">
-      <publishTime>09/13/2019 04:02:32</publishTime>
+      <publishTime>09/14/2019 23:52:17</publishTime>
     </File>
     <File Include="Views/Home/Index.cshtml">
-      <publishTime>09/01/2019 22:50:31</publishTime>
+      <publishTime>09/14/2019 19:57:26</publishTime>
     </File>
     <File Include="Views/IP/Index.cshtml">
-      <publishTime>09/11/2019 17:09:59</publishTime>
+      <publishTime>09/14/2019 19:57:26</publishTime>
     </File>
     <File Include="Views/IP/IPCard.cshtml">
       <publishTime>09/11/2019 02:46:01</publishTime>
     </File>
+    <File Include="Views/IP/_GetList.cshtml">
+      <publishTime>09/14/2019 01:57:49</publishTime>
+    </File>
     <File Include="Views/IPSocial/Create.cshtml">
-      <publishTime>09/10/2019 06:27:15</publishTime>
+      <publishTime>09/14/2019 19:57:26</publishTime>
     </File>
     <File Include="Views/IPSocial/_SaveIP.cshtml">
-      <publishTime>09/12/2019 22:50:27</publishTime>
+      <publishTime>09/14/2019 23:52:37</publishTime>
     </File>
     <File Include="Views/Shared/Components/Carousel/_Carousel.cshtml">
       <publishTime>09/03/2019 06:20:58</publishTime>
@@ -5962,7 +5971,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>08/29/2019 09:03:15</publishTime>
     </File>
     <File Include="Views/Shared/Components/ImageCard/_ImageCard.cshtml">
-      <publishTime>09/03/2019 08:43:14</publishTime>
+      <publishTime>09/14/2019 12:24:10</publishTime>
     </File>
     <File Include="Views/Shared/Components/Personal/_CardBodyPersonal.cshtml">
       <publishTime>09/01/2019 22:37:37</publishTime>
@@ -5976,11 +5985,14 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="Views/Shared/Components/Tabs/_CardBodyTabsTable.cshtml">
       <publishTime>09/01/2019 21:54:09</publishTime>
     </File>
+    <File Include="Views/Shared/Components/Tabs/_CardHeaderTab.cshtml">
+      <publishTime>09/14/2019 22:48:14</publishTime>
+    </File>
     <File Include="Views/Shared/Components/_CardBodyList.cshtml">
       <publishTime>08/31/2019 11:11:30</publishTime>
     </File>
     <File Include="Views/Shared/Components/_CardHeaderTab.cshtml">
-      <publishTime>09/13/2019 04:02:06</publishTime>
+      <publishTime>09/14/2019 12:35:18</publishTime>
     </File>
     <File Include="Views/Shared/Components/_UploadFile.cshtml">
       <publishTime>09/11/2019 00:39:05</publishTime>
@@ -5988,32 +6000,56 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="Views/Shared/Error.cshtml">
       <publishTime>08/18/2019 20:34:02</publishTime>
     </File>
+    <File Include="Views/Shared/_ImageCard.cshtml">
+      <publishTime>09/14/2019 12:24:10</publishTime>
+    </File>
+    <File Include="Views/Shared/_IPCard.cshtml">
+      <publishTime>09/14/2019 12:02:50</publishTime>
+    </File>
     <File Include="Views/Shared/_Layout.cshtml">
-      <publishTime>09/12/2019 05:39:17</publishTime>
+      <publishTime>09/14/2019 19:56:08</publishTime>
     </File>
     <File Include="Views/Shared/_SearchVoicersForm.cshtml">
       <publishTime>09/06/2019 13:01:11</publishTime>
     </File>
+    <File Include="Views/Shared/_UploadFile.cshtml">
+      <publishTime>09/11/2019 00:39:05</publishTime>
+    </File>
     <File Include="Views/Shared/_VoicerFilter.cshtml">
-      <publishTime>09/09/2019 22:18:05</publishTime>
+      <publishTime>09/14/2019 22:13:32</publishTime>
     </File>
     <File Include="Views/User/Details.cshtml">
-      <publishTime>09/01/2019 23:09:42</publishTime>
+      <publishTime>09/14/2019 23:52:43</publishTime>
+    </File>
+    <File Include="Views/User/Details/Common/_CardBody.cshtml">
+      <publishTime>09/14/2019 22:57:37</publishTime>
+    </File>
+    <File Include="Views/User/Details/Common/_CardBodyList.cshtml">
+      <publishTime>09/14/2019 23:13:17</publishTime>
+    </File>
+    <File Include="Views/User/Details/Common/_CardHeader.cshtml">
+      <publishTime>09/14/2019 22:55:16</publishTime>
+    </File>
+    <File Include="Views/User/Details/Personal/_CardBodyPersonal.cshtml">
+      <publishTime>09/14/2019 22:43:09</publishTime>
+    </File>
+    <File Include="Views/User/Details/Personal/_CardHeaderPersonal.cshtml">
+      <publishTime>09/14/2019 22:00:06</publishTime>
     </File>
     <File Include="Views/User/Gallery.cshtml">
       <publishTime>08/29/2019 09:10:50</publishTime>
     </File>
     <File Include="Views/User/Index.cshtml">
-      <publishTime>09/06/2019 03:40:13</publishTime>
+      <publishTime>09/14/2019 23:52:49</publishTime>
     </File>
     <File Include="Views/User/Login.cshtml">
-      <publishTime>09/01/2019 21:22:34</publishTime>
+      <publishTime>09/14/2019 19:57:26</publishTime>
     </File>
     <File Include="Views/User/Register.cshtml">
-      <publishTime>09/01/2019 10:10:22</publishTime>
+      <publishTime>09/14/2019 19:57:26</publishTime>
     </File>
     <File Include="Views/User/_AccountInfo.cshtml">
-      <publishTime>09/13/2019 01:45:12</publishTime>
+      <publishTime>09/13/2019 13:23:30</publishTime>
     </File>
     <File Include="Views/User/_AdsInfo.cshtml">
       <publishTime>08/31/2019 11:11:30</publishTime>
@@ -6022,34 +6058,37 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>09/12/2019 22:40:45</publishTime>
     </File>
     <File Include="Views/User/_PersonalInfo.cshtml">
-      <publishTime>09/10/2019 23:55:29</publishTime>
+      <publishTime>09/14/2019 21:48:41</publishTime>
     </File>
     <File Include="Views/Voicer/Index.cshtml">
-      <publishTime>09/06/2019 13:07:23</publishTime>
+      <publishTime>09/14/2019 23:53:01</publishTime>
     </File>
     <File Include="Views/Voicer/SearchVoicers.cshtml">
-      <publishTime>09/06/2019 22:07:44</publishTime>
+      <publishTime>09/14/2019 21:27:40</publishTime>
+    </File>
+    <File Include="Views/Voicer/_SearchVoicersForm.cshtml">
+      <publishTime>09/14/2019 23:52:55</publishTime>
     </File>
     <File Include="Views/Voicer/_VoicerCard.cshtml">
-      <publishTime>09/10/2019 02:53:59</publishTime>
+      <publishTime>09/14/2019 20:26:55</publishTime>
     </File>
     <File Include="Views/Web.config">
       <publishTime>08/31/2019 11:11:30</publishTime>
     </File>
     <File Include="Views/Whisper/Create.cshtml">
-      <publishTime>09/10/2019 23:55:47</publishTime>
+      <publishTime>09/14/2019 23:53:17</publishTime>
     </File>
     <File Include="Views/Whisper/Details.cshtml">
-      <publishTime>08/31/2019 11:11:30</publishTime>
+      <publishTime>09/14/2019 23:53:23</publishTime>
     </File>
     <File Include="Views/Whisper/Index.cshtml">
-      <publishTime>09/13/2019 04:01:48</publishTime>
+      <publishTime>09/14/2019 23:53:29</publishTime>
     </File>
     <File Include="Views/_ViewStart.cshtml">
       <publishTime>08/18/2019 20:34:02</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>09/13/2019 04:03:58</publishTime>
+      <publishTime>09/13/2019 13:57:10</publishTime>
     </File>
   </ItemGroup>
 </Project>

@@ -229,13 +229,12 @@
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\CardView.css" />
-    <Content Include="Content\ImageCardListView.css" />
+    <Content Include="Content\GalleryCard.css" />
     <Content Include="Content\Home.css" />
-    <Content Include="Content\Components\imagecard.css" />
     <Content Include="Content\IP.css" />
     <Content Include="Content\IPSocial.css" />
     <Content Include="Content\User.css" />
-    <Content Include="Content\Voicer.css" />
+    <Content Include="Content\VoicerCard.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -2096,22 +2095,21 @@
     <Content Include="Views\User\Register.cshtml" />
     <Content Include="Views\User\Details.cshtml" />
     <Content Include="Views\Whisper\Index.cshtml" />
-    <Content Include="Views\Shared\Components\_CardHeaderTab.cshtml" />
-    <Content Include="Views\Shared\Components\Common\_CardHeader.cshtml" />
-    <Content Include="Views\Shared\Components\Common\_CardBody.cshtml" />
-    <Content Include="Views\Shared\Components\ImageCard\_ImageCard.cshtml" />
-    <Content Include="Views\Shared\Components\Personal\_CardHeaderPersonal.cshtml" />
-    <Content Include="Views\Shared\Components\Personal\_CardBodyPersonal.cshtml" />
-    <Content Include="Views\Shared\Components\_CardBodyList.cshtml" />
-    <Content Include="Views\Shared\Components\Tabs\_CardBodyTabsList.cshtml" />
+    <Content Include="Views\Shared\Components\Tabs\_CardHeaderTab.cshtml" />
+    <Content Include="Views\User\Details\Common\_CardHeader.cshtml" />
+    <Content Include="Views\User\Details\Common\_CardBody.cshtml" />
+    <Content Include="Views\Shared\_ImageCard.cshtml" />
+    <Content Include="Views\User\Details\Personal\_CardHeaderPersonal.cshtml" />
+    <Content Include="Views\User\Details\Personal\_CardBodyPersonal.cshtml" />
+    <Content Include="Views\User\Details\Common\_CardBodyList.cshtml" />
     <Content Include="Views\Shared\Components\Tabs\_CardBodyTabsTable.cshtml" />
-    <Content Include="Views\Shared\Components\_UploadFile.cshtml" />
+    <Content Include="Views\Shared\_UploadFile.cshtml" />
     <Content Include="Views\Whisper\Create.cshtml" />
     <Content Include="Views\Whisper\Details.cshtml" />
     <Content Include="Views\Gallery\GalleryCard.cshtml" />
     <Content Include="Views\Gallery\Index.cshtml" />
     <Content Include="Views\Voicer\Index.cshtml" />
-    <Content Include="Views\Shared\_SearchVoicersForm.cshtml" />
+    <Content Include="Views\Voicer\_SearchVoicersForm.cshtml" />
     <Content Include="Views\Voicer\_VoicerCard.cshtml" />
     <Content Include="Views\Voicer\SearchVoicers.cshtml" />
     <Content Include="Views\User\Index.cshtml" />
@@ -2125,12 +2123,12 @@
     <Content Include="Views\IPSocial\_SaveIP.cshtml" />
     <Content Include="Views\Shared\_VoicerFilter.cshtml" />
     <Content Include="Views\IP\Index.cshtml" />
-    <Content Include="Views\IP\IPCard.cshtml" />
+    <Content Include="Views\Shared\_IPCard.cshtml" />
+    <Content Include="Views\IP\_GetList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Views\BasePIP\" />
-    <Folder Include="Views\Shared\EditorTemplate\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

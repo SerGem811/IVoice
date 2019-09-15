@@ -3,6 +3,7 @@
 @using IVoice.Models.Components.Common
 @using IVoice.Models.Common
 @model IVoice.Models.Gallery.GalleryViewModel
+
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
 
@@ -11,21 +12,24 @@
     var albumId = ViewBag.AlbumId;
 }
 
+@section hrefs {
+    <link href="~/Content/GalleryCard.css" rel="stylesheet" />
+}
 <div class="container fluid-content">
-    <div class="row" style="margin-top:20px; margin-bottom:20px;">
+    <div class="row margin-top-30 margin-bottom-20">
         <div class="form-control">
-            <a href="@Url.Action("Index", "Gallery", new {UserId = currentUserId, Id = ""})" style="color:#fff;">Root</a>
+            <a class="white-link" href="@Url.Action("Index", "Gallery", new {UserId = currentUserId, Id = ""})">Root</a>
             @foreach (var item in Model._path)
             {
                 if (item != null)
                 {
                     @Html.Raw(@">")
-                    <a href="@Url.Action("Index", "Gallery", new { UserId = currentUserId, AlbumId = item.Id })" style="color:#fff;">@item.Description</a>
+                    <a class="white-link" href="@Url.Action("Index", "Gallery", new { UserId = currentUserId, AlbumId = item.Id })">@item.Description</a>
                 }
             }
         </div>
         <div class="panel with-nav-tabs panel-default">
-            @Html.Partial("~/Views/Shared/Components/_CardHeaderTab.cshtml",
+            @Html.Partial("~/Views/Shared/Components/Tabs/_CardHeaderTab.cshtml",
                         new CardHeaderTabsModel() { _header = new List<CardHeaderModel>() { new CardHeaderModel() { _link = "#tabGallery", _class = "active", _label = "User Gallery" } } })
             <div class="panel-body">
                 <div class="tab-content">
@@ -34,7 +38,7 @@
                         {
                             if (item._item._visibility == "PUBLIC" || (currentUserId == userId))
                             {
-                                <div class="col-md-3 col-xs-6" style="padding:10px;">
+                                <div class="col-md-3 col-xs-6 pd-10">
                                     @Html.Partial("~/Views/Gallery/GalleryCard.cshtml", item)
                                 </div>
                             }
@@ -49,20 +53,17 @@
     {
         <div class="row">
             <div class="panel with-nav-tabs panel-default">
-                @Html.Partial("~/Views/Shared/Components/_CardHeaderTab.cshtml",
-                            new CardHeaderTabsModel()
-                            {
-                                _header = new List<CardHeaderModel>() { new CardHeaderModel() { _link = "#tabAttachments", _class = "active", _label = "Upload File" },
-                                                                                                new CardHeaderModel() { _link = "#tabCreateAlbum", _label = "Create Album" } }
-                            })
+                @Html.Partial("~/Views/Shared/Components/Tabs/_CardHeaderTab.cshtml", new CardHeaderTabsModel() {
+                                                                                        _header = new List<CardHeaderModel>() { new CardHeaderModel() { _link = "#tabAttachments", _class = "active", _label = "Upload File" },
+                                                                                                                                new CardHeaderModel() { _link = "#tabCreateAlbum", _label = "Create Album" } }})
                 <div class="panel-body">
                     <div class="tab-content">
                         <div class="tab-pane fade in active" id="tabAttachments">
                             @if (albumId > 0)
                             {
-                                <input type="checkbox" class="toggle-options-gallery" id="isCover" />
+                                <input type="checkbox" class="toggle-gallery-cover" id="isCover" />
                             }
-                            @Html.Partial("~/Views/Shared/Components/_uploadFile.cshtml", new IVoice.Models.Common.UploadModel()
+                            @Html.Partial("_UploadFile", new IVoice.Models.Common.UploadModel()
                             {
                                 UniqueId = Guid.NewGuid(),
                                 _hiddens = new List<HiddenModel>() { new HiddenModel() { _name = "AlbumId", _value = albumId},

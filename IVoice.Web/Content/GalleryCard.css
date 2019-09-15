@@ -1,0 +1,22 @@
+﻿.gallery-card-img {
+    min-height: 200px;
+}
+    .gallery-card-img img{
+        width : 100%;
+        max-height: 200px;
+        border-radius: 7px;
+    }
+
+.gallery-card-body {
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+.gallery-card-content {
+    position: absolute;
+    right: 0;
+}
+    .gallery-card-content ul {
+        background-color: #252525 !important;
+    }

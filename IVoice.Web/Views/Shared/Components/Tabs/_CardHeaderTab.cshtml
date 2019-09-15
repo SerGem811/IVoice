@@ -1,12 +1,12 @@
 ﻿@model IVoice.Models.Components.Tabs.CardHeaderTabsModel
 <div class="panel-heading">
-    <ul class="nav nav-tabs">
+    <ul class="nav nav-tabs nav-tabs-custom">
         @{
             foreach (var item in Model._header)
             {
                 <li class="@item._class">
-                    <a href="@item._link" data-toggle="@((item._isbutton == false) ? "tab" : "")">
-                        <div class="box">
+                    <a class="white-link" href="@item._link" data-toggle="@((item._isbutton == false) ? "tab" : "")">
+                        <div>
                             @if (item._icon != "")
                             {
                                 <i class="@item._icon"></i>
@@ -14,7 +14,7 @@
                             <span st>&nbsp;@item._label</span>
                             @if (item._num != "")
                             {
-                                <span class="viewcard-num">&nbsp;@item._num</span>
+                                <span class="card-header-num">&nbsp;@item._num</span>
                             }
                             @if(item._open_folder)
                             {

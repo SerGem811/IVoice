@@ -1,64 +1,56 @@
-﻿.viewcard-title {
+﻿/* Card Header */
+.card-header-title {
     background-color: #252525;
     padding: 10px;
-    border-radius: 3px;
 }
-    .viewcard-title a {
-        color: #fff;
-        margin-left: 10px;
+    .card-header-title img{
+        height: 20px;
     }
-
-.viewcard-tab-header {
-    background-color : #252525;
-}
-    .viewcard-tab-header a:hover{
-        background-color : #424242 !important;
-        color:antiquewhite;
-    }
-    .viewcard-tab-header a:active {
-        background-color: #424242!important;
-    }
-
-.viewcard-title-right {
-    float: right;
+.card-header-num {
+    background-color: #424242;
 }
 
-.viewcard-body {
+/* Card Body*/
+.card-body {
     min-height: 20px;
     background-color: #424242;
-    border-radius: 3px;
+    display: inline-block;
+    overflow-y: auto;
+    width: 100%;
 }
-.personal-btn {
-    padding: 5px;
-    background: #252525;
-    color: #fff;
-    vertical-align: middle;
-    text-align: center;
-    margin-bottom: 5px;
+/* Personal Card Image*/
+.card-body-image {
+    min-height: 200px;
 }
-
-    .personal-btn:hover {
-        background: #353535;
-        color: #ccc;
+    .card-body-image img{
+        padding: 10px;
+        width: 100%;
     }
 
-.personal-btn-disabled {
-    padding: 5px;
-    background: #252525;
-    color: #333;
-    vertical-align: middle;
-    text-align: center;
-    margin-bottom: 5px;
-}
-.personal-small-btn {
-    width : 30%;
+/* Personal Card Button */
+.btn-card-btn {
+    background-color: #252525;
+    width: 90%;
 }
 
-.viewcard-item {
+.btn-card-btn-small{
+    background-color:transparent!important;
+}   
+.btn-card-btn-small:disabled{
+    color: #808080;
+    background-color: transparent!important;
+}
+
+/* Card Body Item */
+.card-body-item {
+    padding: 10px;
+    border-bottom: none;
+    margin-left: 10px;
+}
+.card-body-item-list {
     padding: 10px;
     border-bottom: 1px dotted #333;
     margin-left: 10px;
 }
-.viewcard-num {
-    background-color: #424242;
-}
+
+

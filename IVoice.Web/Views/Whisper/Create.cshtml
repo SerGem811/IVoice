@@ -6,29 +6,29 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <div class="container fluid-content">
-    <div class="row" style="margin-top:20px; margin-bottom:20px;">
+    <div class="row margin-top-30 margin-bottom-20">
         @using (Ajax.BeginForm("Create", "Whisper", new AjaxOptions { OnComplete = "onPostFunction" }, new { id = $"CreateWhisper" }))
         {
             @Html.AntiForgeryToken();
             @Html.HiddenFor(m => m._uniqueId);
 
         <div class="panel with-nav-tabs panel-default">
-            @Html.Partial("~/Views/Shared/Components/_CardHeaderTab.cshtml",
+            @Html.Partial("~/Views/Shared/Components/Tabs/_CardHeaderTab.cshtml",
                         new CardHeaderTabsModel() { _header = new List<CardHeaderModel>() { new CardHeaderModel() { _link = "#tabCompose", _class = "active", _label = "Compose" } } })
             <div class="panel-body">
                 <div class="tab-content">
                     <div class="tab-pane fade in active" id="tabCompose">
                         <div class="form-group col-md-12 col-xs-12 float-left">
-                            <label for="voicer"><span class="req">* </span> Voicer: </label>
+                            <label for="_voicerId"><span class="req">* </span> Voicer: </label>
                             @Html.DropDownListAutoCompleteFor(m => m._voicerId, Model._voicers, "", new { @class = "form-control" })
                         </div>
                         <div class="form-group col-md-12 col-xs-12 float-left">
-                            <label for="subject"><span class="req">* </span> Subject: </label>
+                            <label for="_subject"><span class="req">* </span> Subject: </label>
                             @Html.TextBoxFor(m => m._subject, new { @class = "form-control", required = "required" })
                         </div>
 
                         <div class="form-group col-md-12 col-xs-12 float-left">
-                            <label for="bodymail"><span class="req">* </span> Messagge: </label>
+                            <label for="_message"><span class="req">* </span> Messagge: </label>
                             @Html.TextAreaFor(m => m._message, new { @class = "form-control", required = "required" })
                         </div>
                     </div>
@@ -38,14 +38,14 @@
         }
 
         <div class="panel with-nav-tabs panel-default">
-            @Html.Partial("~/Views/Shared/Components/_CardHeaderTab.cshtml",
+            @Html.Partial("~/Views/Shared/Components/Tabs/_CardHeaderTab.cshtml",
                         new CardHeaderTabsModel() { _header = new List<CardHeaderModel>() { new CardHeaderModel() { _link = "#tabAttachments", _class = "active", _label = "Attachments" } } })
             <div class="panel-body">
                 <div class="tab-content">
                     <div class="tab-pane fade in active" id="tabAttachements">
-                        @Html.Partial("~/Views/Shared/Components/_uploadFile.cshtml", new IVoice.Models.Common.UploadModel() { UniqueId = Model._uniqueId, _function = "FileUpload",
+                        @Html.Partial("_UploadFile", new IVoice.Models.Common.UploadModel() { UniqueId = Model._uniqueId, _function = "FileUpload",
                                                                                                                                 _div_id = "upload", _input_file = "file" })
-                        <table class="table table-dark table-striped table-hover box-default table-no-padding" id="tblFileUpload">
+                        <table class="table table-striped table-hover box-default" id="tblFileUpload">
                             <thead>
                                 <tr>
                                     <th scope="col">Name</th>

@@ -1,10 +1,10 @@
 ﻿@model IVoice.Models.Components.PersonalCard.CardHeaderPersonalModel
 
-<div class="viewcard-title">
-    <a href="@Model._title._link" title="@Model._title._tooltip">
+<div class="card-header-title">
+    <a class="white-link" href="@Model._title._link" title="@Model._title._tooltip">
         @if (Model._title_img != "")
         {
-            <img src="@Model._title_img" style="height: 23px;" />
+            <img src="@Model._title_img" />
         }
         @if (Model._title._icon != "")
         {
@@ -14,6 +14,6 @@
     </a>
     @if (Model._diip != null)
     {
-        <a href="@Model._diip._link" class="viewcard-title-right" title="@Model._diip._tooltip">@Model._diip._label</a>
+        <a href="@Model._diip._link" class="pull-right white-link" title="@Model._diip._tooltip">@Model._diip._label</a>
     }
 </div>
