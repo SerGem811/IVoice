@@ -8,7 +8,7 @@
 
     </div>
 
-    <div class="center-item margin-bottom-10">
+    <div class="center-item margin-bottom-20">
         <button id="btn-ip-more" type="submit" class="btn btn-primary btn-ip-more" style="min-width:300px;margin-top: 50px;">Load more...</button>
     </div>
 </div>
@@ -20,6 +20,7 @@
         var urlLikeDislike = '@Url.Action("SetLikeDislike", "IP")';
         var urlSpread = '@Url.Action("_SpreadIP", "IPSocial")';
         var urlAddEP = '@Url.Action("AddPoint", "IP")';
+        var urlSurf = '@Url.Action("SurfIP", "IP")';
 
         $('#btn-ip-more').click(function () {
             $.ajax({

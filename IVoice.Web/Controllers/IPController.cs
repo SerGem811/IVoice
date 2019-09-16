@@ -20,7 +20,8 @@ namespace IVoice.Controllers
         protected IUsersIPRepository _usersIPRepository { get; }
         protected IGenericRepository<UsersIPLike> _usersIPLikesRepository { get; }
         protected IGenericRepository<UsersIPEPPoint> _usersIPEPRepository { get; }
-
+        protected IGenericRepository<UsersIPSurf> _usersIPSurfRepository { get; }
+        protected IGenericRepository<UsersActivity> _usersActivityRepository { get; }
         public IPController(IUserRepository userRepository,
                                 IUsersConnectionRepository usersConnectionRepository,
                                 IGenericRepository<UsersHobby> usersHobbyRepository,
@@ -29,12 +30,16 @@ namespace IVoice.Controllers
                                 IGenericRepository<Country> countryRepository,
                                 IGenericRepository<UsersIPLike> usersIPLikesRepository,
                                 IGenericRepository<UsersIPEPPoint> usersIPEPRepository,
+                                IGenericRepository<UsersIPSurf> usersIPSurfRepository,
+                                IGenericRepository<UsersActivity> usersActivityRepository,
                                 IUsersIPRepository usersIPRepository) : base(userRepository)
         {
             _usersConnectionRepository = usersConnectionRepository;
             _usersIPLikesRepository = usersIPLikesRepository;
             _usersIPRepository = usersIPRepository;
             _usersIPEPRepository = usersIPEPRepository;
+            _usersIPSurfRepository = usersIPSurfRepository;
+            _usersActivityRepository = usersActivityRepository;
         }
 
         // id : featureID, secondid : categoryID
@@ -156,6 +161,55 @@ namespace IVoice.Controllers
             {
                 return Json("Failed", JsonRequestBehavior.AllowGet);
             }
+        }
+
+        [HttpPost]
+        public JsonResult SurfIP(int IpId)
+        {
+            if(_userID > 0)
+            {
+                var item = _usersIPSurfRepository.FirstOrDefault(x => x.UsersIPId == IpId && x.UserId == _userID);
+                if(item == null)
+                {
+                    // add to surf
+                    _usersIPSurfRepository.Save(new UsersIPSurf()
+                    {
+                        Date = DateTime.Now,
+                        UsersIPId = IpId,
+                        UserId = _userID
+                    });
+
+                    // save activity
+                    _usersActivityRepository.Save(new UsersActivity()
+                    {
+                        Date = DateTime.Now,
+                        Type = "ACTIVITY",
+                        UsersIPId = IpId,
+                        UserId = _userID,
+                        RowText = "Add SURF"
+                    });
+                }
+                else
+                {
+                    // remove from surf
+                    _usersIPSurfRepository.Remove(item);
+
+                    _usersActivityRepository.Save(new UsersActivity()
+                    {
+                        Date = DateTime.Now,
+                        Type = "ACTIVITY",
+                        UsersIPId = IpId,
+                        UserId = _userID,
+                        RowText = "Add SURF"
+                    });
+                }
+                return Json(_usersIPRepository.FirstOrDefault(x => x.Id == IpId, x => x.Surfs, null).ToString(), JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                return Json("Failed", JsonRequestBehavior.AllowGet);
+            }
+            
         }
 
     }

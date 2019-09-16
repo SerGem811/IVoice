@@ -37,8 +37,26 @@ function AddEP(itemId, currentObject) {
     });
 }
 
-function SurfIP(itemId, currentObject) {
-    alert('Surf');
+function SurfIP(itemId, currentObject, type) {
+    $.ajax({
+        url: urlSurf,
+        data: { IpId: itemId },
+        type: 'POST',
+        complete: function (request, status) {
+            if (request.responseJSON == "Failed") {
+                alertMessage('Notice', 'Something went wrong');
+            } else {
+                if (type == 1) {
+                    $(currentObject).html('<i class="fa fa-star"></i>&nbsp;' + request.responseJSON + '&nbsp;You SURFs');
+                    $(currentObject).attr('onclick', 'SurfIP(' + itemId + ', this, 2)');
+                } else if(type == 2) {
+                    $(currentObject).html('<i class="far fa-star"></i>&nbsp;' + request.responseJSON + '&nbsp;SURFs');
+                    $(currentObject).attr('onclick', 'SurfIP(' + itemId + ', this, 1)');
+                }
+                
+            }
+        }
+    });
 }
 
 function onSpreadSucess() {

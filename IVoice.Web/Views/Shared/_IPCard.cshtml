@@ -78,11 +78,11 @@
                 <span onclick="AddEP(@Model._id, this)" class="text-small blue-link"><i class="fa fa-hand-point-up"></i>&nbsp;@Model._ep&nbsp;EP Points</span>
                 if (Model._current_added_surf_id.HasValue && Model._current_added_surf_id > 0)
                 {
-                    <span onclick="SurfIP(@Model._id, this)" class="text-small blue-link padding-left-10"><i class="fa fa-star"></i>&nbsp;@(Model._surfs)&nbsp;Surfs</span>
+                    <span onclick='SurfIP(@Model._id, this, 2)' class="text-small blue-link padding-left-10"><i class="fa fa-star"></i>&nbsp;@(Model._surfs)&nbsp;You Surfs</span>
                 }
                 else
                 {
-                    <span onclick="SurfIP(@Model._id, this)" class="text-small blue-link padding-left-10"><i class="far fa-star"></i>&nbsp;@(Model._surfs)&nbsp;Surfs</span>
+                    <span onclick='SurfIP(@Model._id, this, 1)' class="text-small blue-link padding-left-10"><i class="far fa-star"></i>&nbsp;@(Model._surfs)&nbsp;Surfs</span>
                 }
             }
             <span class="text-small no-link-text padding-left-10"><i class="fa fa-eye"></i>&nbsp;@Model._views&nbsp;Views</span>

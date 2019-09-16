@@ -278,14 +278,14 @@ namespace IVoice.Controllers
             SpreadToUser(UserIpId, model._selected);
 
             // set activity
-                _userActivityRepository.Save(new UsersActivity()
-                {
-                    Date = DateTime.Now,
-                    Type = "ACTIVITY",
-                    UsersIPId = UserIpId,
-                    UserId = _userID,
-                    RowText = "Spread"
-                });
+            _userActivityRepository.Save(new UsersActivity()
+            {
+                Date = DateTime.Now,
+                Type = "ACTIVITY",
+                UsersIPId = UserIpId,
+                UserId = _userID,
+                RowText = "Spread"
+            });
 
             return Json("Success", JsonRequestBehavior.AllowGet);
         }
