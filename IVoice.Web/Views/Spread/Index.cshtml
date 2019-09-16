@@ -14,9 +14,10 @@
 </div>
 
 @section scripts {
+
     <script>
         var pageNum = 0;
-
+        var urlLikeDislike = '@Url.Action("SetLikeDislike", "IP")';
 
         $('#btn-ip-more').click(function () {
             $.ajax({
@@ -37,4 +38,6 @@
 
         $('#btn-ip-more').click();
     </script>
+
+    <script src="~/Scripts/views/ip/iplist.js"></script>
 }

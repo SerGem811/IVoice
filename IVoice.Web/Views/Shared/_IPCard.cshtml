@@ -6,6 +6,7 @@
     var full_url = HttpContext.Current.Request.Url.AbsoluteUri.Replace(HttpContext.Current.Request.Url.AbsolutePath, "") + url;
     var userID = ViewBag.userID;
 }
+
 <div class="box-default pd-20 ip-card-content">
     <div class="ip-card-img">
         <a href="@url"><img src="@Model._image_path" /></a>
@@ -37,62 +38,60 @@
         <div class="ip-card-body-line">
             @if (Model._user_id == userID || userID == 0)
             {
-                <span class="text-small secondary-link"><i class="fa fa-thumbs-up"></i>&nbsp;@Model._likes&nbsp;Like</span>
-                <span class="text-small secondary-link padding-left-10"><i class="fa fa-thumbs-down"></i>&nbsp;@Model._dislikes&nbsp;Dislike</span>
+                <span class="text-small no-link-text"><i class="fa fa-thumbs-up"></i>&nbsp;@Model._likes&nbsp;Like</span>
+                <span class="text-small no-link-text padding-left-10"><i class="fa fa-thumbs-down"></i>&nbsp;@Model._dislikes&nbsp;Dislike</span>
             }
             else
             {
-                <a href="#" class="text-small blue-link" onclick="LikeDislikeIP('like', @Model._id, this)">
+                <span>
                     @if (Model._current_like_dislike == "like")
                     {
-                        <i class="fas fa-thumbs-up">&nbsp;@Model._likes&nbsp;Liked</i>
+                        <span class="text-small no-link-text"><i class="fa fa-thumbs-up">&nbsp;@Model._likes&nbsp;You liked</i></span>
                     }
                     else
                     {
-                        <i class="fa fa-thumbs-up">&nbsp;@Model._likes&nbsp;Like</i>
+                        <span class="text-small blue-link" onclick="LikeDislikeIP('like', @Model._id, this)"><i class="fa fa-thumbs-up">&nbsp;@Model._likes&nbsp;Like</i></span>
                     }
-
-                </a>
-                <a href="#" class="text-small blue-link padding-left-10" onclick="LikeDislikeIP('dislike', @Model._id, this)">
                     @if (Model._current_like_dislike == "dislike")
                     {
-                        <i class="fas fa-thumbs-down">&nbsp;@Model._dislikes&nbsp;Disliked</i>
+                        <span class="text-small no-link-text padding-left-10"><i class="fa fa-thumbs-down">&nbsp;@Model._dislikes&nbsp;You disliked</i></span>
                     }
                     else
                     {
-                        <i class="fa fa-thumbs-down">&nbsp;@Model._dislikes&nbsp;Dislike</i>
+                        <span class="text-small blue-link padding-left-10" onclick="LikeDislikeIP('dislike', @Model._id, this)"><i class="fa fa-thumbs-down">&nbsp;@Model._dislikes&nbsp;Dislike</i></span>
                     }
-                </a>
+                </span>
             }
-            <a href="#" onclick="OpenComments(@Model._id)" class="text-small blue-link padding-left-10">
+            <span onclick="OpenComments(@Model._id)" class="text-small blue-link padding-left-10">
                 <i class="fa fa-comment-alt"></i>&nbsp;@(Model._comments)&nbsp;Comments
-            </a>
-            <span class="text-small secondary-link padding-left-10"><i class="fa fa-eye"></i>&nbsp;@Model._views&nbsp;Views</span>
+            </span>
+
         </div>
         <div class="ip-card-body-line">
             @if (Model._user_id == userID || userID == 0)
             {
-                <span class="text-small secondary-link"><i class="fa fa-hand-point-up"></i>&nbsp;@Model._ep&nbsp;EP Points</span>
-                <span class="text-small secondary-link padding-left-10"><i class="fa fa-star"></i>&nbsp;@Model._surfs&nbsp;Surfs</span>
+                <span class="text-small no-link-text"><i class="fa fa-hand-point-up"></i>&nbsp;@Model._ep&nbsp;EP Points</span>
+                <span class="text-small no-link-text padding-left-10"><i class="fa fa-star"></i>&nbsp;@Model._surfs&nbsp;Surfs</span>
             }
             else
             {
-                <a href="#" oncancel="AddEP(@Model._id, this)" class="text-small blue-link float-left"><i class="fa fa-hand-point-up"></i>&nbsp;@Model._ep&nbsp;EP Points</a>
+                <span onclick="AddEP(@Model._id, this)" class="text-small blue-link"><i class="fa fa-hand-point-up"></i>&nbsp;@Model._ep&nbsp;EP Points</span>
                 if (Model._current_added_surf_id.HasValue && Model._current_added_surf_id > 0)
                 {
-                    <a href="#" onclick="SurfIP(@Model._id, this)" class="text-small blue-link padding-left-10 float-left"><i class="fa fa-star"></i>&nbsp;@(Model._surfs)&nbsp;Surfs</a>
+                    <span onclick="SurfIP(@Model._id, this)" class="text-small blue-link padding-left-10"><i class="fa fa-star"></i>&nbsp;@(Model._surfs)&nbsp;Surfs</span>
                 }
                 else
                 {
-                    <a href="#" onclick="SurfIP(@Model._id, this)" class="text-small blue-link padding-left-10 float-left"><i class="fas fa-star"></i>&nbsp;@(Model._surfs)&nbsp;Surfs</a>
+                    <span onclick="SurfIP(@Model._id, this)" class="text-small blue-link padding-left-10"><i class="fas fa-star"></i>&nbsp;@(Model._surfs)&nbsp;Surfs</span>
                 }
             }
+            <span class="text-small no-link-text padding-left-10"><i class="fa fa-eye"></i>&nbsp;@Model._views&nbsp;Views</span>
         </div>
         <div class="ip-card-body-line">
             <a href="#" class="blue-link" onclick="window.open('https://www.facebook.com/sharer/sharer.php?u=' + '@full_url', 'facebook-share-dialog', 'width=626, height=436'); return false;"><i class="fab fa-facebook"></i></a>
-            <a href="#" class="blue-link padding-left-10" onclick="window.open('https://twitter.com/intent/tweet?original_referer=' + '@full_url' + '&ref_src=' + '@full_url' + '&text=&tw_p=tweetbutton&url=' + '@full_url', 'twitter-share-dialog', 'width=626, height=436'); return false;" class="twitter-share-dialog padding-left-10"><i class="fab fa-twitter"></i></a>
-            <a href="#" class="blue-link padding-left-10" onclick="window.open('//pinterest.com/pin/create/button?url=' + '@full_url', 'pinterest-share-dialog', 'width=626, height=436'); return false;" class="padding-left-10"><i class="fab fa-pinterest"></i></a>
-            <a href="#" class="blue-link padding-left-10" onclick="window.open('https://plus.google.com/share?url=' + '@full_url', 'googlep-share-dialog', 'width=626, height=436'); return false;" class="padding-left-10"><i class="fab fa-google-plus"></i></a>
+            <a href="#" class="blue-link padding-left-10" onclick="window.open('https://twitter.com/intent/tweet?original_referer=' + '@full_url' + '&ref_src=' + '@full_url' + '&text=&tw_p=tweetbutton&url=' + '@full_url', 'twitter-share-dialog', 'width=626, height=436'); return false;"><i class="fab fa-twitter"></i></a>
+            <a href="#" class="blue-link padding-left-10" onclick="window.open('//pinterest.com/pin/create/button?url=' + '@full_url', 'pinterest-share-dialog', 'width=626, height=436'); return false;" ss><i class="fab fa-pinterest"></i></a>
+            <a href="#" class="blue-link padding-left-10" onclick="window.open('https://plus.google.com/share?url=' + '@full_url', 'googlep-share-dialog', 'width=626, height=436'); return false;"><i class="fab fa-google-plus"></i></a>
         </div>
     </div>
 </div>

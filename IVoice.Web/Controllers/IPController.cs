@@ -18,7 +18,7 @@ namespace IVoice.Controllers
     {
         protected IUsersConnectionRepository _usersConnectionRepository { get; }
         protected IUsersIPRepository _usersIPRepository { get; }
-
+        protected IGenericRepository<UsersIPLike> _usersIPLikesRepository { get; }
 
         public IPController(IUserRepository userRepository,
                                 IUsersConnectionRepository usersConnectionRepository,
@@ -26,9 +26,13 @@ namespace IVoice.Controllers
                                 IGenericRepository<UsersOccupation> usersOccupationRepository,
                                 IGenericRepository<Gender> genderRepository,
                                 IGenericRepository<Country> countryRepository,
+                                IGenericRepository<UsersIPLike> usersIPLikesRepository,
                                 IUsersIPRepository usersIPRepository) : base(userRepository)
         {
             _usersConnectionRepository = usersConnectionRepository;
+
+            _usersIPLikesRepository = usersIPLikesRepository;
+
             _usersIPRepository = usersIPRepository;
         }
 
@@ -68,6 +72,69 @@ namespace IVoice.Controllers
             lst = _usersIPRepository.GetAllIPSForUser(filter, PageNum, 9, _userID);
             ViewBag.userID = _userID;
             return PartialView("_GetIPList", lst);
+        }
+
+        [HttpPost]
+        public JsonResult SetLikeDislike(int IpId, string Type)
+        {
+            var like = _usersIPLikesRepository.FirstOrDefault(x => x.UsersIPId == IpId && x.UserId == _userID);
+            var ip = _usersIPRepository.FirstOrDefault(x => x.Id == IpId);
+            var nLike = ip.Likes;
+            var nDislike = ip.Dislikes;
+
+            if (like != null)
+            {
+                like.Type = Type;
+                _usersIPLikesRepository.Save(like);
+                if(Type == "like")
+                {
+                    ip.Dislikes--;
+                    ip.Likes++;
+                }
+                else
+                {
+                    ip.Likes--;
+                    ip.Dislikes++;
+                }
+                _usersIPRepository.Save(ip);
+                nLike = ip.Likes;
+                nDislike = ip.Dislikes;
+            }
+            else
+            {
+                _usersIPLikesRepository.Save(new UsersIPLike()
+                {
+                    Date = DateTime.Now,
+                    Row = "",
+                    Type = Type,
+                    UsersIPId = IpId,
+                    UserId = _userID
+                });
+
+                if(Type == "like")
+                {
+                    nLike++;
+                }
+                else
+                {
+                    nDislike++;
+                }
+            }
+
+            var span = "";
+            
+            if (Type == "like")
+            {
+                span = "<span class='text-small no-link-text'><i class='fa fa-thumbs-up'>&nbsp;" + nLike.ToString() + "&nbsp;You liked</i></span>";
+                span += "<span class='text-small blue-link padding-left-10' onclick='LikeDislikeIP(\"dislike\"," + IpId + ", this)'><i class='fa fa-thumbs-down'>&nbsp;" + nDislike + "&nbsp;Dislike</i></span>";
+            }
+            else if (Type == "dislike")
+            {
+                span = "<span class='text-small blue-link' onclick='LikeDislikeIP(\"like\"," + IpId + ", this)'><i class='fa fa-thumbs-up'>&nbsp;" + nLike + "&nbsp;Like</i></span>";
+                span += "<span class='text-small no-link-text padding-left-10'><i class='fa fa-thumbs-down'>&nbsp;" + nDislike.ToString() + "&nbsp;You disliked</i></span>";
+            }
+
+            return Json(span, JsonRequestBehavior.AllowGet);
         }
     }
 }

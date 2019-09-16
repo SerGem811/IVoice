@@ -40,7 +40,7 @@ namespace IVoice.Services
                                 _likes = x.UsersIP.Likes,
                                 _views = x.UsersIP.Views,
                                 _ep = x.UsersIP.EPPoints,
-                                _current_like_dislike = x.UsersIP.UsersIPLikes.FirstOrDefault(y => y.UserId == currentUserId).Row,
+                                _current_like_dislike = x.UsersIP.UsersIPLikes.FirstOrDefault(y => y.UserId == currentUserId).Type,
                                 _current_added_surf_id = x.UsersIP.UsersIPSurfs.FirstOrDefault(y => y.UserId == currentUserId).Id
                             }).ToList();
             

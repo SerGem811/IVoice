@@ -270,13 +270,13 @@ body {
 
 
 /* common a link */
-a.white-link {
+.white-link {
     color: #fff!important;
     text-decoration: none;
 }
-    a.white-link:hover,
-    a.white-link:active,
-    a.white-link:focus{
+    .white-link:hover,
+    .white-link:active,
+    .white-link:focus{
         color: #aaa !important;
         text-decoration: none;
     }
@@ -293,12 +293,14 @@ a.white-link {
 .blue-link {
     color: #8AA9DA!important;
     text-decoration: none;
+    cursor: pointer;
 }
     .blue-link:hover,
     .blue-link:active,
     .blue-link:focus {
-        color: #fff!important;
+        color: #fff !important;
         text-decoration: none;
+        cursor: pointer;
     }
 .no-link-text {
     color:#c3c3c3;
