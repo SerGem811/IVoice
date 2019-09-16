@@ -19,6 +19,7 @@ namespace IVoice.Controllers
         protected IUsersConnectionRepository _usersConnectionRepository { get; }
         protected IUsersIPRepository _usersIPRepository { get; }
         protected IGenericRepository<UsersIPLike> _usersIPLikesRepository { get; }
+        protected IGenericRepository<UsersIPEPPoint> _usersIPEPRepository { get; }
 
         public IPController(IUserRepository userRepository,
                                 IUsersConnectionRepository usersConnectionRepository,
@@ -27,13 +28,13 @@ namespace IVoice.Controllers
                                 IGenericRepository<Gender> genderRepository,
                                 IGenericRepository<Country> countryRepository,
                                 IGenericRepository<UsersIPLike> usersIPLikesRepository,
+                                IGenericRepository<UsersIPEPPoint> usersIPEPRepository,
                                 IUsersIPRepository usersIPRepository) : base(userRepository)
         {
             _usersConnectionRepository = usersConnectionRepository;
-
             _usersIPLikesRepository = usersIPLikesRepository;
-
             _usersIPRepository = usersIPRepository;
+            _usersIPEPRepository = usersIPEPRepository;
         }
 
         // id : featureID, secondid : categoryID
@@ -136,5 +137,26 @@ namespace IVoice.Controllers
 
             return Json(span, JsonRequestBehavior.AllowGet);
         }
+
+        [HttpPost]
+        public JsonResult AddPoint(int IpId)
+        {
+            if(_userID > 0 && _userRepository.FirstOrDefault(x => x.Id == _userID, x => x.EPPoints, null) > 0)
+            {
+                _usersIPEPRepository.Save(new UsersIPEPPoint()
+                {
+                    Date = DateTime.Now,
+                    EPPoints = 1,
+                    UserId = _userID,
+                    UsersIPId = IpId,
+                });
+                return Json(_usersIPRepository.FirstOrDefault(x => x.Id == IpId, x => x.EPPoints, null).ToString(), JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                return Json("Failed", JsonRequestBehavior.AllowGet);
+            }
+        }
+
     }
 }

@@ -1,5 +1,6 @@
 ﻿function spreadIp(itemId) {
-    alert('SpreadIP');
+
+    popupBootstrap("Spread IP", urlSpread, null, { IPId: itemId }, true, "Spread", onSpreadSucess, true, "Cancel", performOk, '50%', null, '50%');
 }
 
 function LikeDislikeIP(type, itemId, currentObject, like, dislike) {
@@ -22,9 +23,25 @@ function OpenComments(itemId) {
 }
 
 function AddEP(itemId, currentObject) {
-    alert('Add EP');
+    $.ajax({
+        url: urlAddEP,
+        data: { IpId: itemId },
+        type: 'POST',
+        complete: function (request, status) {
+            if (request.responseJSON == "Failed") {
+                alertMessage('Notice', 'You have no Point');
+            } else {
+                $(currentObject).html('<i class="fa fa-hand-point-up"></i>&nbsp;' + request.responseJSON + '&nbsp;EP Points');
+            }
+        }
+    });
 }
 
 function SurfIP(itemId, currentObject) {
     alert('Surf');
+}
+
+function onSpreadSucess() {
+    performOk();
+
 }

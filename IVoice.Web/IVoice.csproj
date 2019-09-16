@@ -198,6 +198,7 @@
     <Compile Include="Models\IpAds\IpAdModel.cs" />
     <Compile Include="Models\IPSocial\Create.cs" />
     <Compile Include="Models\IPSocial\SaveIPOptionModel.cs" />
+    <Compile Include="Models\IPSocial\SpreadViewModel.cs" />
     <Compile Include="Models\IPSocial\TableRowModel.cs" />
     <Compile Include="Models\IP\IPListModel.cs" />
     <Compile Include="Models\IP\IPViewModel.cs" />
@@ -2127,6 +2128,7 @@
     <Content Include="Views\Shared\_IPCard.cshtml" />
     <Content Include="Views\Shared\_GetIPList.cshtml" />
     <Content Include="Views\Spread\Index.cshtml" />
+    <Content Include="Views\Shared\_SpreadForm.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -84,6 +84,8 @@
         </div>
     </div>
     <div class="form-group col-md-12" id="frmSpread" style="display:none">
+
+
         <div class="panel with-nav-tabs panel-default">
             @Html.Partial("~/Views/Shared/Components/Tabs/_CardHeaderTab.cshtml", new CardHeaderTabsModel() { _header = new List<CardHeaderModel>() {
                                                                                         new CardHeaderModel() { _class = "active", _link = "#tabFieldSearchVoicers", _label="Field Search Voicers" },
@@ -145,7 +147,6 @@
 
 <script>
     $(document).ready(function () {
-        $('.selectpicker').selectpicker();
         $('.toggle-options').bootstrapToggle({
             on: 'On',
             off: 'Off'

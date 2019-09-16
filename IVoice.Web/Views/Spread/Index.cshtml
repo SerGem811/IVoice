@@ -18,6 +18,8 @@
     <script>
         var pageNum = 0;
         var urlLikeDislike = '@Url.Action("SetLikeDislike", "IP")';
+        var urlSpread = '@Url.Action("_SpreadIP", "IPSocial")';
+        var urlAddEP = '@Url.Action("AddPoint", "IP")';
 
         $('#btn-ip-more').click(function () {
             $.ajax({

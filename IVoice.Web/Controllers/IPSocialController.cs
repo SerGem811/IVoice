@@ -151,7 +151,7 @@ namespace IVoice.Controllers
             model._selected = new List<bool>();
             foreach (var item in model._connected)
             {
-                model._selected.Add(false);
+                model._selected.Add(true);
             }
             return PartialView(model);
         }
@@ -275,24 +275,7 @@ namespace IVoice.Controllers
             }
 
             // spread to voicer
-            var connected = _connectionRepository.GetAllVoicerModelsByFilter(x => x.User1.Active && x.User1.ActiveIPFeeds && x.UserId == _userID && x.Type == VoicerConnectionType.CONNECTED.ToString(),
-                                                                                Sorter<UsersConnection>.Get(x => x.DateConnected, false));
-
-            var index = 0;
-            foreach(var item in connected)
-            {
-                if(model._selected[index])
-                {
-                    _userIPSpreadRepository.Save(new UsersIPSpread()
-                    {
-                        Date = DateTime.Now,
-                        UserId = item.Id,
-                        UserIpId = UserIpId,
-                        UserSentId = _userID,
-                    });
-                }
-                index++;
-            }
+            SpreadToUser(UserIpId, model._selected);
 
             // set activity
                 _userActivityRepository.Save(new UsersActivity()
@@ -305,6 +288,29 @@ namespace IVoice.Controllers
                 });
 
             return Json("Success", JsonRequestBehavior.AllowGet);
+        }
+
+        public void SpreadToUser(int id, List<bool> options)
+        {
+            // spread to voicer
+            var connected = _connectionRepository.GetAllVoicerModelsByFilter(x => x.User1.Active && x.User1.ActiveIPFeeds && x.UserId == _userID && x.Type == VoicerConnectionType.CONNECTED.ToString(),
+                                                                                Sorter<UsersConnection>.Get(x => x.DateConnected, false));
+
+            var index = 0;
+            foreach (var item in connected)
+            {
+                if (options[index])
+                {
+                    _userIPSpreadRepository.Save(new UsersIPSpread()
+                    {
+                        Date = DateTime.Now,
+                        UserId = item.Id,
+                        UserIpId = id,
+                        UserSentId = _userID,
+                    });
+                }
+                index++;
+            }
         }
 
         public SearchVoicerViewModel GetSearchVoicerViewModel(SearchFormType searchFormType, int UserIpId)
@@ -327,6 +333,43 @@ namespace IVoice.Controllers
             ViewData["hobbies"] = _hobbyRepository.LoadAndSelect(x => true, x => new SelectListItem_Custom { Id = x.Id, Description = x.HobbyName }, false).ToSelectList(x => x.Description);
             ViewData["occupations"] = _occupationRepository.LoadSortAndSelect(x => true, x => new SelectListItem_Custom { Id = x.Id, Description = x.Occupation },
                                                                                     Helpers.External.Sorter<UsersOccupation>.Get(x => x.OrderBy, true)).ToSelectList<SelectListItem_Custom>(null);
+        }
+
+        [HttpPost]
+        public PartialViewResult _SpreadIP(int IPId)
+        {
+            var lst = _countryRepository.LoadAndSelect(x => true, x => new SelectListItem_Custom { Id = x.Id, Description = x.Name }, false).ToSelectList(x => x.Description);
+
+            FillViewData();
+
+            var model = new SpreadViewModel()
+            {
+                _id = IPId,
+                _filter = new VoicerFilterModel() { _frm_id = "voicerfilter_filter" },
+                _connected = _connectionRepository.GetAllVoicerModelsByFilter(x => x.User1.Active && x.User1.ActiveIPFeeds && x.UserId == _userID && x.Type == VoicerConnectionType.CONNECTED.ToString(),
+                                                                                Sorter<UsersConnection>.Get(x => x.DateConnected, false)),
+            };
+            model._selected = new List<bool>();
+            foreach (var item in model._connected)
+            {
+                model._selected.Add(true);
+            }
+
+            return PartialView("_SpreadForm", model);
+        }
+
+        [HttpPost]
+        public ActionResult SpreadIP(SpreadViewModel model)
+        {
+            try
+            {
+                SpreadToUser(model._id, model._selected);
+                return Json("Success", JsonRequestBehavior.AllowGet);
+            }
+            catch
+            {
+                return Json("Failed", JsonRequestBehavior.AllowGet);
+            }
         }
     }
 }
