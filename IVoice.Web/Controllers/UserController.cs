@@ -224,7 +224,7 @@ namespace IVoice.Controllers
             // Ad Card
             dynamic ads = new ExpandoObject();
             ads.header = new CardHeaderModel() { _label = "Ad Box", _icon = "fa fa-ad" } ;
-            ads.body = new CardBodyModel() { _style = "height:335px" };
+            ads.body = new CardBodyModel() { _style = "height:350px" };
             model._ads = ads;
 
             // Tab
@@ -267,6 +267,8 @@ namespace IVoice.Controllers
             chatWing.body = new CardBodyModel() { _text = "Chat you've bought" };
             model._chatWing = chatWing;
 
+            ViewBag.userID = Id;
+
             FillBaseModel(model);
             return View(model);
         }
@@ -277,7 +279,7 @@ namespace IVoice.Controllers
             string url_voicer = Url.Action("Details", "User", new { Id = x._user_id });
 
             return "<i class='fa fa-share-alt'></i>&nbsp;" + "<a href='" + url_ip + "' title=" + x._title + "' class='link-text'>" + Extension.Truncate(x._title, 20) +
-                    "</a>&nbsp;by<a href='" + url_voicer + "' class='link-text'>&nbsp;" + Extension.Truncate(x._voicer, 10) + "</a><small>" + x._time_ago + "</small>";
+                    "</a>&nbsp;by<a href='" + url_voicer + "' class='link-text'>&nbsp;" + Extension.Truncate(x._voicer, 10) + "</a>&nbsp;<small>" + x._time_ago + "</small>";
         }
 
         private string FormatActivityForDetails(UsersActivity x)

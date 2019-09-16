@@ -58,15 +58,16 @@ namespace IVoice.Controllers
             {
                 filter = filter.And(x => x.CategoryId == CategoryId);
             }
-//             if(_userID == 0 || _userModel._account._is_adult)
-//             {
-//                 filter = filter.And(x => !x.AdultOnly);
-//             }
-//            filter = filter.And(x => x.UserId == _userID);
+            if(_userID == 0 || _userModel._account._is_adult)
+            {
+                filter = filter.And(x => !x.AdultOnly);
+            }
+            if(_userID > 0)
+                filter = filter.And(x => x.UserId == _userID);
 
             lst = _usersIPRepository.GetAllIPSForUser(filter, PageNum, 9, _userID);
             ViewBag.userID = _userID;
-            return PartialView(lst);
+            return PartialView("_GetIPList", lst);
         }
     }
 }

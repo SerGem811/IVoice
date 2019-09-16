@@ -154,7 +154,7 @@
         $('.toggle-options-full-width').bootstrapToggle({
             on: 'Selected',
             off: 'Click to select',
-            style: 'w-100'
+            style: 'w-100-force'
         })
     });
 
@@ -204,12 +204,16 @@
 
             done: function (e, data) {
                 if (data.result != null) {
-                    var id = data.result['id'];
-                    var path = data.result['cover'];
+                    if (data.result == 'Failed') {
+                        alertMessage('Error', 'Something went wrong with cover');
+                    } else {
+                        var id = data.result['id'];
+                        var path = data.result['cover'];
 
-                    $('#ip_cover').attr('src', path);
-                    $('[name="_cover_id"]').attr('value', id);
-                    $('[name="_img"]').attr('value', path);
+                        $('#ip_cover').attr('src', path);
+                        $('[name="_cover_id"]').attr('value', id);
+                        $('[name="_img"]').attr('value', path);
+                    }
                 }
                 //$("#ip_cover").attr("src", data.result);
             },

@@ -2,36 +2,43 @@
 
 @{
     var url = Url.Action("Details", "User", new { Id = Model.Id });
+
+    var currentUserId = ViewBag.currentUserId;
+    var userId = ViewBag.userId;
 }
 @section script {
 
 }
 
 <div class="box-default pd-10">
-    <div>
-        @if (Model.Type == "BLOCKED")
-        {
-            <a href="#" class="pull-left secondary-link" onclick="cmdConnection(this, '@Model.Id', 'CONNECTED')"><i class="fa fa-unlock"></i>&nbsp;unblock</a>
-        }
-        else if (Model.Type == "CONNECTED")
-        {
-            <a href="#" class="pull-left secondary-link" onclick="cmdConnection(this, '@Model.Id', 'BLOCKED')"><i class="fa fa-ban"></i>&nbsp;block</a>
-            <a href="#" class="pull-right secondary-link" onclick="cmdConnection(this, '@Model.Id', 'REMOVED')"><i class="fa fa-user-times"></i>&nbsp;remove</a>
-        }
-        else if (Model.Type == "WAITING")
-        {
-            <a href="#" class="pull-left secondary-link" onclick="cmdConnection(this, '@Model.Id', 'CONNECTED')"><i class="fa fa-check"></i>&nbsp;accept</a>
-            <a href="#" class="pull-right secondary-link" onclick="cmdConnection(this, '@Model.Id', 'REMOVED')"><i class="fa fa-times"></i>&nbsp;decline</a>
-        }
-        else if (Model.Type == "REQUESTED")
-        {
-            <a href="#" class="pull-right secondary-link" onclick="cmdConnection(this, '@Model.Id', 'REMOVED')"><i class="fa fa-times"></i>&nbsp;cancel</a>
-        }
-        else
-        {
-            <a href="#" class="pull-right secondary-link" onclick="cmdConnection(this, '@Model.Id', 'WAITING')"><i class="fa fa-plus"></i>&nbsp;connect</a>
-        }
-    </div>
+    @if (currentUserId == userId)
+    {
+        <div>
+            @if (Model.Type == "BLOCKED")
+            {
+                <a href="#" class="pull-left secondary-link" onclick="cmdConnection(this, '@Model.Id', 'CONNECTED')"><i class="fa fa-unlock"></i>&nbsp;unblock</a>
+            }
+            else if (Model.Type == "CONNECTED")
+            {
+                <a href="#" class="pull-left secondary-link" onclick="cmdConnection(this, '@Model.Id', 'BLOCKED')"><i class="fa fa-ban"></i>&nbsp;block</a>
+                <a href="#" class="pull-right secondary-link" onclick="cmdConnection(this, '@Model.Id', 'REMOVED')"><i class="fa fa-user-times"></i>&nbsp;remove</a>
+            }
+            else if (Model.Type == "WAITING")
+            {
+                <a href="#" class="pull-left secondary-link" onclick="cmdConnection(this, '@Model.Id', 'CONNECTED')"><i class="fa fa-check"></i>&nbsp;accept</a>
+                <a href="#" class="pull-right secondary-link" onclick="cmdConnection(this, '@Model.Id', 'REMOVED')"><i class="fa fa-times"></i>&nbsp;decline</a>
+            }
+            else if (Model.Type == "REQUESTED")
+            {
+                <a href="#" class="pull-right secondary-link" onclick="cmdConnection(this, '@Model.Id', 'REMOVED')"><i class="fa fa-times"></i>&nbsp;cancel</a>
+            }
+            else
+            {
+                <a href="#" class="pull-right secondary-link" onclick="cmdConnection(this, '@Model.Id', 'WAITING')"><i class="fa fa-plus"></i>&nbsp;connect</a>
+            }
+        </div>
+    }
+
     <div class="voicer-card-img">
         <a href="@url"><img src="@Model.ImagePath" /></a>
     </div>

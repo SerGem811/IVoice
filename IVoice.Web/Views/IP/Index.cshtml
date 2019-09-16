@@ -26,7 +26,7 @@
 
         </div>
 
-        <div style="text-align:center;">
+        <div class="center-item margin-bottom-10">
             <button id="btn-ip-more" type="submit" class="btn btn-primary btn-ip-more" style="min-width:300px;margin-top: 50px;">Load more...</button>
         </div>
     </div>
@@ -77,7 +77,7 @@
                         return;
                     }
                     pageNum++;
-                    $("#ip-container").append(request.responseText);
+                    $("#ip-container").html(request.responseText);
                 }
             });
         });

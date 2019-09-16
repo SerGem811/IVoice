@@ -135,56 +135,66 @@ namespace IVoice.Controllers
         [HttpPost]
         public ActionResult UploadMedia(HttpPostedFileBase file, Guid UniqueId, int? AlbumId, string type)
         {
-            if (file != null && file.ContentLength > 0)
+            try
             {
-                string extension = Path.GetExtension(file.FileName).ToLower();
-                var fileName = UniqueId + "_" + Path.GetFileName(file.FileName);
-                if (!Directory.Exists(_galleryPath))
-                    Directory.CreateDirectory(_galleryPath);
-                if (!Directory.Exists(_galleryPath + @"\" + _userID))
-                    Directory.CreateDirectory(_galleryPath + @"\" + _userID);
-
-                if(type == "cover")
+                if (file != null && file.ContentLength > 0)
                 {
-                    if (!Directory.Exists(_galleryPath + @"\" + _userID + @"\cover"))
-                        Directory.CreateDirectory(_galleryPath + @"\" + _userID + @"\cover");
-                }
+                    string extension = Path.GetExtension(file.FileName).ToLower();
+                    var fileName = UniqueId + "_" + Path.GetFileName(file.FileName);
+                    if (!Directory.Exists(_galleryPath))
+                        Directory.CreateDirectory(_galleryPath);
+                    if (!Directory.Exists(_galleryPath + @"\" + _userID))
+                        Directory.CreateDirectory(_galleryPath + @"\" + _userID);
 
-                var path = Path.Combine(_galleryPath + @"\" + _userID, fileName);
-
-                if(type == "cover")
-                {
-                    path = Path.Combine(_galleryPath + @"\" + _userID + @"\cover", fileName);
-                }
-                file.SaveAs(path);
-
-                if (AlbumId < 1)
-                    AlbumId = null;
-
-                var id = -1;
-                if(type != "cover")
-                {
-                    id = _usersAttachmentRepository.Save(new UsersAttachment()
+                    if (type == "cover")
                     {
-                        Active = true,
-                        DateAdded = DateTime.Now,
-                        FileName = file.FileName,
-                        Path = "/upload/gallery/" + _userID + "/" + fileName,
-                        UserId = _userID,
-                        Visibity = Visibility.PRIVATE.ToString(),
-                        UniqueId = UniqueId,
-                        UserAttachAlbumId = AlbumId
-                    });
-                } else
-                {
-                    var album = _userAttachmentsAlbumRepository.FirstOrDefault(x => x.Id == AlbumId);
-                    album.Cover = "/upload/gallery/" + _userID + "/cover/" + fileName;
-                    _userAttachmentsAlbumRepository.Save(album);
-                }
+                        if (!Directory.Exists(_galleryPath + @"\" + _userID + @"\cover"))
+                            Directory.CreateDirectory(_galleryPath + @"\" + _userID + @"\cover");
+                    }
 
-                return Json(new Message(TMessage.TRUE), JsonRequestBehavior.AllowGet);
+                    var path = Path.Combine(_galleryPath + @"\" + _userID, fileName);
+
+                    if (type == "cover")
+                    {
+                        path = Path.Combine(_galleryPath + @"\" + _userID + @"\cover", fileName);
+                    }
+                    file.SaveAs(path);
+
+                    if (AlbumId < 1)
+                        AlbumId = null;
+
+                    var id = -1;
+                    if (type != "cover")
+                    {
+                        id = _usersAttachmentRepository.Save(new UsersAttachment()
+                        {
+                            Active = true,
+                            DateAdded = DateTime.Now,
+                            FileName = file.FileName,
+                            Path = "/upload/gallery/" + _userID + "/" + fileName,
+                            UserId = _userID,
+                            Visibity = Visibility.PRIVATE.ToString(),
+                            UniqueId = UniqueId,
+                            UserAttachAlbumId = AlbumId
+                        });
+                    }
+                    else
+                    {
+                        var album = _userAttachmentsAlbumRepository.FirstOrDefault(x => x.Id == AlbumId);
+                        album.Cover = "/upload/gallery/" + _userID + "/cover/" + fileName;
+                        _userAttachmentsAlbumRepository.Save(album);
+                    }
+
+                    return Json(new Message(TMessage.TRUE), JsonRequestBehavior.AllowGet);
+                }
             }
-            return Json(new Message(TMessage.FALSE), JsonRequestBehavior.AllowGet);
+            catch(Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return Json("Failed", JsonRequestBehavior.AllowGet);
+            }
+            
+            return Json("Failed", JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]

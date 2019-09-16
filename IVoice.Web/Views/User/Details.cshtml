@@ -5,80 +5,92 @@
 @section hrefs {
     <link href="~/Content/User.css" rel="stylesheet" />
     <link href="~/Content/CardView.css" rel="stylesheet" />
-    <link href="~/Content/Components/carousel_custom.css" rel="stylesheet"/>
+    <link href="~/Content/Components/carousel_custom.css" rel="stylesheet" />
     <!-- simply scroll-->
 }
 <div class="fluid-content">
-    <!-- Simply Scroll for features -->
-        <div class="col-md-8 col-md-offset-2 margin-top-30 margin-bottom-20">
-            <div class="col-md-3 user-detail-feature">
-                <!--<button type="button" class="btn btn-dark" style="width:100%"><i class="fas fa-angle-double-up"></i></button>-->
-                @Html.Partial("~/Views/Shared/Components/Carousel/_Carousel.cshtml", Model._features)
+    <div class="user-detail-container">
+        <div class="row">
+            <!-- Simply Scroll for features -->
+            <div class="col-md-3">
+                <div class="user-detail-feature col-remove-pd-right">
+                    <!--<button type="button" class="btn btn-dark" style="width:100%"><i class="fas fa-angle-double-up"></i></button>-->
+                    @Html.Partial("~/Views/Shared/Components/Carousel/_Carousel.cshtml", Model._features)
+                </div>
             </div>
-
             <!-- Personal information-->
-            <div class="col-md-9 pd-0 h-100 pd-0">
-                <div class="col-md-8 user-detail-personal">
-                    <div>
-                        <!-- Personal Card -->
-                        <div class="col-md-4 pd-0">
-                            <div class="box-default">
-                                @Html.Partial("~/Views/User/Details/Personal/_CardHeaderPersonal.cshtml", (IVoice.Models.Components.PersonalCard.CardHeaderPersonalModel)Model._pcard.header)
-                                @Html.Partial("~/Views/User/Details/Personal/_CardBodyPersonal.cshtml", (IVoice.Models.Components.PersonalCard.CardBodyPersonalModel)Model._pcard.body)
+            <div class="col-md-9">
+                <div class="row">
+                    <div class="col-md-8 user-detail-personal">
+                        <div>
+                            <!-- Personal Card -->
+                            <div class="col-md-4 pd-0">
+                                <div class="box-default">
+                                    @Html.Partial("~/Views/User/Details/Personal/_CardHeaderPersonal.cshtml", (IVoice.Models.Components.PersonalCard.CardHeaderPersonalModel)Model._pcard.header)
+                                    @Html.Partial("~/Views/User/Details/Personal/_CardBodyPersonal.cshtml", (IVoice.Models.Components.PersonalCard.CardBodyPersonalModel)Model._pcard.body)
+                                </div>
+                            </div>
+                            <!-- Ads Card -->
+                            <div class="col-md-8 pd-0 padding-left-10">
+                                <div class="box-default">
+                                    @Html.Partial("~/Views/User/Details/Common/_CardHeader.cshtml", (IVoice.Models.Components.Common.CardHeaderModel)Model._ads.header)
+                                    @Html.Partial("~/Views/User/Details/Common/_CardBody.cshtml", (IVoice.Models.Components.Common.CardBodyModel)Model._ads.body)
+                                </div>
                             </div>
                         </div>
-                        <!-- Ads Card -->
-                        <div class="col-md-8 pd-0 padding-left-10">
-                            <div class="box-default">
-                                @Html.Partial("~/Views/User/Details/Common/_CardHeader.cshtml", (IVoice.Models.Components.Common.CardHeaderModel)Model._ads.header)
-                                @Html.Partial("~/Views/User/Details/Common/_CardBody.cshtml", (IVoice.Models.Components.Common.CardBodyModel)Model._ads.body)
-                            </div>
-                        </div>
-                    </div>
-                    <div>
-                        <!-- Tab -->
-                        <div class="user-detail-tab margin-top-20">
-                            @Html.Partial("~/Views/Shared/Components/Tabs/_CardHeaderTab.cshtml", (IVoice.Models.Components.Tabs.CardHeaderTabsModel)Model._tabs.header)
-                            <div class="box-default tab-content">
-                                @{
-                                    var i = 1;
-                                    foreach (var item in Model._tabs.body)
-                                    {
-                                        item._html_id = "tab_" + i;
-                                        item._style = "height:240px;";
-                                        @Html.Partial("~/Views/User/Details/Common/_CardBodyList.cshtml", (IVoice.Models.Components.CardBodyListModel)item)
-                                        i++;
+                        <div>
+                            <!-- Tab -->
+                            <div class="user-detail-tab margin-top-20">
+                                @Html.Partial("~/Views/Shared/Components/Tabs/_CardHeaderTab.cshtml", (IVoice.Models.Components.Tabs.CardHeaderTabsModel)Model._tabs.header)
+                                <div class="box-default tab-content">
+                                    @{
+                                        var i = 1;
+                                        foreach (var item in Model._tabs.body)
+                                        {
+                                            item._html_id = "tab_" + i;
+                                            item._style = "height:240px;";
+                                            @Html.Partial("~/Views/User/Details/Common/_CardBodyList.cshtml", (IVoice.Models.Components.CardBodyListModel)item)
+                                            i++;
+                                        }
                                     }
-                                }
+                                </div>
+                            </div>
+                            <!-- Ad stream -->
+                            <div class="box-default margin-top-20">
+                                @Html.Partial("~/Views/User/Details/Common/_CardHeader.cshtml", (IVoice.Models.Components.Common.CardHeaderModel)Model._adstream.header)
+                                @Html.Partial("~/Views/User/Details/Common/_CardBody.cshtml", (IVoice.Models.Components.Common.CardBodyModel)Model._adstream.body)
                             </div>
                         </div>
-                        <!-- Ad stream -->
+
+                    </div>
+                    <div class="col-md-4">
+                        <!-- live IP -->
+                        <div class="box-default">
+                            @Html.Partial("~/Views/User/Details/Common/_CardHeader.cshtml", (IVoice.Models.Components.Common.CardHeaderModel)Model._liveIP.header)
+                            @Html.Partial("~/Views/User/Details/Common/_CardBody.cshtml", new IVoice.Models.Components.Common.CardBodyModel() { })
+                        </div>
+                        <!-- Spread Box -->
                         <div class="box-default margin-top-20">
-                            @Html.Partial("~/Views/User/Details/Common/_CardHeader.cshtml", (IVoice.Models.Components.Common.CardHeaderModel)Model._adstream.header)
-                            @Html.Partial("~/Views/User/Details/Common/_CardBody.cshtml", (IVoice.Models.Components.Common.CardBodyModel)Model._adstream.body)
+                            @Html.Partial("~/Views/User/Details/Common/_CardHeader.cshtml", (IVoice.Models.Components.Common.CardHeaderModel)Model._spreadBox.header)
+                            @Html.Partial("~/Views/User/Details/Common/_CardBodyList.cshtml", (IVoice.Models.Components.CardBodyListModel)Model._spreadBox.body)
+                        </div>
+                        <!-- Chat Wing -->
+                        <div class="box-default margin-top-20">
+                            @Html.Partial("~/Views/User/Details/Common/_CardHeader.cshtml", (IVoice.Models.Components.Common.CardHeaderModel)Model._chatWing.header)
+                            @Html.Partial("~/Views/User/Details/Common/_CardBody.cshtml", (IVoice.Models.Components.Common.CardBodyModel)Model._chatWing.body)
                         </div>
                     </div>
                 </div>
-                <div class="col-md-4 pd-0">
-                    <!-- live IP -->
-                    <div class="box-default">
-                        @Html.Partial("~/Views/User/Details/Common/_CardHeader.cshtml", (IVoice.Models.Components.Common.CardHeaderModel)Model._liveIP.header)
-                        @Html.Partial("~/Views/User/Details/Common/_CardBody.cshtml", new IVoice.Models.Components.Common.CardBodyModel() { })
-                    </div>
-                    <!-- Spread Box -->
-                    <div class="box-default margin-top-20">
-                        @Html.Partial("~/Views/User/Details/Common/_CardHeader.cshtml", (IVoice.Models.Components.Common.CardHeaderModel)Model._spreadBox.header)
-                        @Html.Partial("~/Views/User/Details/Common/_CardBodyList.cshtml", (IVoice.Models.Components.CardBodyListModel)Model._spreadBox.body)
-                    </div>
-                    <!-- Chat Wing -->
-                    <div class="box-default margin-top-20">
-                        @Html.Partial("~/Views/User/Details/Common/_CardHeader.cshtml", (IVoice.Models.Components.Common.CardHeaderModel)Model._chatWing.header)
-                        @Html.Partial("~/Views/User/Details/Common/_CardBody.cshtml", (IVoice.Models.Components.Common.CardBodyModel)Model._chatWing.body)
-                    </div>
-                </div>
+                
             </div>
         </div>
+        
+
+        
+    </div>
+
 </div>
+
 
 @section scripts {
     <script src="~/Scripts/views/common/carousel_custom.js"></script>

@@ -72,13 +72,15 @@ $('#file_upload_creator').change(function (e) {
         processData: false,
         data: model,
         complete: function (e) {
-            if (e.responseJSON != "") {
+            if (e.responseJSON == 'Failed' || e.responseJSON == '') {
+                alertMessage('Error', 'Something went wrong with upload');
+            } else {
                 if (upload_type == 'panel') {
 
                 } else if (upload_type == 'background') {
                     $('#ipcreator-board').css('background-color', '');
                     $('#ipcreator-board').css('background-image', 'url(' + e.responseText + ')');
-                    
+
                 }
             }
         }

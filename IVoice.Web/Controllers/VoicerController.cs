@@ -57,24 +57,8 @@ namespace IVoice.Controllers
                 }
             }
 
-            model._blocked = _usersConnectionRepository.GetAllVoicerModelsByFilter(x => x.User1.Active && x.UserId == userID && x.Type == VoicerConnectionType.BLOCKED.ToString(),
-                                                                                    Sorter<UsersConnection>.Get(x => x.DateConnected, false));
             model._connected = _usersConnectionRepository.GetAllVoicerModelsByFilter(x => x.User1.Active && x.UserId == userID && x.Type == VoicerConnectionType.CONNECTED.ToString(),
                                                                                     Sorter<UsersConnection>.Get(x => x.DateConnected, false));
-            model._waiting = _usersConnectionRepository.GetAllVoicerModelsByFilter(x => x.User1.Active && x.UserId == userID && x.Type == VoicerConnectionType.WAITING.ToString(),
-                                                                                    Sorter<UsersConnection>.Get(x => x.DateConnected, false));
-
-            model._requested = _usersConnectionRepository.GetAllVoicerModelsByFilter(x => x.User1.Active && x.UserId == userID && x.Type == VoicerConnectionType.WAITING.ToString(),
-                                                                                    Sorter<UsersConnection>.Get(x => x.DateConnected, false));
-
-            foreach (var item in model._blocked)
-            {
-                if(!System.IO.File.Exists(HttpContext.Server.MapPath(item.ImagePath)))
-                {
-                    item.ImagePath = "/Images/common/no-image.jpg";
-                }
-            }
-
             foreach (var item in model._connected)
             {
                 if (!System.IO.File.Exists(HttpContext.Server.MapPath(item.ImagePath)))
@@ -82,20 +66,39 @@ namespace IVoice.Controllers
                     item.ImagePath = "/Images/common/no-image.jpg";
                 }
             }
-
-            foreach(var item in model._waiting)
+            if (userID == _userID)
             {
-                if(!System.IO.File.Exists(HttpContext.Server.MapPath(item.ImagePath)))
+                model._blocked = _usersConnectionRepository.GetAllVoicerModelsByFilter(x => x.User1.Active && x.UserId == userID && x.Type == VoicerConnectionType.BLOCKED.ToString(),
+                                                                                    Sorter<UsersConnection>.Get(x => x.DateConnected, false));
+
+                model._waiting = _usersConnectionRepository.GetAllVoicerModelsByFilter(x => x.User1.Active && x.UserId == userID && x.Type == VoicerConnectionType.WAITING.ToString(),
+                                                                                        Sorter<UsersConnection>.Get(x => x.DateConnected, false));
+
+                model._requested = _usersConnectionRepository.GetAllVoicerModelsByFilter(x => x.User1.Active && x.UserId == userID && x.Type == VoicerConnectionType.REQUESTED.ToString(),
+                                                                                        Sorter<UsersConnection>.Get(x => x.DateConnected, false));
+
+                foreach (var item in model._blocked)
                 {
-                    item.ImagePath = "/Images/common/no-image.jpg";
+                    if (!System.IO.File.Exists(HttpContext.Server.MapPath(item.ImagePath)))
+                    {
+                        item.ImagePath = "/Images/common/no-image.jpg";
+                    }
                 }
-            }
 
-            foreach(var item in model._requested)
-            {
-                if (!System.IO.File.Exists(HttpContext.Server.MapPath(item.ImagePath)))
+                foreach (var item in model._waiting)
                 {
-                    item.ImagePath = "/Images/common/no-image.jpg";
+                    if (!System.IO.File.Exists(HttpContext.Server.MapPath(item.ImagePath)))
+                    {
+                        item.ImagePath = "/Images/common/no-image.jpg";
+                    }
+                }
+
+                foreach (var item in model._requested)
+                {
+                    if (!System.IO.File.Exists(HttpContext.Server.MapPath(item.ImagePath)))
+                    {
+                        item.ImagePath = "/Images/common/no-image.jpg";
+                    }
                 }
             }
 

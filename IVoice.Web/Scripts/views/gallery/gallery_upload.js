@@ -15,7 +15,11 @@
 
         done: function (e, data) {
             // upload success
-            location.reload();
+            if (data.result == "Failed") {
+                alertMessage('Error', 'Error while uploading file');
+            } else {
+                location.reload();
+            }
         },
 
         fail: function (e, data) {

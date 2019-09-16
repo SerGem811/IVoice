@@ -143,17 +143,24 @@ namespace IVoice.Controllers
         [HttpPost]
         public override JsonResult FileUpload(int Id, HttpPostedFileBase file, Guid UniqueId)
         {
-            var result = base.FileUpload(Id, file, UniqueId);
-            var userAttachmentId = result.Data.ToString().ToInt();
-            if (userAttachmentId > 0)
+            try
             {
-                _whisperAttachmentRepository.Save(new WhisperAttachment
+                var result = base.FileUpload(Id, file, UniqueId);
+                var userAttachmentId = result.Data.ToString().ToInt();
+                if (userAttachmentId > 0)
                 {
-                    UserAttachmentId = userAttachmentId,
-                });
+                    _whisperAttachmentRepository.Save(new WhisperAttachment
+                    {
+                        UserAttachmentId = userAttachmentId,
+                    });
+                }
+                return result;
             }
-
-            return result;
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return Json("Failed", JsonRequestBehavior.AllowGet);
+            }
         }
 
         [HttpPost]

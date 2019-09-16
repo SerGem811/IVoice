@@ -157,6 +157,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\IPController.cs" />
     <Compile Include="Controllers\IPSocialController.cs" />
+    <Compile Include="Controllers\SpreadController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\VoicerController.cs" />
     <Compile Include="Controllers\WhisperController.cs" />
@@ -2124,7 +2125,8 @@
     <Content Include="Views\Shared\_VoicerFilter.cshtml" />
     <Content Include="Views\IP\Index.cshtml" />
     <Content Include="Views\Shared\_IPCard.cshtml" />
-    <Content Include="Views\IP\_GetList.cshtml" />
+    <Content Include="Views\Shared\_GetIPList.cshtml" />
+    <Content Include="Views\Spread\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

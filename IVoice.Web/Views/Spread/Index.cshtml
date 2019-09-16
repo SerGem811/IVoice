@@ -1,0 +1,40 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Index";
+}
+
+<div class="container fluid-content">
+    <div class="container" id="ip-container">
+
+    </div>
+
+    <div class="center-item margin-bottom-10">
+        <button id="btn-ip-more" type="submit" class="btn btn-primary btn-ip-more" style="min-width:300px;margin-top: 50px;">Load more...</button>
+    </div>
+</div>
+
+@section scripts {
+    <script>
+        var pageNum = 0;
+
+
+        $('#btn-ip-more').click(function () {
+            $.ajax({
+                url: '@Url.Action("_GetList", "Spread")',
+                data: {
+                    PageNum: pageNum,
+                },
+                type: 'POST',
+                complete: function (request, status) {
+                    if (request.responseText == null || request.responseText == "") {
+                        return;
+                    }
+                    pageNum++;
+                    $("#ip-container").append(request.responseText);
+                }
+            });
+        });
+
+        $('#btn-ip-more').click();
+    </script>
+}

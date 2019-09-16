@@ -84,30 +84,39 @@ namespace IVoice.Controllers
         [HttpPost]
         public JsonResult UploadIPImage(HttpPostedFileBase file, Guid guid)
         {
-            var fileName = "";
-            if(file != null && file.ContentLength > 0)
+            try
             {
-                string extension = Path.GetExtension(file.FileName).ToLower();
-                fileName = guid + "_" + Path.GetFileName(file.FileName);
-                if (!Directory.Exists(_ip_path))
-                    Directory.CreateDirectory(_ip_path);
-
-                var path = Path.Combine(_ip_path, fileName);
-                file.SaveAs(path);
-
-                var id = _userAttachmentsRepository.Save(new UsersAttachment()
+                var fileName = "";
+                if (file != null && file.ContentLength > 0)
                 {
-                    Active = false,
-                    DateAdded = DateTime.Now,
-                    FileName = file.FileName,
-                    Path = "/upload/ip/" + fileName,
-                    UserId = _userID,
-                    Visibity = Visibility.PRIVATE.ToString(),
-                    UniqueId = guid
-                });
-            }
+                    string extension = Path.GetExtension(file.FileName).ToLower();
+                    fileName = guid + "_" + Path.GetFileName(file.FileName);
+                    if (!Directory.Exists(_ip_path))
+                        Directory.CreateDirectory(_ip_path);
 
-            return Json("/upload/ip/" + fileName, JsonRequestBehavior.AllowGet);
+                    var path = Path.Combine(_ip_path, fileName);
+                    file.SaveAs(path);
+
+                    var id = _userAttachmentsRepository.Save(new UsersAttachment()
+                    {
+                        Active = false,
+                        DateAdded = DateTime.Now,
+                        FileName = file.FileName,
+                        Path = "/upload/ip/" + fileName,
+                        UserId = _userID,
+                        Visibity = Visibility.PRIVATE.ToString(),
+                        UniqueId = guid
+                    });
+                }
+
+                return Json("/upload/ip/" + fileName, JsonRequestBehavior.AllowGet);
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return Json("Failed", JsonRequestBehavior.AllowGet);
+            }
+            
         }
 
         public PartialViewResult _SaveIP(int Id)
@@ -167,37 +176,45 @@ namespace IVoice.Controllers
         [HttpPost]
         public ActionResult addCoverImage(HttpPostedFileBase file, Guid UniqueId)
         {
-            if (file != null && file.ContentLength > 0)
+            try
             {
-                string extension = Path.GetExtension(file.FileName).ToLower();
-
-                var fileName = UniqueId + "_" + Path.GetFileName(file.FileName);
-
-                if (!Directory.Exists(_cover_path))
-                    Directory.CreateDirectory(_cover_path);
-
-                var path = Path.Combine(_cover_path, fileName);
-                file.SaveAs(path);
-
-                var id = _userAttachmentsRepository.Save(new UsersAttachment()
+                if (file != null && file.ContentLength > 0)
                 {
-                    Active = false,
-                    DateAdded = DateTime.Now,
-                    FileName = file.FileName, //the real FS file name has UniqueId
-                    Path = "/upload/ip/cover/" + fileName,
-                    UserId = _userID,
-                    Visibity = "Private",
-                    UniqueId = UniqueId,
-                });
+                    string extension = Path.GetExtension(file.FileName).ToLower();
 
-                var res = new JObject();
-                res["id"] = id;
-                res["cover"] = "/upload/ip/cover/" + fileName;
+                    var fileName = UniqueId + "_" + Path.GetFileName(file.FileName);
 
-                return Json(res, JsonRequestBehavior.AllowGet);
+                    if (!Directory.Exists(_cover_path))
+                        Directory.CreateDirectory(_cover_path);
+
+                    var path = Path.Combine(_cover_path, fileName);
+                    file.SaveAs(path);
+
+                    var id = _userAttachmentsRepository.Save(new UsersAttachment()
+                    {
+                        Active = false,
+                        DateAdded = DateTime.Now,
+                        FileName = file.FileName, //the real FS file name has UniqueId
+                        Path = "/upload/ip/cover/" + fileName,
+                        UserId = _userID,
+                        Visibity = "Private",
+                        UniqueId = UniqueId,
+                    });
+
+                    var res = new JObject();
+                    res["id"] = id;
+                    res["cover"] = "/upload/ip/cover/" + fileName;
+
+                    return Json(res, JsonRequestBehavior.AllowGet);
+                }
+            }
+            catch(Exception ex)
+            {
+                Console.Write(ex.Message);
+                return Json("Failed", JsonRequestBehavior.AllowGet);
             }
 
-            return Json(new Message(TMessage.FALSE), JsonRequestBehavior.AllowGet);
+            return Json("Failed", JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
