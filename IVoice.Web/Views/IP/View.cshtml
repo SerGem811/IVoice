@@ -1,0 +1,15 @@
+﻿@model IVoice.Models.IP.IPModel
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Index";
+}
+
+@section hrefs {
+    <link href="~/Content/IPSocial.css" rel="stylesheet" />
+}
+
+<div class="full-content">
+    <div class="ipcreator-board" style="@Model._style">
+        @Html.Raw(Model._body)
+    </div>
+</div>

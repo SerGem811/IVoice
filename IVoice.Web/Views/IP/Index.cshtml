@@ -18,16 +18,16 @@
                 @Html.TextBoxFor(m => m._search_content, new { @class = "form-control", placeholder = "IP name" })
                 @Html.HiddenFor(m => m._category_id)
                 @Html.HiddenFor(m => m._feature_id)
-                <button id="btn-ip-search" type="button" class="btn btn-default btn-search box-default margin-left-10">Search</button>
+                <button id="btn-ip-search" class="btn btn-default btn-search box-default margin-left-10">Search</button>
             </div>
         </div>
-        
+
         <div class="container" id="ip-container">
 
         </div>
 
         <div class="center-item margin-bottom-10">
-            <button id="btn-ip-more" type="submit" class="btn btn-primary btn-ip-more" style="min-width:300px;margin-top: 50px;">Load more...</button>
+            <button id="btn-ip-more" class="btn btn-primary btn-ip-more margin-top-30">Load more...</button>
         </div>
     </div>
 </div>
@@ -38,15 +38,18 @@
         var pageNum = 0;
         var categoryId = @Model._category_id;
         var featureId = @Model._feature_id;
+        var ipName = "";
 
         $(document).ready(function () {
-            
+            $('#btn-ip-more').click();
         })
 
-        $('#btn-ip-more').click(function () {
+        $('#btn-ip-more').on('click', function () {
+            ipName = $('[name="_search_content"]')[0].value;
             $.ajax({
                 url: '@Url.Action("_GetList", "IP")',
                 data: {
+                    Name : ipName,
                     PageNum: pageNum,
                     CategoryId: categoryId,
                     FeatureId: featureId,
@@ -62,11 +65,13 @@
             });
         });
 
-        $('#btn-ip-search').click(function () {
+        $('#btn-ip-search').on('click', function () {
             pageNum = 0;
+            ipName = $('[name="_search_content"]')[0].value;
             $.ajax({
                 url: '@Url.Action("_GetList", "IP")',
                 data: {
+                    Name : ipName,
                     PageNum: pageNum,
                     CategoryId: categoryId,
                     FeatureId: featureId,
@@ -82,7 +87,6 @@
             });
         });
 
-        $('#btn-ip-more').click();
     </script>
     <script src="~/Scripts/views/ip/iplist.js"></script>
 }

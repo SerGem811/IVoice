@@ -201,6 +201,7 @@
     <Compile Include="Models\IPSocial\SpreadViewModel.cs" />
     <Compile Include="Models\IPSocial\TableRowModel.cs" />
     <Compile Include="Models\IP\IPListModel.cs" />
+    <Compile Include="Models\IP\IPModel.cs" />
     <Compile Include="Models\IP\IPViewModel.cs" />
     <Compile Include="Models\Components\PersonalCard\CardBodyPersonalModel.cs" />
     <Compile Include="Models\Components\PersonalCard\CardHeaderPersonalModel.cs" />
@@ -2129,6 +2130,7 @@
     <Content Include="Views\Shared\_GetIPList.cshtml" />
     <Content Include="Views\Spread\Index.cshtml" />
     <Content Include="Views\Shared\_SpreadForm.cshtml" />
+    <Content Include="Views\IP\View.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

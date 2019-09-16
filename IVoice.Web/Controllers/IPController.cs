@@ -56,7 +56,7 @@ namespace IVoice.Controllers
         }
 
         [HttpPost]
-        public PartialViewResult _GetList(int PageNum, int CategoryId, int FeatureId)
+        public PartialViewResult _GetList(string Name, int PageNum, int CategoryId, int FeatureId)
         {
             IEnumerable<IPViewModel> lst = null;
 
@@ -75,6 +75,10 @@ namespace IVoice.Controllers
             if(_userID > 0)
                 filter = filter.And(x => x.UserId == _userID);
 
+            if(!String.IsNullOrEmpty(Name))
+            {
+                filter = filter.And(x => x.Name.Contains(Name));
+            }
             lst = _usersIPRepository.GetAllIPSForUser(filter, PageNum, 9, _userID);
             ViewBag.userID = _userID;
             return PartialView("_GetIPList", lst);
@@ -212,5 +216,17 @@ namespace IVoice.Controllers
             
         }
 
+        public ActionResult View(int id)
+        {
+            var item = _usersIPRepository.FirstOrDefault(x => x.Id == id, x => x, null);
+
+            var model = new IPModel() {
+                _body = item.BodyHtml,
+                _style = item.BodyStyle
+            };
+
+            FillBaseModel(model);
+            return View(model);
+        }
     }
 }
