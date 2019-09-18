@@ -173,12 +173,17 @@ namespace IVoice.Controllers
             if (userRepo == null)
                 return RedirectToAction("Index", "Home");
 
+            if(Id != _userID && !userRepo.isPublic)
+            {
+                return RedirectToAction("PermissionDenied", "Home");
+            }
+
             DetailsViewModel model = new DetailsViewModel();
 
-            List<string> lastSpreadList = _userIPSpreadsRepository.GetAllIPSForUser(x => x.UserId == this._userID, 0, int.MaxValue, this._userID)
+            List<string> lastSpreadList = _userIPSpreadsRepository.GetAllIPSForUser(x => x.UserId == userRepo.Id, 0, int.MaxValue, this._userID)
                                             .Select(x => FormatIPForDetails(x)).ToList();
 
-            List<string> lastActivityList = _usersActivityRepository.LoadSortAndSelect(x => x.Type == "ACTIVITY" && x.UsersIP.UserId == userRepo.Id && x.UsersIP.Public,
+            List<string> lastActivityList = _usersActivityRepository.LoadSortAndSelect(x => x.Type == "Activity" && x.UsersIP.UserId == userRepo.Id && x.UsersIP.Public,
                                                                                         x => x, 9, Sorter<UsersActivity>.Get(x => x.Id, false))
                                                                                         .Select(x => FormatActivityForDetails(x)).ToList();
 
@@ -212,8 +217,24 @@ namespace IVoice.Controllers
             {
                 pBody._img = "/Images/common/no-image.jpg";
             }
-            pBody._ep = userRepo.EPPoints;
-            pBody._current = (userRepo.Id == this._userID) ? true : false;
+            if (userRepo.ActiveEP || Id == _userID)
+            {
+                pBody._ep = userRepo.EPPoints;
+            }
+            else
+            {
+                pBody._ep = -1;
+            }
+            
+            pBody._current = (userRepo.Id == _userID) ? true : false;
+            if(Id != _userID)
+            {
+                if (_usersConnectionRepository.FirstOrDefault(x => x.UserId == _userID && x.User1.Id == Id && x.Type == VoicerConnectionType.CONNECTED.ToString(), x => x) == null)
+                    pBody._connected = false;
+                else
+                    pBody._connected = true;
+            }
+
             pBody._gallery = userRepo.ActiveGallery;
             pBody._voicers = userRepo.ActiveVoicer;
             pBody._spreads = userRepo.ActiveSpread;

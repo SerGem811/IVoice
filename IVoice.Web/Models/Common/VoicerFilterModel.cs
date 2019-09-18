@@ -1,4 +1,5 @@
 ﻿using IVoice.Database;
+using IVoice.Helpers.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,8 +13,10 @@ namespace IVoice.Models.Common
     {
         /*type of VoicerFilterModel in used, 
             type = 1 then personal info model in settings, 
-            type = 2 then normal voicer search
-            type = 3 then
+            type = 2 then normal voicer filter
+            type = 3 then event filter
+            type = 4 then normal voicer view
+            type = 5 then event view
         */
         public int _frm_type;
         public string _birthday { get; set; }
@@ -54,6 +57,30 @@ namespace IVoice.Models.Common
             _occupation_ids = new List<int>();
             _relation = "";
             _hobby_ids = new List<int>();
+        }
+
+        public Expression<Func<User, bool>> GetFilter(List<int> blockedUsers)
+        {
+            Expression<Func<User, bool>> filter = x => !blockedUsers.Contains(x.Id) && x.Active;
+
+            if (!string.IsNullOrEmpty(_birthday))
+                filter = filter.And(x => x.BirthDate == _birthday);
+            if (_gender_id != null && _gender_id > 0)
+                filter = filter.And(x => x.GenderId == _gender_id);
+            if (_country_id!= null && _country_id > 0)
+                filter = filter.And(x => x.CountryId == _country_id);
+            if (!_occupation_ids.IsEmpty())
+                filter = filter.And(x => x.UsersOccupationsUsers.Any(y => _occupation_ids.Contains(y.UsersOccupationsId)));
+            if (!_hobby_ids.IsEmpty())
+                filter = filter.And(x => x.UsersHobbyUsers.Any(y => _hobby_ids.Contains(y.UsersHobbyId)));
+            if (!string.IsNullOrEmpty(_region))
+                filter = filter.And(x => x.Region.ToUpper().Contains(_region.ToUpper()));
+            if (!string.IsNullOrEmpty(_language))
+                filter = filter.And(x => x.Language.ToUpper().Contains(_language.ToUpper()));
+            if (!string.IsNullOrEmpty(_relation))
+                filter = filter.And(x => x.RelationshipStatus.ToUpper().Contains(_relation.ToUpper()));
+
+            return filter;
         }
 
         public UsersIPFilter ToUserIIPFilterEntity(int userIPId)

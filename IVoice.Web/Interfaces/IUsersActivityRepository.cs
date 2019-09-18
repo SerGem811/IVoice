@@ -9,5 +9,6 @@ namespace IVoice.Interfaces
 {
     public interface IUsersActivityRepository : IGenericRepository<Database.UsersActivity>
     {
+        int SetActivity(string activityType, string activityOperationType, int UserId, int UsersIPId);
     }
 }

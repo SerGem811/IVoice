@@ -12,7 +12,7 @@
         <a href="@url"><img src="@Model._image_path" /></a>
     </div>
     <div class="margin-top-10">
-        @if (userID == 0)
+        @if (userID == 0 || (Model._user_id != userID && !Model._public))
         {
             <span>@Model._voicer</span>
         }

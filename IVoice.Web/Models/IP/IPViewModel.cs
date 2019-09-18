@@ -14,6 +14,7 @@ namespace IVoice.Models.IP
         public DateTime _date_add { get; set; }
         public string _time_ago { get; set; }
         public string _route { get; set; }
+        public bool _public { get; set; }
 
         public int _views { get; set; }
         public int _comments { get; set; }

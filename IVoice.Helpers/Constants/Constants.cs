@@ -29,8 +29,8 @@
 
         public enum ActivityType
         {
-            ACTIVITY,
-            UPDATES
+            Activity,
+            Updates
         }
 
         public enum ActivityOperationType

@@ -35,7 +35,7 @@ namespace IVoice.Controllers
         protected IGenericRepository<UsersIPSpread> _userIPSpreadRepository { get; }
         protected IUsersConnectionRepository _connectionRepository { get; }
         protected IUserIPAdsRepository _userIPAdsRepository { get; }
-        protected IGenericRepository<UsersActivity> _userActivityRepository { get; set; }
+        protected IUsersActivityRepository _userActivityRepository { get; set; }
 
         public IPSocialController(IUserRepository userRepository,
                                     IUserAttachmentsRepository userAttachmentsRepository,
@@ -52,7 +52,7 @@ namespace IVoice.Controllers
                                     IGenericRepository<UsersIPSpread> userIPSpreadRepository,
                                     IUserIPAdsRepository userIPAdsRepository,
                                     IUsersConnectionRepository connectionRepository,
-                                    IGenericRepository<UsersActivity> usersActivityRepository
+                                    IUsersActivityRepository usersActivityRepository
             ) : base(userRepository, userAttachmentsRepository, userIPRepository)
         {
             _featureRepository = featureRepository;
@@ -153,6 +153,9 @@ namespace IVoice.Controllers
             {
                 model._selected.Add(true);
             }
+
+            model._filter._frm_type = 4;
+            model._event._frm_type = 5;
             return PartialView(model);
         }
 
@@ -275,41 +278,51 @@ namespace IVoice.Controllers
             }
 
             // spread to voicer
-            SpreadToUser(UserIpId, model._selected);
+            // spread to connected
+            var connected = _connectionRepository.GetAllVoicerModelsByFilter(x => x.User1.Active && x.User1.ActiveIPFeeds && x.UserId == _userID && x.Type == VoicerConnectionType.CONNECTED.ToString(),
+                                                                                Sorter<UsersConnection>.Get(x => x.DateConnected, false));
+            var index = 0;
+            foreach(var item in connected)
+            {
+                if (model._selected[index])
+                {
+                    SpreadToUser(UserIpId, item.Id);
+                }
+                index++;
+            }
+            // spread to criteria
+            SpreadToUserByCriteria(UserIpId, model._filter);
 
             // set activity
-            _userActivityRepository.Save(new UsersActivity()
-            {
-                Date = DateTime.Now,
-                Type = "ACTIVITY",
-                UsersIPId = UserIpId,
-                UserId = _userID,
-                RowText = "Spread"
-            });
+
+            _userActivityRepository.SetActivity("Activity", "Spread", _userID, UserIpId);
 
             return Json("Success", JsonRequestBehavior.AllowGet);
         }
 
-        public void SpreadToUser(int id, List<bool> options)
+        public void SpreadToUser(int id, int voicerID)
         {
             // spread to voicer
-            var connected = _connectionRepository.GetAllVoicerModelsByFilter(x => x.User1.Active && x.User1.ActiveIPFeeds && x.UserId == _userID && x.Type == VoicerConnectionType.CONNECTED.ToString(),
-                                                                                Sorter<UsersConnection>.Get(x => x.DateConnected, false));
-
-            var index = 0;
-            foreach (var item in connected)
+            _userIPSpreadRepository.Save(new UsersIPSpread()
             {
-                if (options[index])
-                {
-                    _userIPSpreadRepository.Save(new UsersIPSpread()
-                    {
-                        Date = DateTime.Now,
-                        UserId = item.Id,
-                        UserIpId = id,
-                        UserSentId = _userID,
-                    });
-                }
-                index++;
+                Date = DateTime.Now,
+                UserId = voicerID,
+                UserIpId = id,
+                UserSentId = _userID,
+            });
+        }
+
+        public void SpreadToUserByCriteria(int id, VoicerFilterModel model)
+        {
+            if (model == null)
+                return;
+
+            var filter = model.GetFilter(_connectionRepository.GetAllBlockedUsers(_userID));
+            filter = filter.And(x => x.ActiveIPFeeds);
+            var voicers = _userRepository.LoadAndSelect(filter, x => x.Id, false);
+            foreach(var item in voicers)
+            {
+                SpreadToUser(id, item);
             }
         }
 
@@ -355,6 +368,8 @@ namespace IVoice.Controllers
                 model._selected.Add(true);
             }
 
+            model._filter._frm_type = 4;
+
             return PartialView("_SpreadForm", model);
         }
 
@@ -363,7 +378,23 @@ namespace IVoice.Controllers
         {
             try
             {
-                SpreadToUser(model._id, model._selected);
+                var connected = _connectionRepository.GetAllVoicerModelsByFilter(x => x.User1.Active && x.User1.ActiveIPFeeds && x.UserId == _userID && x.Type == VoicerConnectionType.CONNECTED.ToString(),
+                                                                                Sorter<UsersConnection>.Get(x => x.DateConnected, false));
+                var index = 0;
+                foreach (var item in connected)
+                {
+                    if (model._selected[index])
+                    {
+                        SpreadToUser(model._id, item.Id);
+                    }
+                    index++;
+                }
+                // spread to criteria
+                SpreadToUserByCriteria(model._id, model._filter);
+
+                // set activity
+                _userActivityRepository.SetActivity("Activity", "Spread", _userID, model._id);
+
                 return Json("Success", JsonRequestBehavior.AllowGet);
             }
             catch

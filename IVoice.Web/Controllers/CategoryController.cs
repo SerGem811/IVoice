@@ -10,7 +10,7 @@ using IVoice.Models.Common;
 
 namespace IVoice.Controllers
 {
-    public class CategoryController : BasePIPController
+    public class CategoryController : BaseController
     {
         protected IGenericRepository<Feature> _featureRepository { get; set; }
         protected IGenericRepository<Category> _categoryRepository { get; set; }
@@ -53,6 +53,11 @@ namespace IVoice.Controllers
             FillBaseModel(model);
 
             return View(model);
+        }
+
+        public ActionResult FilterIndex(int id)
+        {
+            return RedirectToAction("FilterIndex", "IP", new { Id = id });
         }
     }
 }

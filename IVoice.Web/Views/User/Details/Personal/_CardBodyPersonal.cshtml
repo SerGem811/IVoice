@@ -4,10 +4,18 @@
     <div class="card-body-image">
         <img src="@Model._img" style="width:100%" />
     </div>
-    @if (Model._current)
+    @if (Model._current || Model._connected)
     {
         <div class="w-100 center-item">
-            <button type="button" class="btn btn-search btn-card-btn box-default">EP Points: @Model._ep</button>
+            @if (Model._ep == -1)
+            {
+                // private EPoint
+                <button type="button" class="btn btn-search btn-card-btn box-default" disabled>EP Points: PRIVATE</button>
+            }
+            else
+            {
+                <button type="button" class="btn btn-search btn-card-btn box-default">EP Points: @Model._ep</button>
+            }
         </div>
     }
     else
@@ -16,37 +24,37 @@
             <button type="button" class="btn btn-search btn-card-btn box-default"><i class="fade fa-plus"></i>&nbsp;Connect to voicer</button>
         </div>
     }
-        <div class="w-100 center-item margin-top-10">
-            <button type="button" class="btn btn-search btn-card-btn box-default"><i class="fa fa-user"></i>&nbsp;Personal Info</button>
-        </div>
+    <div class="w-100 center-item margin-top-10">
+        <button type="button" class="btn btn-search btn-card-btn box-default"><i class="fa fa-user"></i>&nbsp;Personal Info</button>
+    </div>
 
-        <div class="margin-bottom-10 margin-top-10 center-item">
-            @if (Model._gallery)
-            {
-                <a href="@Url.Action("Index", "Gallery", new {UserId = ViewBag.userID})" class="white-link"><i class="fa fa-play"></i></a>
-            }
-            else
-            {
-                <span class="disabled-text"><i class="fa fa-play"></i></span>
-            }
+    <div class="margin-bottom-10 margin-top-10 center-item">
+        @if (Model._gallery)
+        {
+            <a href="@Url.Action("Index", "Gallery", new {id = ViewBag.userID})" class="white-link"><i class="fa fa-play"></i></a>
+        }
+        else
+        {
+            <span class="disabled-text"><i class="fa fa-play"></i></span>
+        }
 
-            @if (Model._voicers)
-            {
-                <a href="@Url.Action("Index", "Voicer", new {UserId = ViewBag.userID})" class="white-link margin-left-20"><i class="fa fa-user-alt"></i></a>
-            }
-            else
-            {
-                <span class="disabled-text margin-left-20"><i class="fa fa-user-alt"></i></span>
-            }
+        @if (Model._voicers)
+        {
+            <a href="@Url.Action("Index", "Voicer", new {id = ViewBag.userID})" class="white-link margin-left-20"><i class="fa fa-user-alt"></i></a>
+        }
+        else
+        {
+            <span class="disabled-text margin-left-20"><i class="fa fa-user-alt"></i></span>
+        }
 
-            @if (Model._spreads)
-            {
-                <a href="@Url.Action("Index", "Spread", new {UserId = ViewBag.userID})" class="white-link margin-left-20"><i class="fa fa-share-alt"></i></a>
-            }
-            else
-            {
-                <span class="disabled-text margin-left-20"><i class="fa fa-share-alt"></i></span>
-            }
+        @if (Model._spreads)
+        {
+            <a href="@Url.Action("Index", "Spread", new {id = ViewBag.userID})" class="white-link margin-left-20"><i class="fa fa-share-alt"></i></a>
+        }
+        else
+        {
+            <span class="disabled-text margin-left-20"><i class="fa fa-share-alt"></i></span>
+        }
 
-        </div>
+    </div>
 </div>

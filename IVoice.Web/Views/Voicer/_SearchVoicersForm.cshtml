@@ -2,6 +2,20 @@
 @using IVoice.Models.Components.Tabs
 @using IVoice.Models.Components.Common
 
+@{ 
+    var v_filter = new ViewDataDictionary()
+    {
+        TemplateInfo = new TemplateInfo()
+        {
+            HtmlFieldPrefix = "_filter"
+        }
+    };
+    v_filter.Add("countries", ViewData["countries"]);
+    v_filter.Add("genders", ViewData["genders"]);
+    v_filter.Add("hobbies", ViewData["hobbies"]);
+    v_filter.Add("occupations", ViewData["occupations"]);
+}
+
 @using (Html.BeginForm("SearchVoicers", "Voicer", FormMethod.Post))
 {
     <div class="panel with-nav-tabs panel-default">
@@ -23,7 +37,7 @@
                 </div>
 
                 <div class="tab-pane" id="tabVoicerFilter">
-                    @Html.Partial("_VoicerFilter", Model._filter)
+                    @Html.Partial("_VoicerFilter", Model._filter, v_filter)
                 </div>
             </div>
         </div>

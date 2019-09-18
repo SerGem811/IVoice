@@ -31,6 +31,7 @@ namespace IVoice.Services
                                 _title = x.Name,
                                 _voicer = x.User.Nickname,
                                 _date_add = x.DateAdd,
+                                _public = x.Public,
 
                                 _comments = x.Comments,
                                 _dislikes = x.Dislikes,

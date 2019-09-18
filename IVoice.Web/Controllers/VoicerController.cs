@@ -39,21 +39,21 @@ namespace IVoice.Controllers
             _occupationRepository = usersOccupationRepository;
         }
 
-        public ActionResult Index(int? UserId)
+        public ActionResult Index(int? id)
         {
             VoicersModel model = new VoicersModel();
 
             int userID = _userID;
-            if (UserId != null)
-                userID = (int)UserId;
+            if (id != null)
+                userID = (int)id;
 
             if(userID != _userID)
             {
                 var user = _userRepository.FirstOrDefault(x => x.Id == userID, x => x);
-                if(user == null || !user.ActiveVoicer)
+                if(user == null || !user.ActiveVoicer || !user.isPublic)
                 {
                     // notice for permission
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("PermissionDenied", "Home");
                 }
             }
 

@@ -1,0 +1,95 @@
+﻿@model IVoice.Models.IP.IPListModel
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    var v_filter = new ViewDataDictionary()
+    {
+        TemplateInfo = new TemplateInfo()
+        {
+            HtmlFieldPrefix = "_filter"
+        }
+    };
+    v_filter.Add("countries", ViewData["countries"]);
+    v_filter.Add("genders", ViewData["genders"]);
+    v_filter.Add("hobbies", ViewData["hobbies"]);
+    v_filter.Add("occupations", ViewData["occupations"]);
+}
+
+@section hrefs {
+    <link href="~/Content/IP.css" rel="stylesheet" />
+}
+
+<div class="container fluid-content">
+    <div class="row margin-top-20 margin-bottom-20">
+        <div class="center-item margin-bottom-20">
+            <button id="btn-ip-event-filter" class="btn box-default btn-search btn-ip-more margin-top-30"><i class="fa fa-angle-double-up"></i></button>
+        </div>
+        @using (Ajax.BeginForm("_GetFilteredList", "IP", new AjaxOptions() { OnComplete = "onFilterSearch", OnBegin = "onBeforeSubmit" }))
+        {
+            <div id="ip-filter-div" class="col-md-8 col-md-offset-2 box-default margin-bottom-20">
+                <div class="pd-tb-15">
+                    @Html.HiddenFor(m => m._feature_id)
+                    @Html.HiddenFor(m => m._pageNum)
+                    @Html.Partial("_VoicerFilter", Model._filter, v_filter)
+                </div>
+            </div>
+        }
+
+        <div class="container" id="ip-container">
+
+        </div>
+
+        <div class="center-item margin-bottom-20">
+            <button id="btn-ip-more" class="btn btn-primary btn-ip-more margin-top-30">Load more...</button>
+        </div>
+    </div>
+</div>
+
+@section scripts {
+    <script>
+        var filterVisible = true;
+        var isMore = false;
+        $(document).ready(function () {
+            $('#btn-ip-event-filter').click();
+            $('#btn-ip-more').click();
+        })
+
+        $('#btn-ip-more').on('click', function () {
+            isMore = true;
+            $('#ip-event-filter').submit();
+        });
+
+        $('#btn-ip-event-filter').on('click', function () {
+            if (filterVisible == true) {
+                console.log("hide");
+                $('#ip-filter-div').hide();
+                filterVisible = false;
+                $('#btn-ip-event-filter').html('<i class="fa fa-angle-double-down"></i>')
+            } else {
+                console.log("show");
+                $('#ip-filter-div').show();
+                filterVisible = true;
+                $('#btn-ip-event-filter').html('<i class="fa fa-angle-double-up"></i>')
+            }
+        });
+
+        function onFilterSearch(result) {
+            if (result == "Failed") {
+
+            } else {
+                var pg = document.getElementsByName('_pageNum')[0].value;
+                pg++;
+                document.getElementsByName('_pageNum')[0].value = pg;
+                isMore = false;
+            }
+        }
+
+        function onBeforeSubmit() {
+            if(!isMore)
+                document.getElementsByName('_pageNum')[0].value = 0;
+        }
+
+    </script>
+    <script src="~/Scripts/views/ip/iplist.js"></script>
+}

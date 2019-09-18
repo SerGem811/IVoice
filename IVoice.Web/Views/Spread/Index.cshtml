@@ -1,6 +1,9 @@
 ﻿@{
     Layout = "~/Views/Shared/_Layout.cshtml";
     ViewBag.Title = "Index";
+
+    var userID = ViewBag.userID;
+    var currentUserID = ViewBag.currentUserID;
 }
 
 <div class="container fluid-content">
@@ -21,11 +24,13 @@
         var urlSpread = '@Url.Action("_SpreadIP", "IPSocial")';
         var urlAddEP = '@Url.Action("AddPoint", "IP")';
         var urlSurf = '@Url.Action("SurfIP", "IP")';
+        var currentUserID = @currentUserID;
 
         $('#btn-ip-more').click(function () {
             $.ajax({
                 url: '@Url.Action("_GetList", "Spread")',
                 data: {
+                    userID: currentUserID,
                     PageNum: pageNum,
                 },
                 type: 'POST',

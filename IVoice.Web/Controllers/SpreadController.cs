@@ -19,15 +19,32 @@ namespace IVoice.Controllers
             _userIPSpreadRepository = userIPSpreadsRepository;
         }
 
-        public ActionResult Index(int? UserId)
+        public ActionResult Index(int? id)
         {
+            int userId = _userID;
+            if(id != null)
+            {
+                userId = (int)id;
+            }
+
+            if(userId != _userID)
+            {
+                var userRepo = _userRepository.FirstOrDefault(x => x.Id == userId, x => x);
+                if(userRepo == null || !userRepo.ActiveSpread || !userRepo.isPublic)
+                {
+                    return RedirectToAction("PermissionDenied", "Home");
+                }
+            }
+            
+            ViewBag.userID = _userID;
+            ViewBag.currentUserID = userId;
             return View(ReturnBaseModel());
         }
 
         [HttpPost]
-        public PartialViewResult _GetList(int PageNum)
+        public PartialViewResult _GetList(int PageNum, int userID)
         {
-            var lst = _userIPSpreadRepository.GetAllIPSForUser(x => x.UserId == _userID, PageNum, 9, _userID);
+            var lst = _userIPSpreadRepository.GetAllIPSForUser(x => x.UserId == userID, PageNum, 9, _userID);
 
             ViewBag.userID = _userID;
             return PartialView("_GetIPList", lst);

@@ -157,6 +157,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\IPController.cs" />
     <Compile Include="Controllers\IPSocialController.cs" />
+    <Compile Include="Controllers\PagesController.cs" />
     <Compile Include="Controllers\SpreadController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\VoicerController.cs" />
@@ -2131,6 +2132,12 @@
     <Content Include="Views\Spread\Index.cshtml" />
     <Content Include="Views\Shared\_SpreadForm.cshtml" />
     <Content Include="Views\IP\View.cshtml" />
+    <Content Include="Views\IP\FilterIndex.cshtml" />
+    <Content Include="Views\Home\Error.cshtml" />
+    <Content Include="Views\Home\PermissionDenied.cshtml" />
+    <Content Include="Views\Pages\Payments.cshtml" />
+    <Content Include="Views\Pages\Contact.cshtml" />
+    <Content Include="Views\Pages\TermsConditions.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

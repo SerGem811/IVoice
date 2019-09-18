@@ -14,24 +14,30 @@ using IVoice.Models.IP;
 
 namespace IVoice.Controllers
 {
-    public class IPController : BasePIPController
+    public class IPController : BaseController
     {
         protected IUsersConnectionRepository _usersConnectionRepository { get; }
         protected IUsersIPRepository _usersIPRepository { get; }
         protected IGenericRepository<UsersIPLike> _usersIPLikesRepository { get; }
         protected IGenericRepository<UsersIPEPPoint> _usersIPEPRepository { get; }
         protected IGenericRepository<UsersIPSurf> _usersIPSurfRepository { get; }
-        protected IGenericRepository<UsersActivity> _usersActivityRepository { get; }
+        protected IUsersActivityRepository _usersActivityRepository { get; }
+
+        protected IGenericRepository<Gender> _genderRepository { get; }
+        protected IGenericRepository<Country> _countryRepository { get; }
+        protected IGenericRepository<UsersHobby> _hobbyRepository { get; }
+        protected IGenericRepository<UsersOccupation> _occupationRepository { get; }
+
         public IPController(IUserRepository userRepository,
                                 IUsersConnectionRepository usersConnectionRepository,
-                                IGenericRepository<UsersHobby> usersHobbyRepository,
-                                IGenericRepository<UsersOccupation> usersOccupationRepository,
+                                IGenericRepository<UsersHobby> hobbyRepository,
+                                IGenericRepository<UsersOccupation> occupationRepository,
                                 IGenericRepository<Gender> genderRepository,
                                 IGenericRepository<Country> countryRepository,
                                 IGenericRepository<UsersIPLike> usersIPLikesRepository,
                                 IGenericRepository<UsersIPEPPoint> usersIPEPRepository,
                                 IGenericRepository<UsersIPSurf> usersIPSurfRepository,
-                                IGenericRepository<UsersActivity> usersActivityRepository,
+                                IUsersActivityRepository usersActivityRepository,
                                 IUsersIPRepository usersIPRepository) : base(userRepository)
         {
             _usersConnectionRepository = usersConnectionRepository;
@@ -40,6 +46,11 @@ namespace IVoice.Controllers
             _usersIPEPRepository = usersIPEPRepository;
             _usersIPSurfRepository = usersIPSurfRepository;
             _usersActivityRepository = usersActivityRepository;
+
+            _genderRepository = genderRepository;
+            _countryRepository = countryRepository;
+            _hobbyRepository = hobbyRepository;
+            _occupationRepository = occupationRepository;
         }
 
         // id : featureID, secondid : categoryID
@@ -72,8 +83,6 @@ namespace IVoice.Controllers
             {
                 filter = filter.And(x => !x.AdultOnly);
             }
-            if(_userID > 0)
-                filter = filter.And(x => x.UserId == _userID);
 
             if(!String.IsNullOrEmpty(Name))
             {
@@ -81,6 +90,37 @@ namespace IVoice.Controllers
             }
             lst = _usersIPRepository.GetAllIPSForUser(filter, PageNum, 9, _userID);
             ViewBag.userID = _userID;
+            return PartialView("_GetIPList", lst);
+        }
+
+        // Filter View : this is for Event
+        // id : fetureId 
+        public ActionResult FilterIndex(int id)
+        {
+            IPListModel model = new IPListModel()
+            {
+                _category_id = -1,
+                _feature_id = id,
+                _filter = new VoicerFilterModel(),
+            };
+
+            model._filter._frm_type = 3;
+            model._filter._frm_id = "ip-event-filter";
+            model._pageNum = 0;
+            FillViewData();
+
+            FillBaseModel(model);
+            return View(model);
+        }
+
+        [HttpPost]
+        public PartialViewResult _GetFilteredList(IPListModel model)
+        {
+            IEnumerable<IPViewModel> lst = null;
+            Expression<Func<UsersIP, bool>> filter = x => true;
+
+            lst = _usersIPRepository.GetAllIPSForUser(filter, model._pageNum, 9, _userID);
+
             return PartialView("_GetIPList", lst);
         }
 
@@ -184,28 +224,13 @@ namespace IVoice.Controllers
                     });
 
                     // save activity
-                    _usersActivityRepository.Save(new UsersActivity()
-                    {
-                        Date = DateTime.Now,
-                        Type = "ACTIVITY",
-                        UsersIPId = IpId,
-                        UserId = _userID,
-                        RowText = "Add SURF"
-                    });
+                    _usersActivityRepository.SetActivity("Activity", "Add SURF", IpId, _userID);
                 }
                 else
                 {
                     // remove from surf
                     _usersIPSurfRepository.Remove(item);
-
-                    _usersActivityRepository.Save(new UsersActivity()
-                    {
-                        Date = DateTime.Now,
-                        Type = "ACTIVITY",
-                        UsersIPId = IpId,
-                        UserId = _userID,
-                        RowText = "Add SURF"
-                    });
+                    _usersActivityRepository.SetActivity("Activity", "Remove SURF", IpId, _userID);
                 }
                 return Json(_usersIPRepository.FirstOrDefault(x => x.Id == IpId, x => x.Surfs, null).ToString(), JsonRequestBehavior.AllowGet);
             }
@@ -227,6 +252,15 @@ namespace IVoice.Controllers
 
             FillBaseModel(model);
             return View(model);
+        }
+
+        public void FillViewData()
+        {
+            ViewData["countries"] = _countryRepository.LoadAndSelect(x => true, x => new SelectListItem_Custom { Id = x.Id, Description = x.Name }, false).ToSelectList(x => x.Description);
+            ViewData["genders"] = _genderRepository.LoadAndSelect(x => true, x => new SelectListItem_Custom { Id = x.Id, Description = x.Gender1 }, false).ToSelectList(x => x.Description);
+            ViewData["hobbies"] = _hobbyRepository.LoadAndSelect(x => true, x => new SelectListItem_Custom { Id = x.Id, Description = x.HobbyName }, false).ToSelectList(x => x.Description);
+            ViewData["occupations"] = _occupationRepository.LoadSortAndSelect(x => true, x => new SelectListItem_Custom { Id = x.Id, Description = x.Occupation },
+                                                                                                Helpers.External.Sorter<UsersOccupation>.Get(x => x.OrderBy, true)).ToSelectList<SelectListItem_Custom>(null);
         }
     }
 }

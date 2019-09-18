@@ -8,6 +8,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
+using static IVoice.Helpers.Constants;
 
 namespace IVoice.Services
 {
@@ -43,7 +44,7 @@ namespace IVoice.Services
                 Type = x.Type,
                 Url = "",
                 Voicer = x.Nickname,
-                IsConnected = x.UsersConnections.Any(y => y.Type == "CONNECT" && (y.UserId == CurrentUserId || y.ConnectedUserId == CurrentUserId))
+                IsConnected = x.UsersConnections.Any(y => y.Type == VoicerConnectionType.CONNECTED.ToString() && (y.UserId == CurrentUserId || y.ConnectedUserId == CurrentUserId))
             });
 
             return list.ToList();

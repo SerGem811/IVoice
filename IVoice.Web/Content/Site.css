@@ -89,7 +89,6 @@ body {
 }
 
     .footer a {
-        margin-left: 10px;
         color: #fff;
     }
 
@@ -366,6 +365,9 @@ body {
 .padding-left-10 {
     padding-left: 10px;
 }
+.padding-top-10 {
+    padding-top: 10px;
+}
 
 .pd-tb-15 {
     padding-top: 15px;
@@ -457,3 +459,7 @@ body {
         color: #aaa;
         outline-color: transparent;
     }
+
+.btn-ip-more {
+    min-width: 300px;
+}

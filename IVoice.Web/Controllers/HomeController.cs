@@ -30,5 +30,15 @@ namespace IVoice.Controllers
 
             return View(model);
         }
+
+        public ActionResult PermissionDenied()
+        {
+            return View(ReturnBaseModel());
+        }
+
+        public ActionResult Error()
+        {
+            return View(ReturnBaseModel());
+        }
     }
 }

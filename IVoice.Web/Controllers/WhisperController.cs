@@ -34,13 +34,32 @@ namespace IVoice.Controllers
             _usersConnectionRepository = usersConnectionRepository;
         }
 
-        public ActionResult Index()
+        public ActionResult Index(int? id)
         {
+            var userId = _userID;
+            if(id != null)
+            {
+                userId = (int)id;
+            }
+
+            if(userId != _userID)
+            {
+                return RedirectToAction("PermissionDenied", "Home");
+            }
+
             CardWhisperModel model = new CardWhisperModel();
             CardHeaderModel inbox_header = new CardHeaderModel() { _label = "Inbox", _class = "active", _link = "#tab_1" };
             CardHeaderModel sent_header = new CardHeaderModel() { _label = "Sent Items", _link = "#tab_2"};
             CardHeaderModel compose = new CardHeaderModel() { _label = "Compose", _icon = "fa fa-comment", _class="pull-right", _link = Url.Action("Create", "Whisper"), _isbutton = true };
-            model._header = new CardHeaderTabsModel() { _header = new List<CardHeaderModel>() { inbox_header, sent_header, compose } };
+
+            if(userId == _userID)
+            {
+                model._header = new CardHeaderTabsModel() { _header = new List<CardHeaderModel>() { inbox_header, sent_header, compose } };
+            }
+            else
+            {
+                model._header = new CardHeaderTabsModel() { _header = new List<CardHeaderModel>() { inbox_header, sent_header } };
+            }
 
             ColumnModel col_date = new ColumnModel() { _scope = "col", _name = "Date" };
             ColumnModel col_voicer = new ColumnModel() { _scope = "col", _name = "Voicer" };
@@ -58,8 +77,8 @@ namespace IVoice.Controllers
         [HttpPost]
         public JsonResult GetTableList(string Type, DataTableParameters dtParams)
         {
-            Expression<Func<Database.Whisper, bool>> filter = x => true;
-            Expression<Func<Database.Whisper, WhisperRowModel>> selector = null;
+            Expression<Func<Whisper, bool>> filter = x => true;
+            Expression<Func<Whisper, WhisperRowModel>> selector = null;
 
             if(Type == "INBOX")
             {

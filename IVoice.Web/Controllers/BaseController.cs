@@ -90,6 +90,7 @@ namespace IVoice.Controllers
                             _region = x.Region,
                             _pub_relation = x.RelationshipStatusPublic,
                             _relation = x.RelationshipStatus,
+                            _frm_type = 1
                         }
                     },
 

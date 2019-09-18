@@ -11,5 +11,17 @@ namespace IVoice.Services
         {
 
         }
+
+        public int SetActivity(string activityType, string activityOperationType, int UserId, int UsersIPId)
+        {
+            return Save(new UsersActivity()
+            {
+                Type = activityType,
+                Date = DateTime.Now,
+                UserId = UserId,
+                UsersIPId = UsersIPId,
+                RowText = activityOperationType
+            });
+        }
     }
 }

@@ -30,21 +30,25 @@ namespace IVoice.Controllers
             _usersAttachmentRepository = usersAttachmentRepository;
         }
 
-        public ActionResult Index(int? UserId, int? AlbumId)
+        public ActionResult Index(int? id, int? secondid)
         {
             GalleryViewModel model = new GalleryViewModel();
             int userID = _userID;
-            if (UserId != null)
-                userID = (int)UserId;
+            if (id != null)
+                userID = (int)id;
+
+            int AlbumId = 0;
+            if (secondid != null)
+                AlbumId = (int)secondid;
 
             // check accessibility
             if(userID != _userID)
             {
                 var user = _userRepository.FirstOrDefault(x => x.Id == userID, x => x);
-                if (user == null || !user.ActiveGallery)
+                if (user == null || !user.ActiveGallery || !user.isPublic)
                 {
                     // direct error page
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("PermissionDenied", "Home");
                 }
             }
 

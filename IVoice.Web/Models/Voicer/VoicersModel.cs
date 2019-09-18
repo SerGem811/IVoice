@@ -23,7 +23,7 @@ namespace IVoice.Models.Voicer
 
         public Expression<Func<User, bool>> GetFilter(List<int> exclude)
         {
-            Expression<Func<Database.User, bool>> filter = x => x.Active && !exclude.Contains(x.Id);
+            Expression<Func<Database.User, bool>> filter = x => x.Active && !exclude.Contains(x.Id) && x.isPublic;
 
             if (!string.IsNullOrEmpty(_free))
             {
