@@ -301,6 +301,20 @@ body {
         text-decoration: none;
         cursor: pointer;
     }
+
+.green-link {
+    color: #40A046 !important;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+    .green-link:hover,
+    .green-link:active,
+    .green-link:focus {
+        color: #fff !important;
+        text-decoration: none;
+        cursor: pointer;
+    }
 .no-link-text {
     color:#c3c3c3;
 }

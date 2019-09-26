@@ -53,33 +53,42 @@ namespace IVoice.Controllers
             _occupationRepository = occupationRepository;
         }
 
-        // id : featureID, secondid : categoryID
-        public ActionResult Index(int id, int secondid)
+        // id : feature, secondid : categoryid, thirdid: userid
+        public ActionResult Index(int? FeatureId, int? CategoryId, int? UserId)
         {
             IPListModel model = new IPListModel()
             {
-                _category_id = secondid,
-                _feature_id = id,
+                _category_id = (int)CategoryId,
+                _feature_id = (int)FeatureId,
+                _user_id = (UserId != null) ? (int)UserId : -1
             };
-            
+
             FillBaseModel(model);
+
+            ViewBag.currentUserID = _userID;
+            
             return View(model);
         }
 
+        
+
         [HttpPost]
-        public PartialViewResult _GetList(string Name, int PageNum, int CategoryId, int FeatureId)
+        public PartialViewResult _GetList(string Name, int PageNum, int CategoryId, int FeatureId, int UserId)
         {
             IEnumerable<IPViewModel> lst = null;
 
             Expression<Func<UsersIP, bool>> filter = x => true;
 
-            filter = filter.And(x => x.Public && x.FeatureId == FeatureId);
+            if (UserId == -1)
+                filter = filter.And(x => x.Public && x.FeatureId == FeatureId);
+            else
+                filter = filter.And(x => x.FeatureId == FeatureId && x.UserId == UserId);
 
             if(CategoryId > 0)
             {
                 filter = filter.And(x => x.CategoryId == CategoryId);
             }
-            if(_userID == 0 || _userModel._account._is_adult)
+            if(UserId == -1 || (_userModel._account._is_adult))
             {
                 filter = filter.And(x => !x.AdultOnly);
             }
@@ -88,19 +97,23 @@ namespace IVoice.Controllers
             {
                 filter = filter.And(x => x.Name.Contains(Name));
             }
+
             lst = _usersIPRepository.GetAllIPSForUser(filter, PageNum, 9, _userID);
-            ViewBag.userID = _userID;
+
+            ViewBag.currentUserID = _userID;
+
             return PartialView("_GetIPList", lst);
         }
 
         // Filter View : this is for Event
         // id : fetureId 
-        public ActionResult FilterIndex(int id)
+        public ActionResult FilterIndex(int? FeatureId, int? UserId)
         {
             IPListModel model = new IPListModel()
             {
                 _category_id = -1,
-                _feature_id = id,
+                _feature_id = (int)FeatureId,
+                _user_id = (UserId != null) ? (int)UserId : -1,
                 _filter = new VoicerFilterModel(),
             };
 
@@ -117,10 +130,56 @@ namespace IVoice.Controllers
         public PartialViewResult _GetFilteredList(IPListModel model)
         {
             IEnumerable<IPViewModel> lst = null;
+
             Expression<Func<UsersIP, bool>> filter = x => true;
+
+            if (model._filter != null)
+            {
+                if(!string.IsNullOrEmpty(model._filter._birthday))
+                {
+                    filter = filter.And(x => x.UsersIPFilters.FirstOrDefault().BirthDate == model._filter._birthday);
+                }
+                if(model._filter._gender_id != null && model._filter._gender_id > 0)
+                {
+                    filter = filter.And(x => x.UsersIPFilters.FirstOrDefault().GenderId == model._filter._gender_id);
+                }
+                if(model._filter._country_id != null && model._filter._country_id > 0)
+                {
+                    filter = filter.And(x => x.UsersIPFilters.FirstOrDefault().CountryId == model._filter._country_id);
+                }
+                if(model._filter._occupation_ids != null && model._filter._occupation_ids.Count > 0)
+                {
+                    var val = string.Join(",", model._filter._occupation_ids);
+                    filter = filter.And(x => x.UsersIPFilters.FirstOrDefault().OccupationByComma.Contains(val));
+                }
+                if(model._filter._hobby_ids != null && model._filter._hobby_ids.Count > 0)
+                {
+                    var val = string.Join(",", model._filter._hobby_ids);
+                    filter = filter.And(x => x.UsersIPFilters.FirstOrDefault().HobbiesByComma.Contains(val));
+                }
+                if(!string.IsNullOrEmpty(model._filter._region))
+                {
+                    filter = filter.And(x => x.UsersIPFilters.FirstOrDefault().Region.ToUpper().Contains(model._filter._region.ToUpper()));
+                }
+                if(!string.IsNullOrEmpty(model._filter._language))
+                {
+                    filter = filter.And(x => x.UsersIPFilters.FirstOrDefault().Language.ToUpper().Contains(model._filter._language.ToUpper()));
+                }
+                if(!string.IsNullOrEmpty(model._filter._relation))
+                {
+                    filter = filter.And(x => x.UsersIPFilters.FirstOrDefault().RelationshipStatus.ToUpper().Contains(model._filter._relation.ToUpper()));
+                }
+            }
+
+            if (model._user_id != -1)
+                filter = filter.And(x => x.UserId == model._user_id);
+            else
+                filter = filter.And(x => x.Public);
+            filter = filter.And(x => x.FeatureId == model._feature_id);
 
             lst = _usersIPRepository.GetAllIPSForUser(filter, model._pageNum, 9, _userID);
 
+            ViewBag.currentUserID = _userID;
             return PartialView("_GetIPList", lst);
         }
 
@@ -224,13 +283,13 @@ namespace IVoice.Controllers
                     });
 
                     // save activity
-                    _usersActivityRepository.SetActivity("Activity", "Add SURF", IpId, _userID);
+                    _usersActivityRepository.SetActivity("Activity", "Add SURF", _userID, IpId);
                 }
                 else
                 {
                     // remove from surf
                     _usersIPSurfRepository.Remove(item);
-                    _usersActivityRepository.SetActivity("Activity", "Remove SURF", IpId, _userID);
+                    _usersActivityRepository.SetActivity("Activity", "Remove SURF", _userID, IpId);
                 }
                 return Json(_usersIPRepository.FirstOrDefault(x => x.Id == IpId, x => x.Surfs, null).ToString(), JsonRequestBehavior.AllowGet);
             }
@@ -246,6 +305,7 @@ namespace IVoice.Controllers
             var item = _usersIPRepository.FirstOrDefault(x => x.Id == id, x => x, null);
 
             var model = new IPModel() {
+                id = id,
                 _body = item.BodyHtml,
                 _style = item.BodyStyle
             };

@@ -11,6 +11,7 @@ using IVoice.Helpers.Extensions;
 using IVoice.Helpers.External;
 using IVoice.Interfaces;
 using IVoice.Models.Common;
+using IVoice.Models.IP;
 using IVoice.Models.IPSocial;
 using IVoice.Models.Voicer;
 using Newtonsoft.Json.Linq;
@@ -36,6 +37,7 @@ namespace IVoice.Controllers
         protected IUsersConnectionRepository _connectionRepository { get; }
         protected IUserIPAdsRepository _userIPAdsRepository { get; }
         protected IUsersActivityRepository _userActivityRepository { get; set; }
+        protected IUsersIPRepository _usersIPRepository { get; set; }
 
         public IPSocialController(IUserRepository userRepository,
                                     IUserAttachmentsRepository userAttachmentsRepository,
@@ -52,7 +54,8 @@ namespace IVoice.Controllers
                                     IGenericRepository<UsersIPSpread> userIPSpreadRepository,
                                     IUserIPAdsRepository userIPAdsRepository,
                                     IUsersConnectionRepository connectionRepository,
-                                    IUsersActivityRepository usersActivityRepository
+                                    IUsersActivityRepository usersActivityRepository,
+                                    IUsersIPRepository usersIPRepository
             ) : base(userRepository, userAttachmentsRepository, userIPRepository)
         {
             _featureRepository = featureRepository;
@@ -68,6 +71,7 @@ namespace IVoice.Controllers
             _userIPSpreadRepository = userIPSpreadRepository;
             _userIPAdsRepository = userIPAdsRepository;
             _userActivityRepository = usersActivityRepository;
+            _usersIPRepository = userIPRepository;
         }
 
         public string _cover_path => Server.MapPath(System.Configuration.ConfigurationManager.AppSettings["FS_IP_COVER_PATH"].ToString());
@@ -76,9 +80,34 @@ namespace IVoice.Controllers
 
         public override ActionResult Create()
         {
+
+            var model = new IPModel() {
+                id = -1,
+                _body = "",
+                _style = ""
+            };
+
+            FillBaseModel(model);
             ViewBag.userId = _userID;
 
-            return View(ReturnBaseModel());
+            return View(model);
+        }
+
+        public ActionResult Edit(int id)
+        {
+            var item = _usersIPRepository.FirstOrDefault(x => x.Id == id, x => x, null);
+
+            var model = new IPModel()
+            {
+                id = id,
+                _body = item.BodyHtml,
+                _style = item.BodyStyle
+            };
+
+            ViewBag.userId = _userID;
+            FillBaseModel(model);
+
+            return View("Create", model);
         }
 
         [HttpPost]
@@ -130,7 +159,7 @@ namespace IVoice.Controllers
 
             ViewData["features"] = _featureRepository.LoadSortAndSelect(x => x.ForIP,
                                                                     x => new SelectListItem_Custom { Id = x.Id, Description = x.Name },
-                                                                    Sorter<Feature>.Get(x => x.Id, true)).ToSelectList(x => x.Description);
+                                                                    Sorter<Feature>.Get(x => x.Id, true)).ToSelectList(x => x.Id);
             ViewData["categories"] = _categoryRepository.LoadAndSelect(x => x.Active,
                                                                 x => new SelectListItem_Custom { Id = x.Id, Description = x.Name }, false).ToSelectList(x => x.Description);
 
@@ -232,7 +261,7 @@ namespace IVoice.Controllers
             {
                 return Json("Select the feature please", JsonRequestBehavior.AllowGet);
             }
-            if(model._category_id == null || model._category_id <= 0)
+            if((model._category_id == null || model._category_id <= 0) && model._feature_id != EVENT_ID)
             {
                 return Json("Select the category please", JsonRequestBehavior.AllowGet);
             }
@@ -274,7 +303,7 @@ namespace IVoice.Controllers
             // event
             if(model._feature_id == EVENT_ID)
             {
-                _userIPFilterRepository.Save(model._filter.ToUserIIPFilterEntity(UserIpId));               
+                _userIPFilterRepository.Save(model._event.ToUserIIPFilterEntity(UserIpId));
             }
 
             // spread to voicer
@@ -282,47 +311,50 @@ namespace IVoice.Controllers
             var connected = _connectionRepository.GetAllVoicerModelsByFilter(x => x.User1.Active && x.User1.ActiveIPFeeds && x.UserId == _userID && x.Type == VoicerConnectionType.CONNECTED.ToString(),
                                                                                 Sorter<UsersConnection>.Get(x => x.DateConnected, false));
             var index = 0;
+
+            var userIds = new List<int>();
             foreach(var item in connected)
             {
                 if (model._selected[index])
                 {
-                    SpreadToUser(UserIpId, item.Id);
+                    userIds.Add(item.Id);
                 }
                 index++;
             }
-            // spread to criteria
-            SpreadToUserByCriteria(UserIpId, model._filter);
+
+            if(model._filter != null)
+            {
+                var filter = model._filter.GetFilter(_connectionRepository.GetAllBlockedUsers(_userID));
+                filter = filter.And(x => x.ActiveIPFeeds);
+                var voicers = _userRepository.LoadAndSelect(filter, x => x.Id, false);
+                foreach(var item in voicers)
+                {
+                    if(!userIds.Contains(item))
+                    {
+                        userIds.Add(item);
+                    }
+                }
+            }
+            SpreadToUsers(UserIpId, userIds);
 
             // set activity
-
             _userActivityRepository.SetActivity("Activity", "Spread", _userID, UserIpId);
 
             return Json("Success", JsonRequestBehavior.AllowGet);
         }
 
-        public void SpreadToUser(int id, int voicerID)
+        public void SpreadToUsers(int id, List<int> voicerIDs)
         {
             // spread to voicer
-            _userIPSpreadRepository.Save(new UsersIPSpread()
+            foreach(var item in voicerIDs)
             {
-                Date = DateTime.Now,
-                UserId = voicerID,
-                UserIpId = id,
-                UserSentId = _userID,
-            });
-        }
-
-        public void SpreadToUserByCriteria(int id, VoicerFilterModel model)
-        {
-            if (model == null)
-                return;
-
-            var filter = model.GetFilter(_connectionRepository.GetAllBlockedUsers(_userID));
-            filter = filter.And(x => x.ActiveIPFeeds);
-            var voicers = _userRepository.LoadAndSelect(filter, x => x.Id, false);
-            foreach(var item in voicers)
-            {
-                SpreadToUser(id, item);
+                _userIPSpreadRepository.Save(new UsersIPSpread()
+                {
+                    Date = DateTime.Now,
+                    UserId = item,
+                    UserIpId = id,
+                    UserSentId = _userID,
+                });
             }
         }
 
@@ -346,6 +378,19 @@ namespace IVoice.Controllers
             ViewData["hobbies"] = _hobbyRepository.LoadAndSelect(x => true, x => new SelectListItem_Custom { Id = x.Id, Description = x.HobbyName }, false).ToSelectList(x => x.Description);
             ViewData["occupations"] = _occupationRepository.LoadSortAndSelect(x => true, x => new SelectListItem_Custom { Id = x.Id, Description = x.Occupation },
                                                                                     Helpers.External.Sorter<UsersOccupation>.Get(x => x.OrderBy, true)).ToSelectList<SelectListItem_Custom>(null);
+        }
+
+        [HttpPost]
+        public ActionResult UpdateIP(IPModel modal)
+        {
+            int ipid = modal.id;
+            var item = _usersIPRepository.FirstOrDefault(x => x.Id == ipid);
+            item.BodyHtml = modal._body;
+            item.BodyStyle = modal._style;
+            item.IsUpdated = true;
+            _usersIPRepository.Save(item);
+
+            return Json("Updated", JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
@@ -381,16 +426,30 @@ namespace IVoice.Controllers
                 var connected = _connectionRepository.GetAllVoicerModelsByFilter(x => x.User1.Active && x.User1.ActiveIPFeeds && x.UserId == _userID && x.Type == VoicerConnectionType.CONNECTED.ToString(),
                                                                                 Sorter<UsersConnection>.Get(x => x.DateConnected, false));
                 var index = 0;
+                var userIds = new List<int>();
                 foreach (var item in connected)
                 {
                     if (model._selected[index])
                     {
-                        SpreadToUser(model._id, item.Id);
+                        userIds.Add(item.Id);
                     }
                     index++;
                 }
-                // spread to criteria
-                SpreadToUserByCriteria(model._id, model._filter);
+                if (model._filter != null)
+                {
+                    var filter = model._filter.GetFilter(_connectionRepository.GetAllBlockedUsers(_userID));
+                    filter = filter.And(x => x.ActiveIPFeeds);
+                    var voicers = _userRepository.LoadAndSelect(filter, x => x.Id, false);
+                    foreach (var item in voicers)
+                    {
+                        if (!userIds.Contains(item))
+                        {
+                            userIds.Add(item);
+                        }
+                    }
+                }
+
+                SpreadToUsers(model._id, userIds);
 
                 // set activity
                 _userActivityRepository.SetActivity("Activity", "Spread", _userID, model._id);

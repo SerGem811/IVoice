@@ -1,80 +1,99 @@
-﻿@{
+﻿@model IVoice.Models.IP.IPModel
+
+@{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 @section hrefs {
+    <link href="~/Scripts/contextmenu/jquery.contextMenu.min.css" rel="stylesheet" />
     <link href="~/Content/IPSocial.css" rel="stylesheet" />
 }
 
-<div class="fluid-content ip-creator">
-    <div class="left-pane" style="position:relative;">
-        <div class="sh-side-options">
-            <div class="sh-side-options-container">
-                <a class="sh-side-options-item center-item">
-                    <div class="sh-side-options-item-container">
-                        Panel
-                    </div>
-                    <div class="sh-side-options-hover">
-                        <div class="button-group">
-                            <div class="btn btn-tool" id="creator-panel-shape" data-toggle="tooltip" data-placement="bottom" title="Add shape"><i class="fa fa-plus"></i></div>
-                            <div class="btn btn-tool" id="creator-panel-file" data-val="file" data-toggle="tooltip" data-placement="bottom" title="Upload file"><i class="fa fa-file-upload"></i></div>
-                            <div class="btn btn-tool" id="creator-panel-media" data-toggle="tooltip" data-placement="bottom" title="Upload media"><i class="fa fa-music"></i></div>
-                            <div class="btn btn-tool" id="creator-panel-image" data-toggle="tooltip" data-placement="bottom" title="Upload image"><i class="fa fa-camera"></i></div>
-                            <div class="btn btn-tool" id="creator-panel-text" data-toggle="tooltip" data-placement="bottom" title="Add text"><i class="fa fa-font"></i></div>
-                            <div class="btn btn-tool" id="creator-panel-url" data-toggle="tooltip" data-placement="bottom" title="Add Url"><i class="fa fa-arrow-right"></i></div>
+    <div class="fluid-content ip-creator">
+        <div class="left-pane" style="position:relative;">
+            <div class="sh-side-options">
+                <div class="sh-side-options-container">
+                    <a class="sh-side-options-item center-item">
+                        <div class="sh-side-options-item-container">
+                            Panel
                         </div>
-                    </div>
-                </a>
-                <a class="sh-side-options-item center-item">
-                    <div class="sh-side-options-item-container">
-                        Background
-                    </div>
-                    <div class="sh-side-options-hover">
-                        <div class="button-group">
-                            <div class="btn btn-tool" id="creator-background-clear" data-toggle="tooltip" data-placement="bottom" title="Clear background"><i class="fa fa-trash-alt"></i></div>
-                            <div class="btn btn-tool" id="creator-background-color" data-toggle="tooltip" data-placement="bottom" title="Background color"><i class="fa fa-palette"></i></div>
-                            <div class="btn btn-tool" id="creator-background-image" data-toggle="tooltip" data-placement="bottom" title="Background image"><i class="fa fa-file-upload"></i></div>
-                            <input type="file" style="display:none;" id="file_upload_creator" />
-                            <div class="btn btn-tool" id="creator-background-url" data-toggle="tooltip" data-placement="bottom" title="Add Url"><i class="fa fa-arrow-right"></i></div>
+                        <div class="sh-side-options-hover">
+                            <div class="button-group">
+                                <div class="btn btn-tool" id="creator-panel-shape" data-toggle="tooltip" data-placement="bottom" title="Add shape"><i class="fa fa-plus"></i></div>
+                                <div class="btn btn-tool" id="creator-panel-file" data-val="file" data-toggle="tooltip" data-placement="bottom" title="Upload file"><i class="fa fa-file-upload"></i></div>
+                                <div class="btn btn-tool" id="creator-panel-media" data-toggle="tooltip" data-placement="bottom" title="Upload media"><i class="fa fa-music"></i></div>
+                                <div class="btn btn-tool" id="creator-panel-image" data-toggle="tooltip" data-placement="bottom" title="Upload image"><i class="fa fa-camera"></i></div>
+                                <div class="btn btn-tool" id="creator-panel-text" data-val="Textbox" data-toggle="tooltip" data-placement="bottom" title="Add text"><i class="fa fa-font"></i></div>
+                                <div class="btn btn-tool" id="creator-panel-url" data-toggle="tooltip" data-placement="bottom" title="Add Url"><i class="fa fa-arrow-right"></i></div>
+                            </div>
                         </div>
-                    </div>
-                </a>
-                <a class="sh-side-options-item center-item">
-                    <div class="sh-side-options-item-container">
-                        IP
-                    </div>
-                    <div class="sh-side-options-hover">
-                        <div class="button-group">
-                            <div class="btn btn-tool" id="creator-ip-comment" data-toggle="tooltip" data-placement="bottom" title="Add Comment"><i class="fa fa-comment-alt"></i></div>
-                            <div class="btn btn-tool" id="creator-ip-save" data-toggle="tooltip" data-placement="bottom" title="Save IP"><i class="fa fa-check"></i></div>
-                            <div class="btn btn-tool" id="creator-ip-cancel" data-toggle="tooltip" data-placement="bottom" title="Close"><i class="fa fa-times"></i></div>
+                    </a>
+                    <a class="sh-side-options-item center-item">
+                        <div class="sh-side-options-item-container">
+                            Background
                         </div>
-                    </div>
-                </a>
-            </div>
-        </div>
-    </div>
-    <div class="work-area">
-        <div class="ipcreator-board" id="ipcreator-board">
-            <div class="colPicker">
-                <div class="col-picker">
-                </div>
-            </div>
-            <div class="" style="position: absolute; left:0; top: 0; width: 100%; height: 100%; overflow: auto;">
-                <div class="" style="position: relative; height: auto; background-color: transparent">
-                </div>
-            </div>
-        </div>
-    </div>
+                        <div class="sh-side-options-hover">
+                            <div class="button-group">
+                                <div class="btn btn-tool" id="creator-background-clear" data-toggle="tooltip" data-placement="bottom" title="Clear background"><i class="fa fa-trash-alt"></i></div>
+                                <div class="btn btn-tool" id="creator-background-color" data-toggle="tooltip" data-placement="bottom" title="Background color"><i class="fa fa-palette"></i></div>
+                                <div class="btn btn-tool" id="creator-background-image" data-toggle="tooltip" data-placement="bottom" title="Background image"><i class="fa fa-file-upload"></i></div>
+                                <input type="file" style="display:none;" id="file_upload_creator" />
+                                <div class="btn btn-tool" id="creator-background-url" data-toggle="tooltip" data-placement="bottom" title="Add Url"><i class="fa fa-arrow-right"></i></div>
+                            </div>
+                        </div>
+                    </a>
+                    <a class="sh-side-options-item center-item">
+                        <div class="sh-side-options-item-container">
+                            IP
+                        </div>
+                        <div class="sh-side-options-hover">
+                            <div class="button-group">
+                                <div class="btn btn-tool" id="creator-ip-comment" data-toggle="tooltip" data-placement="bottom" title="Add Comment"><i class="fa fa-comment-alt"></i></div>
+                                <div class="btn btn-tool" id="creator-ip-save" data-toggle="tooltip" data-placement="bottom" title="Save IP"><i class="fa fa-check"></i></div>
+                                <div class="btn btn-tool" id="creator-ip-cancel" data-toggle="tooltip" data-placement="bottom" title="Close"><i class="fa fa-times"></i></div>
+                            </div>
+                        </div>
+                    </a>
 
-</div>
+                </div>
+            </div>
+        </div>
+        <input type="color" id="color-picker" name="color" pattern="^#+([a-fA-F0-9]{6}|[a-fA-F0-9]{3})$" value="#bada55" />
+        <div class="work-area">
+            <div class="ipcreator-board" id="ipcreator-board" style="@Model._style">
+                <div class="ipcreator-board-wrapper">
+                    <div id="ipcreator-board-area">
+                        @Html.Raw(Model._body)
+                    </div>
+                </div>
+            </div>
+        </div>
+        @using (Ajax.BeginForm("UpdateIP", "IPSocial", new AjaxOptions() { OnComplete = "onCompleteUpdateIP", OnFailure = "onFailedUpdateIP" }, new { id = "modalData"}))
+        {
+            @Html.HiddenFor(m => m.id)
+            @Html.HiddenFor(m => m._body)
+            @Html.HiddenFor(m => m._style)
+        }
+
+    </div>
 
 @section scripts {
     <script>
         var urlUploadIPImage = "@Url.Action("UploadIPImage", "IPSocial")";
-        var optionURL = '@Url.Action("_SaveIP", "IPSocial", new { Id = -1})';
-        var detailURL = '@Url.Action("Details", "User", new { Id = ViewBag.userId})';
+        var optionURL = '@Url.Action("_SaveIP", "IPSocial", new { Id = -1 })';
+        var detailURL = '@Url.Action("Details", "User", new { Id = ViewBag.userId })';
+        var updateURL = '@Url.Action("UpdateIP", "IPSocial")';
         var guid = "@Guid.NewGuid()";
+        var id = @Model.id;
     </script>
+    <script src="https://cloud.tinymce.com/stable/tinymce.min.js?apiKey=7daytolk6jeltjfjw3x2dy01texvksndtbxn8f9u2j4syqoi"></script>
+    <script src="~/Scripts/interactjs/interact.min.js"></script>
+    <!--
+    <script src="~/Scripts/pickr/pickr.min.js"></script>
+    <script src="~/Scripts/vanilla/vanilla-picker.min.js"></script>
+    <script src="~/Scripts/jpicker/jpicker-1.1.6.min.js"></script>
+    -->
+    <script src="~/Scripts/contextmenu/jquery.contextMenu.min.js"></script>
+    <script src="~/Scripts/contextmenu/jquery.ui.position.min.js"></script>
     <script src="~/Scripts/views/ip/ipcreate.js"></script>
 }

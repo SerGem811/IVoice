@@ -84,9 +84,7 @@
         </div>
     </div>
     <div class="form-group col-md-12" id="frmSpread" style="display:none">
-
-
-        <div class="panel with-nav-tabs panel-default">
+                       <div class="panel with-nav-tabs panel-default">
             @Html.Partial("~/Views/Shared/Components/Tabs/_CardHeaderTab.cshtml", new CardHeaderTabsModel() { _header = new List<CardHeaderModel>() {
                                                                                         new CardHeaderModel() { _class = "active", _link = "#tabFieldSearchVoicers", _label="Field Search Voicers" },
                                                                                         new CardHeaderModel() { _link = "#tabConnectedVoicer", _label = "Connected Voicers" } } })
@@ -104,7 +102,7 @@
                                 <div class="col-md-3 padding-bottom-10">
                                     <div class="panel" style="padding:7px">
                                         <div><span>@item.Voicer</span></div>
-                                        <img src="@item.ImagePath" style="width:100%;" />
+                                        <img src="@item.ImagePath" style="width:100%;height:200px;" />
                                         @Html.CheckBoxFor(m => m._selected[index], new { @class = "toggle-options-full-width"})
                                     </div>
                                 </div>
@@ -178,6 +176,7 @@
         // in the future should be changed with ViewType
         if ($(element).val() == @IVoice.Helpers.Constants.EVENT_ID) {
             $("#frmEvent").show();
+            $("#frmCategory").hide();   
         }
         if ($(element).val() == 25) {
 
@@ -233,9 +232,7 @@
     $('#btnSuccessBootstrapShared').click(function () {
         var style = $('#ipcreator-board').attr('style');
         var body = $('#ipcreator-board').html();
-        var colorPicker = $('.colPicker')[0].outerHTML;
-
-        body = body.replace(colorPicker, "");
+        
         body = body.trim();
         if (style == undefined) {
             style = '';

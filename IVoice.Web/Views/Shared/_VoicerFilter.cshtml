@@ -11,13 +11,13 @@
 <div id="@Model._frm_id">
     <!-- Birthday / Date -->
     <div class="form-group col-md-6 col-xs-12">
-        @if (Model._frm_type == 1)
+        @if (Model._frm_type == 3 || Model._frm_type == 5)
         {
-            <label for="_birthday">Birthday : </label>
+            <label for="_birthday">Date : </label>
         }
         else
         {
-            <label for="_birthday">Date : </label>
+            <label for="_birthday">Birth Date : </label>
         }
         @if (Model._frm_type == 1)
         {
@@ -118,7 +118,7 @@
     {
         // Save
         <div class="form-group col-md-12 pull-left">
-            @if (Model._frm_type == 2)
+            @if (Model._frm_type == 2 || Model._frm_type == 3)
             {
                 <button id="voicer-filter-search" type="submit" class="btn btn-default btn-search pull-right box-default margin-left-10">Search</button>
             }

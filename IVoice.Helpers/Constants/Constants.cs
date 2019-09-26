@@ -13,7 +13,7 @@
             BLOCKED,
             CONNECTED,
             WAITING,
-            REMOVE,
+            REMOVED,
             REQUESTED
         }
 

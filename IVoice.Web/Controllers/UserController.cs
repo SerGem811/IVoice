@@ -183,19 +183,28 @@ namespace IVoice.Controllers
             List<string> lastSpreadList = _userIPSpreadsRepository.GetAllIPSForUser(x => x.UserId == userRepo.Id, 0, int.MaxValue, this._userID)
                                             .Select(x => FormatIPForDetails(x)).ToList();
 
-            List<string> lastActivityList = _usersActivityRepository.LoadSortAndSelect(x => x.Type == "Activity" && x.UsersIP.UserId == userRepo.Id && x.UsersIP.Public,
+            List<string> lastActivityList = null;
+            
+            if(Id == _userID)
+            {
+                lastActivityList = _usersActivityRepository.LoadSortAndSelect(x => x.Type == "Activity" && x.UsersIP.UserId == userRepo.Id,
                                                                                         x => x, 9, Sorter<UsersActivity>.Get(x => x.Id, false))
                                                                                         .Select(x => FormatActivityForDetails(x)).ToList();
-
-            /*List<string> lastVoicerUpdateList = _usersConnectionRepository.LoadAndSelectMany(x => x.UserId == userRepo.Id, 
-                                                                                            x => x.User1.UsersActivities.Select(y => y.RowText), null);*/
+            }
+            else
+            {
+                lastActivityList = _usersActivityRepository.LoadSortAndSelect(x => x.Type == "Activity" && x.UsersIP.UserId == userRepo.Id && x.UsersIP.Public,
+                                                                                        x => x, 9, Sorter<UsersActivity>.Get(x => x.Id, false))
+                                                                                        .Select(x => FormatActivityForDetails(x)).ToList();
+            }
+            
 
             List<string> lastVoicerUpdateList = _usersConnectionRepository.LoadAndSelectMany(x => x.UserId == userRepo.Id,
                                                                                             x => x.User1.UsersActivities.Select(y => y), null).Select(x => FormatActivityForDetails(x)).ToList();
 
 
             model._features = _featureRepository.LoadAndSelect(x => x.ProfileUse && !string.IsNullOrEmpty(x.ProfileImagePath), x => new { ImagePath = x.ProfileImagePath, x.Id }, false)
-                                                                                        .Select(x => new CarouselModel() { _img = x.ImagePath, _link = Url.Action("IPS","User", new { UserId = Id, FeatureId = x.Id})}).ToList();
+                                                                .Select(x => new CarouselModel() { _img = x.ImagePath, _link = Url.Action("Index","Category", new { FeatureId = x.Id, UserId = Id})}).ToList();
 
             // Personal Card part
             dynamic pCard = new ExpandoObject();

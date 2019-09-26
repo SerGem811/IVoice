@@ -4,7 +4,7 @@
     var url = Url.Action("View", "IP", new { Id = Model._id });
     var user_url = Url.Action("Details", "User", new { Id = Model._user_id });
     var full_url = HttpContext.Current.Request.Url.AbsoluteUri.Replace(HttpContext.Current.Request.Url.AbsolutePath, "") + url;
-    var userID = ViewBag.userID;
+    var currentUserID = (ViewBag.currentUserID > 0) ? ViewBag.currentUserID : -1;
 }
 
 <div class="box-default pd-20 ip-card-content">
@@ -12,7 +12,7 @@
         <a href="@url"><img src="@Model._image_path" /></a>
     </div>
     <div class="margin-top-10">
-        @if (userID == 0 || (Model._user_id != userID && !Model._public))
+        @if (currentUserID == -1 || (Model._user_id != currentUserID && !Model._public))
         {
             <span>@Model._voicer</span>
         }
@@ -24,11 +24,11 @@
             </button>
         }
 
-        <div class="margin-top-10 text-large"><a class="blue-link" href="@url">@Model._title</a></div>
+        <div class="margin-top-10 text-large"><a class="@(Model._is_updated ? "green-link" : "blue-link")" href="@url">@Model._title</a></div>
 
         <div class="ip-card-body-line">
             <a class="blue-link" href="@url">View IP</a>
-            @if (Model._user_id == userID)
+            @if (Model._user_id == currentUserID)
             {
                 <a class="blue-link margin-left-10" href="@Url.Action("Edit", "IPSocial", new { Id = Model._id})">Edit IP</a>
             }
@@ -36,7 +36,7 @@
         </div>
 
         <div class="ip-card-body-line">
-            @if (Model._user_id == userID || userID == 0)
+            @if (Model._user_id == currentUserID || currentUserID == -1)
             {
                 <span class="text-small no-link-text"><i class="fa fa-thumbs-up"></i>&nbsp;@Model._likes&nbsp;Like</span>
                 <span class="text-small no-link-text padding-left-10"><i class="fa fa-thumbs-down"></i>&nbsp;@Model._dislikes&nbsp;Dislike</span>
@@ -68,7 +68,7 @@
 
         </div>
         <div class="ip-card-body-line">
-            @if (Model._user_id == userID || userID == 0)
+            @if (Model._user_id == currentUserID || currentUserID == -1)
             {
                 <span class="text-small no-link-text"><i class="fa fa-hand-point-up"></i>&nbsp;@Model._ep&nbsp;EP Points</span>
                 <span class="text-small no-link-text padding-left-10"><i class="fa fa-star"></i>&nbsp;@Model._surfs&nbsp;Surfs</span>

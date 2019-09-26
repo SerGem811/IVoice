@@ -35,8 +35,13 @@ namespace IVoice.Controllers
             _occupationRepository = occupationRepository;
         }
 
-        public ActionResult Index(int id)
+        public ActionResult Index(int? FeatureId, int? UserId)
         {
+            if(FeatureId != null && (int)FeatureId == IVoice.Helpers.Constants.EVENT_ID)
+            {
+                return RedirectToAction("FilterIndex", "IP", new { FeatureId = FeatureId, UserId = UserId });
+            }
+
             var list = _categoryRepository.LoadAndSelect(x => x.Active, x => x, false).OrderBy(x => x.Name).ToList();
 
             List<ImageCardModel> lst = new List<ImageCardModel>();
@@ -45,7 +50,7 @@ namespace IVoice.Controllers
                 lst.Add(new ImageCardModel() {
                     _img = item.ImagePath,
                     _label = item.Name,
-                    _link = Url.Action("Index", "IP", new { id = id, secondid = item.Id})
+                    _link = Url.Action("Index", "IP", new { FeatureId = FeatureId, CategoryId = item.Id, UserId = UserId})
                 });
             }
 
@@ -55,9 +60,9 @@ namespace IVoice.Controllers
             return View(model);
         }
 
-        public ActionResult FilterIndex(int id)
+        public ActionResult FilterIndex(int FeatureId, int? UserId)
         {
-            return RedirectToAction("FilterIndex", "IP", new { Id = id });
+            return RedirectToAction("FilterIndex", "IP", new { FeatureId = FeatureId, UserId = UserId});
         }
     }
 }

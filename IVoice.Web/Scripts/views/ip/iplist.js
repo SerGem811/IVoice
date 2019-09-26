@@ -46,6 +46,7 @@ function SurfIP(itemId, currentObject, type) {
             if (request.responseJSON == "Failed") {
                 alertMessage('Notice', 'Something went wrong');
             } else {
+                console.log(request);
                 if (type == 1) {
                     $(currentObject).html('<i class="fa fa-star"></i>&nbsp;' + request.responseJSON + '&nbsp;You SURFs');
                     $(currentObject).attr('onclick', 'SurfIP(' + itemId + ', this, 2)');

@@ -23,6 +23,7 @@ namespace IVoice.Models.IP
         public int _surfs { get; set; }
         public int _ep { get; set; }
         public int _user_id { get; set; }
+        public bool _is_updated { get; set; }
 
         public string _current_like_dislike { get; set; }
         public int? _current_added_surf_id { get; set; }

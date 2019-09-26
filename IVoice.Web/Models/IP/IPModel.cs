@@ -8,6 +8,7 @@ namespace IVoice.Models.IP
 {
     public class IPModel : BaseModel
     {
+        public int id { get; set; }
         [AllowHtml]
         public string _style { get; set; }
         [AllowHtml]

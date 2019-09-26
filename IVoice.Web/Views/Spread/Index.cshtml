@@ -2,7 +2,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
     ViewBag.Title = "Index";
 
-    var userID = ViewBag.userID;
+    var selectedUserID = ViewBag.selectedUserID;
     var currentUserID = ViewBag.currentUserID;
 }
 
@@ -24,13 +24,13 @@
         var urlSpread = '@Url.Action("_SpreadIP", "IPSocial")';
         var urlAddEP = '@Url.Action("AddPoint", "IP")';
         var urlSurf = '@Url.Action("SurfIP", "IP")';
-        var currentUserID = @currentUserID;
+        var selectedUserID = @selectedUserID;
 
         $('#btn-ip-more').click(function () {
             $.ajax({
                 url: '@Url.Action("_GetList", "Spread")',
                 data: {
-                    userID: currentUserID,
+                    userID: selectedUserID,
                     PageNum: pageNum,
                 },
                 type: 'POST',

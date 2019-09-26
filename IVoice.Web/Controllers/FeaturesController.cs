@@ -16,7 +16,8 @@ namespace IVoice.Controllers
             _features = feature;
         }
 
-        public ActionResult Index()
+        // userId
+        public ActionResult Index(int? userId)
         {
             List<Feature> list = _features.LoadAndSelect(x => x.Enabled && x.Public, x => x, false).OrderBy(x => x.Id).ToList();
             List<ImageCardModel> lst = new List<ImageCardModel>();
@@ -27,7 +28,7 @@ namespace IVoice.Controllers
                 {
                     _img = f.ImagePath,
                     _label = "Public " + f.Name,
-                    _link = Url.Action(f.ViewType, "Category", new { Id = f.Id})
+                    _link = Url.Action(f.ViewType, "Category", new { FeatureId = f.Id, UserId = userId})
                 });
             }
 
@@ -36,6 +37,4 @@ namespace IVoice.Controllers
             return View(m);
         }
     }
-
-    
 }

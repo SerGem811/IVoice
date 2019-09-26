@@ -18,6 +18,7 @@
                 @Html.TextBoxFor(m => m._search_content, new { @class = "form-control", placeholder = "IP name" })
                 @Html.HiddenFor(m => m._category_id)
                 @Html.HiddenFor(m => m._feature_id)
+                @Html.HiddenFor(m => m._user_id)
                 <button id="btn-ip-search" class="btn btn-default btn-search box-default margin-left-10">Search</button>
             </div>
         </div>
@@ -34,11 +35,17 @@
 
 @section scripts {
     <script>
-        var urlGetMore = '@Url.Action("GetNextIPS", "IP")';
         var pageNum = 0;
         var categoryId = @Model._category_id;
         var featureId = @Model._feature_id;
         var ipName = "";
+        var userID = @Model._user_id;
+
+        var urlGetMore = '@Url.Action("GetNextIPS", "IP")';
+        var urlLikeDislike = '@Url.Action("SetLikeDislike", "IP")';
+        var urlSpread = '@Url.Action("_SpreadIP", "IPSocial")';
+        var urlAddEP = '@Url.Action("AddPoint", "IP")';
+        var urlSurf = '@Url.Action("SurfIP", "IP")';
 
         $(document).ready(function () {
             $('#btn-ip-more').click();
@@ -53,6 +60,7 @@
                     PageNum: pageNum,
                     CategoryId: categoryId,
                     FeatureId: featureId,
+                    UserID: userID
                 },
                 type: 'POST',
                 complete: function (request, status) {
@@ -68,6 +76,7 @@
         $('#btn-ip-search').on('click', function () {
             pageNum = 0;
             ipName = $('[name="_search_content"]')[0].value;
+            $('#ip-container').html('');
             $.ajax({
                 url: '@Url.Action("_GetList", "IP")',
                 data: {
@@ -75,6 +84,7 @@
                     PageNum: pageNum,
                     CategoryId: categoryId,
                     FeatureId: featureId,
+                    UserID: userID
                 },
                 type: 'POST',
                 complete: function (request, status) {

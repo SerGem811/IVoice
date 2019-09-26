@@ -21,15 +21,15 @@
 
         .carousel-inner.vertical > .item.next,
         .carousel-inner.vertical > .item.active.right {
-            -webkit-transform: translate3d(0, 33.33%, 0);
-            transform: translate3d(0, 33.33%, 0);
+            -webkit-transform: translate3d(0, 33%, 0);
+            transform: translate3d(0, 33%, 0);
             top: 0;
         }
 
         .carousel-inner.vertical > .item.prev,
         .carousel-inner.vertical > .item.active.left {
-            -webkit-transform: translate3d(0, -33.33%, 0);
-            transform: translate3d(0, -33.33%, 0);
+            -webkit-transform: translate3d(0, -33%, 0);
+            transform: translate3d(0, -33%, 0);
             top: 0;
         }
 
@@ -55,13 +55,13 @@
 
 .carousel-inner.vertical > .next {
     left: 0;
-    top: 33.33%;
+    top: 33%;
     right: 0;
 }
 
 .carousel-inner.vertical > .prev {
     left: 0;
-    top: -33.33%;
+    top: -33%;
     right: 0;
 }
 
@@ -72,13 +72,13 @@
 
 .carousel-inner.vertical > .active.left {
     left: 0;
-    top: -33.33%;
+    top: -33%;
     right: 0;
 }
 
 .carousel-inner.vertical > .active.right {
     left: 0;
-    top: 33.33%;
+    top: 33%;
     right: 0;
 }
 

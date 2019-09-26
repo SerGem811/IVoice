@@ -47,6 +47,7 @@ namespace IVoice.Database
         public int Dislikes { get; set; }
         public int Surfs { get; set; }
         public int EPPoints { get; set; }
+        public Nullable<bool> IsUpdated { get; set; }
     
         public virtual Category Category { get; set; }
         public virtual Feature Feature { get; set; }

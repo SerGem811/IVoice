@@ -37,7 +37,7 @@ namespace IVoice.Controllers
             if (id != null)
                 userID = (int)id;
 
-            int AlbumId = 0;
+            int AlbumId = -1;
             if (secondid != null)
                 AlbumId = (int)secondid;
 
@@ -102,10 +102,7 @@ namespace IVoice.Controllers
 
             ViewBag.userId = _userID;
             ViewBag.currentUserId = userID;
-            if (AlbumId != null)
-                ViewBag.albumId = AlbumId;
-            else
-                ViewBag.albumId = -1;
+            ViewBag.albumId = AlbumId;
             
             FillBaseModel(model);
             return View(model);

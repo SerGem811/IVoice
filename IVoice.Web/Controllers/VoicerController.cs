@@ -151,7 +151,7 @@ namespace IVoice.Controllers
                 var conn1 = makeConnection(_userID, VoicerID, func);
                 _usersConnectionRepository.Save(conn1);
             }
-            else if(func == VoicerConnectionType.REMOVE.ToString())
+            else if(func == VoicerConnectionType.REMOVED.ToString())
             {
                 var conn1 = _usersConnectionRepository.FirstOrDefault(x => x.UserId == _userID && x.User1.Id == VoicerID, x => x, null);
                 if (conn1 != null)

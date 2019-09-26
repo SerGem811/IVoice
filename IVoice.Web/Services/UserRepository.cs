@@ -21,7 +21,7 @@ namespace IVoice.Services
 
         public List<VoicerModel> GetAllVoicerModelsByFilter(Expression<Func<User, bool>> filter, int CurrentUserId, params Sorter<User>[] sorters)
         {
-            var set = PrepareSet().Where(x => true && x.Id != CurrentUserId);
+            var set = PrepareSet().Where(x => true && x.Id != CurrentUserId && x.isPublic);
             if (filter != null)
                 set = set.Where(filter);
 

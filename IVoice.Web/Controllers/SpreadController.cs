@@ -36,8 +36,8 @@ namespace IVoice.Controllers
                 }
             }
             
-            ViewBag.userID = _userID;
-            ViewBag.currentUserID = userId;
+            ViewBag.selectedUserID = userId;
+            ViewBag.currentUserID = _userID;
             return View(ReturnBaseModel());
         }
 
@@ -46,7 +46,8 @@ namespace IVoice.Controllers
         {
             var lst = _userIPSpreadRepository.GetAllIPSForUser(x => x.UserId == userID, PageNum, 9, _userID);
 
-            ViewBag.userID = _userID;
+            ViewBag.currentUserID = _userID;
+            ViewBag.selectedUserID = userID;
             return PartialView("_GetIPList", lst);
         }
     }

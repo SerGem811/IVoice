@@ -31,6 +31,7 @@
                 <div class="pd-tb-15">
                     @Html.HiddenFor(m => m._feature_id)
                     @Html.HiddenFor(m => m._pageNum)
+                    @Html.HiddenFor(m => m._user_id)
                     @Html.Partial("_VoicerFilter", Model._filter, v_filter)
                 </div>
             </div>
@@ -62,12 +63,10 @@
 
         $('#btn-ip-event-filter').on('click', function () {
             if (filterVisible == true) {
-                console.log("hide");
                 $('#ip-filter-div').hide();
                 filterVisible = false;
                 $('#btn-ip-event-filter').html('<i class="fa fa-angle-double-down"></i>')
             } else {
-                console.log("show");
                 $('#ip-filter-div').show();
                 filterVisible = true;
                 $('#btn-ip-event-filter').html('<i class="fa fa-angle-double-up"></i>')
@@ -75,19 +74,23 @@
         });
 
         function onFilterSearch(result) {
-            if (result == "Failed") {
+            if (result.responseText == "Failed" || result.responseText == "") {
 
-            } else {
+            } else{
                 var pg = document.getElementsByName('_pageNum')[0].value;
+
                 pg++;
                 document.getElementsByName('_pageNum')[0].value = pg;
                 isMore = false;
+                $("#ip-container").html(result.responseText);
             }
         }
 
         function onBeforeSubmit() {
-            if(!isMore)
+            if (!isMore) {
                 document.getElementsByName('_pageNum')[0].value = 0;
+                $("#ip-container").html('');
+            }
         }
 
     </script>

@@ -286,6 +286,7 @@
           <Property Name="Dislikes" Type="int" Nullable="false" />
           <Property Name="Surfs" Type="int" Nullable="false" />
           <Property Name="EPPoints" Type="int" Nullable="false" />
+          <Property Name="IsUpdated" Type="bit" />
         </EntityType>
         <EntityType Name="UsersIPAds">
           <Key>
@@ -2019,6 +2020,7 @@
           <NavigationProperty Name="UsersIPFilters" Relationship="eoneModel.FK_UsersIPFilter_UsersIP" FromRole="UsersIP" ToRole="UsersIPFilter" />
           <NavigationProperty Name="UsersIPLikes" Relationship="eoneModel.FK_UsersIPLikes_UsersIP" FromRole="UsersIP" ToRole="UsersIPLike" />
           <NavigationProperty Name="UsersIPSurfs" Relationship="eoneModel.FK_UsersIPSurf_UsersIP" FromRole="UsersIP" ToRole="UsersIPSurf" />
+          <Property Name="IsUpdated" Type="Boolean" />
         </EntityType>
         <EntityType Name="UsersIPAd">
           <Key>
@@ -3197,6 +3199,7 @@
           <EntitySetMapping Name="UsersIPs">
             <EntityTypeMapping TypeName="eoneModel.UsersIP">
               <MappingFragment StoreEntitySet="UsersIP">
+                <ScalarProperty Name="IsUpdated" ColumnName="IsUpdated" />
                 <ScalarProperty Name="EPPoints" ColumnName="EPPoints" />
                 <ScalarProperty Name="Surfs" ColumnName="Surfs" />
                 <ScalarProperty Name="Dislikes" ColumnName="Dislikes" />
