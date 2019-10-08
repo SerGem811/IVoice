@@ -30,16 +30,14 @@ namespace IVoice.Controllers
             _usersAttachmentRepository = usersAttachmentRepository;
         }
 
-        public ActionResult Index(int? id, int? secondid)
+        public ActionResult Index(int? UserId, int? AlbumId)
         {
             GalleryViewModel model = new GalleryViewModel();
             int userID = _userID;
-            if (id != null)
-                userID = (int)id;
+            if (UserId != null)
+                userID = (int)UserId;
 
-            int AlbumId = -1;
-            if (secondid != null)
-                AlbumId = (int)secondid;
+            int? albumId = AlbumId;
 
             // check accessibility
             if(userID != _userID)
@@ -52,9 +50,9 @@ namespace IVoice.Controllers
                 }
             }
 
-            if (AlbumId > 0)
+            if (AlbumId != null && (int)AlbumId > 0)
             {
-                model._current = _userAttachmentsAlbumRepository.LoadAndSelect(x => x.UserId == userID && x.Id == AlbumId,
+                model._current = _userAttachmentsAlbumRepository.LoadAndSelect(x => x.UserId == userID && x.Id == (int)albumId,
                                                                                 x => new SelectListItem_Custom() { Id = x.Id, Description = x.Name }, false).FirstOrDefault();
             }
             else
@@ -62,9 +60,9 @@ namespace IVoice.Controllers
                 model._current = new SelectListItem_Custom() { Id = 0, Description = "ROOT" };
             }
 
-            var folders = _userAttachmentsAlbumRepository.LoadAndSelect(x => x.Active && x.UserId == userID && x.ParentId == AlbumId,
+            var folders = _userAttachmentsAlbumRepository.LoadAndSelect(x => x.Active && x.UserId == userID && x.ParentId == albumId,
                             x => new GalleryItemModel() { _id = x.Id, _name = x.Name, _date_add = x.Created, _type = "Folder", _visibility = x.Visibility, _path = x.Cover }, false);
-            var media = _usersAttachmentRepository.LoadAndSelect(x => x.Active && x.UserId == userID && x.UserAttachAlbumId == AlbumId,
+            var media = _usersAttachmentRepository.LoadAndSelect(x => x.Active && x.UserId == userID && x.UserAttachAlbumId == albumId,
                             x => new GalleryItemModel() { _id = x.Id, _name = x.FileName, _visibility = x.Visibity, _date_add = x.DateAdded, _type = "Media", _path = x.Path }, false);
             var items = folders.Union(media).ToList();
 
@@ -83,26 +81,26 @@ namespace IVoice.Controllers
                 vitems.Add(vitem);
                 if(item._type == "Folder")
                     vitem._class += " box-album";
+                vitem._class += " box-gallery";
             }
 
             model._items = vitems;
 
             model._path = new List<SelectListItem_Custom>();
-            int? idF = AlbumId;
-            while (idF != null)
+            while (albumId != null)
             {
-                var path = _userAttachmentsAlbumRepository.LoadAndSelect(x => x.Active && x.UserId == userID && x.Id == (int)idF,
+                var path = _userAttachmentsAlbumRepository.LoadAndSelect(x => x.Active && x.UserId == userID && x.Id == (int)albumId,
                                                                             x => new SelectListItem_Custom() { Id = x.Id, Description = x.Name }, false).FirstOrDefault();
                 if(path != null)
                 {
                     model._path.Insert(0, path);
                 }
-                idF = _userAttachmentsAlbumRepository.FirstOrDefault(x => x.UserId == userID && x.Id == idF, x => x.ParentId, null);
+                albumId = _userAttachmentsAlbumRepository.FirstOrDefault(x => x.UserId == userID && x.Id == albumId, x => x.ParentId, null);
             }
 
             ViewBag.userId = _userID;
             ViewBag.currentUserId = userID;
-            ViewBag.albumId = AlbumId;
+            ViewBag.AlbumId = AlbumId;
             
             FillBaseModel(model);
             return View(model);

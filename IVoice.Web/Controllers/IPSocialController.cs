@@ -100,7 +100,7 @@ namespace IVoice.Controllers
             var model = new IPModel()
             {
                 id = id,
-                _body = item.BodyHtml,
+                _body = item.BodyHtml.Replace("onclick=\"GoToLink(1", "onclick=\"GoToLink(0"),
                 _style = item.BodyStyle
             };
 
@@ -275,7 +275,7 @@ namespace IVoice.Controllers
             int UserIpId = _crudRepository.Save(new UsersIP()
             {
                 AdultOnly = model._adult,
-                BodyHtml = model._body,
+                BodyHtml = model._body.Replace("onclick=\"GoToLink(0", "onclick=\"GoToLink(1"),
                 BodyStyle = model._style,
                 CategoryId = model._category_id,
                 FeatureId = (int)model._feature_id,
@@ -385,7 +385,7 @@ namespace IVoice.Controllers
         {
             int ipid = modal.id;
             var item = _usersIPRepository.FirstOrDefault(x => x.Id == ipid);
-            item.BodyHtml = modal._body;
+            item.BodyHtml = modal._body.Replace("onclick=\"GoToLink(0", "onclick=\"GoToLink(1");
             item.BodyStyle = modal._style;
             item.IsUpdated = true;
             _usersIPRepository.Save(item);

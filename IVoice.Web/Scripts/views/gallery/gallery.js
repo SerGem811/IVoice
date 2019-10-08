@@ -22,7 +22,8 @@ function onAlbumFailed(e) {
 $(document).on('ready', function () {
     $('.toggle-gallery').bootstrapToggle({
         on: 'Open',
-        off: 'Private'
+        off: 'Private',
+        style:'w-100-force'
     });
 
     $('.toggle-gallery-cover').bootstrapToggle({
@@ -76,7 +77,7 @@ $("#PopupMedia a").on("click", function (e) {
             type: 'POST',
             complete: function (request, status) {
                 if (request.responseJSON.Text == "TRUE") {
-                    alert("Gallery moved");
+                    //alert("Gallery moved");
                     //$("#media-" + selectedGallery.id).remove();
                     location.reload();
                 } else {

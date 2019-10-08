@@ -42,7 +42,7 @@
     @if(userId == currentUserId)
     {
         <div class="margin-top-10">
-        <input type="checkbox" @(Model._item._visibility == "PUBLIC" ? "checked" : "") class="toggle-gallery" data-val="@Model._item._id" data-type="@Model._item._type" />
+        <input type="checkbox" @(Model._item._visibility == "PUBLIC" ? "checked" : "") class="toggle-gallery w-100" data-val="@Model._item._id" data-type="@Model._item._type" />
     </div>
     }
     

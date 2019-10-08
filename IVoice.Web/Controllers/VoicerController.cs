@@ -39,13 +39,13 @@ namespace IVoice.Controllers
             _occupationRepository = usersOccupationRepository;
         }
 
-        public ActionResult Index(int? id)
+        public ActionResult Index(int? UserId)
         {
             VoicersModel model = new VoicersModel();
 
             int userID = _userID;
-            if (id != null)
-                userID = (int)id;
+            if (UserId != null)
+                userID = (int)UserId;
 
             if(userID != _userID)
             {
@@ -57,7 +57,7 @@ namespace IVoice.Controllers
                 }
             }
 
-            model._connected = _usersConnectionRepository.GetAllVoicerModelsByFilter(x => x.User1.Active && x.UserId == userID && x.Type == VoicerConnectionType.CONNECTED.ToString(),
+            model._connected = _usersConnectionRepository.GetAllVoicerModelsByFilter(x => x.User1.Active && x.UserId == userID && x.User1.Id != _userID && x.Type == VoicerConnectionType.CONNECTED.ToString(),
                                                                                     Sorter<UsersConnection>.Get(x => x.DateConnected, false));
             foreach (var item in model._connected)
             {

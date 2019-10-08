@@ -7,7 +7,6 @@ body {
     color: white;
 }
 
-
 .overlay-loading {
     z-index: 9999 !important;
     position: fixed;
@@ -29,7 +28,6 @@ body {
 
 .main-container {
 }
-
 
 .header {
     background-color: #252525;
@@ -103,8 +101,6 @@ body {
     display: flow-root;
 }
 
-
-
 .center-item {
     justify-content: center;
     align-items: center;
@@ -116,12 +112,9 @@ body {
     color: white;
 }
 
-
 .float-left {
     float: left;
 }
-
-
 
 .dropdown-menu-lg-right {
     right: 0;
@@ -153,9 +146,6 @@ body {
     padding-right: 0px !important;
 }
 
-
-
-
 .modal-header-custom {
     display: flex;
 }
@@ -181,6 +171,9 @@ body {
 
 .box-album {
     background-color: #003648 !important;
+}
+.box-gallery {
+    border-radius: 15px !important;
 }
 
 
@@ -258,7 +251,6 @@ body {
         margin-left: 0px;
     }
 
-
 /* Text size */
 .text-small {
     font-size: 12px;
@@ -266,7 +258,6 @@ body {
 .text-large {
     font-size: 18px;
 }
-
 
 /* common a link */
 .white-link {
@@ -321,7 +312,6 @@ body {
 .disabled-text{
     color: #303030;
 }
-
 
 /* coomon box */
 .box-default {
@@ -476,4 +466,8 @@ body {
 
 .btn-ip-more {
     min-width: 300px;
+}
+
+.search-ip-width {
+    width: calc(100% - 20px);
 }

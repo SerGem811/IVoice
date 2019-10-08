@@ -1,4 +1,8 @@
-﻿function ToString(valore) {
+﻿function GoToLink(active, UrlToGo) {
+    if (active && UrlToGo !== '')
+        window.open(UrlToGo);
+}
+function ToString(valore) {
     if (valore == null)
         return '';
     else return valore;

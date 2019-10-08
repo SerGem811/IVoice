@@ -6,8 +6,14 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Web.Mvc;
+
+using System.Dynamic;
+using System.Security.Cryptography;
 using System.Text;
-using System.Threading.Tasks;
+using System.Web;
+using System.IO;
+
 using static IVoice.Helpers.Constants;
 
 namespace IVoice.Services
@@ -44,6 +50,7 @@ namespace IVoice.Services
                 Type = x.Type,
                 Url = "",
                 Voicer = x.Nickname,
+                DIIP = x.CurrentUserIPDI,
                 IsConnected = x.UsersConnections.Any(y => y.Type == VoicerConnectionType.CONNECTED.ToString() && (y.UserId == CurrentUserId || y.ConnectedUserId == CurrentUserId))
             });
 

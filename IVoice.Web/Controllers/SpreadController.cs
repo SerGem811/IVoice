@@ -19,12 +19,12 @@ namespace IVoice.Controllers
             _userIPSpreadRepository = userIPSpreadsRepository;
         }
 
-        public ActionResult Index(int? id)
+        public ActionResult Index(int? UserId)
         {
             int userId = _userID;
-            if(id != null)
+            if(UserId != null)
             {
-                userId = (int)id;
+                userId = (int)UserId;
             }
 
             if(userId != _userID)

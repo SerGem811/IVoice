@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Security.Cryptography;
+using System.Web.Mvc;
 using IVoice.Database;
 using IVoice.Helpers.External;
 using IVoice.Interfaces;
@@ -48,6 +50,7 @@ namespace IVoice.Services
                 Points = x.User1.EPPoints,
                 Type = x.Type,
                 Url = "",
+                DIIP = x.User.CurrentUserIPDI,
                 Voicer = x.User1.Nickname
             });
 

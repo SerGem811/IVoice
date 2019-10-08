@@ -16,5 +16,6 @@ namespace IVoice.Models.Common
         public string Type { get; set; }
         public string ImagePath { get; set; }
         public bool IsConnected { get; set; }
+        public int? DIIP { get; set; }
     }
 }

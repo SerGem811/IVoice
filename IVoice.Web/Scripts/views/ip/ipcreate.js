@@ -27,11 +27,11 @@ $('#creator-panel-image').on('click', function () {
 });
 
 $('.context-menu-one').on('click', function (e) {
-    
+
 });
 
 $('#creator-panel-text').on('click', function () {
-    addBox(false, 'Double click on me!', { 'background-color': '#999'}, 'dblclick-text', true)
+    addBox(false, 'Double click on me!', { 'background-color': '#999' }, 'dblclick-text', true)
     bindDblClickToDiv();
 });
 
@@ -128,7 +128,7 @@ function closeIPPage() {
 }
 
 function ProceedSave() {
-           
+
 }
 
 function dragMoveListener(event) {
@@ -194,7 +194,7 @@ interact('.draggable')
         restrict: {
             restriction: 'parent',
             endOnly: true,
-            elementRect: {top:0, left:0, bottom:1, right:1}
+            elementRect: { top: 0, left: 0, bottom: 1, right: 1 }
         },
         autoScroll: true,
 
@@ -213,9 +213,9 @@ $.contextMenu({
 
         var dynamicItems = {
             'link': { name: 'Add link', icon: 'add' },
-            'front': { name: 'Bring Front'},
-            'back': { name: 'Send Back'},
-            'seperator-01' : '----- Images -----',
+            'front': { name: 'Bring Front' },
+            'back': { name: 'Send Back' },
+            'seperator-01': '----- Images -----',
             'shapes': {
                 name: 'Shapes',
                 'items': {
@@ -289,14 +289,16 @@ $.contextMenu({
                 } else if (key == 'fixvideo') {
 
                 } else if (key == 'link') {
-
+                    selectedObject = $(item);
+                    item_type = 'link';
+                    openUrl();
                 } else if (key == 'transparentback') {
                     $(item).css('background-color', 'inherit');
                 } else if (key == 'change-color') {
                     item_type = 'object';
                     selectedObject = $(item);
                     popupColor.click();
-                    
+
                 } else if (key == 'addtext') {
 
                 } else if (key.indexOf('shapes-') == 0) {
@@ -377,12 +379,12 @@ function bindDblClickToDiv() {
     $('.dblclick-text').on('dblclick', function (e) {
         item_type = 'Textbox';
         selectedObject = $(this);
-        OpenMCEBox($(this).html());
+        openMCE($(this).html());
     })
 }
 
 function SaveMCEContent() {
-    for(var i = 0 ; i < lastTiny.length; i++) {
+    for (var i = 0; i < lastTiny.length; i++) {
         if (!lastTiny[i].isNoDirty) {
             $(selectedObject).html(lastTiny[i].getContent());
         }
@@ -390,7 +392,7 @@ function SaveMCEContent() {
     performOk();
 }
 
-function OpenMCEBox(htmlContent) {
+function openMCE(htmlContent) {
     popupBootstrap('Edit box text', null, '<textarea class="txttiny">' + htmlContent + '</textarea>', {}, true, 'Save', SaveMCEContent, true, 'Cancel', performOk, '70%', null, '70%');
     setTimeout(function () { loadTinyMCE(); }, 250);
 }
@@ -408,16 +410,26 @@ function loadTinyMCE() {
             { title: 'Test template 2', content: 'Test 2' }
         ],
         content_css: [
-            
+
         ]
     }).then(function (editors) {
         lastTiny = editors;
     });
 }
 
+function openUrl() {
+    $('.background-mask').show();
+    $('.url-input').show();
+    $('.txt-url').focus();
+}
+
+function closeUrl() {
+    $('.background-mask').hide();
+    $('.url-input').hide();
+}
 
 $(document).ready(function () {
-    
+
 });
 
 $('#color-picker').on('change', function () {
@@ -447,10 +459,30 @@ $('#color-picker').on('change', function () {
     }
 });
 
+$('.background-mask').on('click', function () {
+    // close popup boxes
+    $('.background-mask').hide();
+    $('.url-input').hide();
+});
+
 
 document.addEventListener('click', function (event) {
     var element = event.target;
-    if (element.hasClass('draggable') || element.hasClass('resize-drag')) {
+    //if (element.hasClass('draggable') || element.hasClass('resize-drag')) {
 
-    }
+    //}
 });
+
+$('.txt-url').keyup(function (event) {
+    event.stopPropagation();
+    if (event.keyCode == 13) {
+        var val = $('.txt-url').val();
+        if (item_type == 'link') {
+            selectedObject.attr('onclick', 'GoToLink(0, "' + val + '")');
+            $('.txt-url').val('');
+        }
+        closeUrl();
+    } else if (event.keyCode == 27) {
+        closeUrl();
+    }
+})

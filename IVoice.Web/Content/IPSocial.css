@@ -242,3 +242,27 @@
 #color-picker {
     display:none;
 }
+
+
+
+.background-mask {
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    height: 100%;
+    width: 100%;
+    background-color: rgb(86, 86, 86);
+    opacity: 0.5;
+    display: block;
+    z-index: 99998;
+}
+
+.url-input {
+    position: absolute;
+    width: 70%;
+    height: 60px;
+    overflow-x: hidden;
+    left: 15%;
+    top: 49%;
+    z-index: 99999;
+}
