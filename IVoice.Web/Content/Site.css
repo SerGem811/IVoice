@@ -471,3 +471,22 @@ body {
 .search-ip-width {
     width: calc(100% - 20px);
 }
+
+div#ip-comment {
+    min-width:200px !important;
+}
+
+table.table-ip-comment td.image {
+    max-width: 60px;
+    text-align: center;
+}
+    table.table-ip-comment td.image img {
+        max-height: 45px;
+    }
+table.table-ip-comment small {
+    font-size : 10px;
+}
+table.table-ip-comment p {
+    font-size: 13px;
+    text-align:justify;
+}

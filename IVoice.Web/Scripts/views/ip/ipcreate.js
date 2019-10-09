@@ -3,6 +3,7 @@ var color_type = "";
 var selectedObject = null;
 var lastTiny = null;
 var eIndex = 1;
+var cIndex = 1; // comment index
 var popupColor = $('#color-picker');
 
 $('#ipcreator-board-area').on('click', function (e) {
@@ -58,7 +59,35 @@ $('#creator-background-url').on('click', function () {
 });
 
 $('#creator-ip-comment').on('click', function () {
-
+    var div = $('<div id="IPComments-' + cIndex + '" class="resize-drag box-default ip-comment" data-x="0" data-y="0" style="transform: translate(0px, 0px); width: 300px; height: 400px; background-color: #424242;">' +
+        '<H2 class="context-menu-one title-ip-comment margin-left-10">Options: smartphone hold, pc right click</H2>' +
+        '<table class="table table-dark table-striped table-hover table-ip-comment">' +
+        '    <tbody>' +
+        '        <tr>' +
+        '            <td class="col-md-2 text-center image">' +
+        '                <img src="https://www.french-weekendbreaks.co.uk/sites/uk.picardiev3/themes/picardiev3/img_v2/user-default.jpg" class="img-topic">' +
+        '                <br/>' +
+        '                <small class="">01/05/2018 05:04:00</small>' +
+        '            </td>' +
+        '            <td class="col-md-10">' +
+        '                <p> Donec id mi in sem fringilla pretium pharetra at lectus. Phasellus id ligula sagittis, pulvinar velit a, feugiat risus. </p>' +
+        '                </td>' +
+        '        </tr>' +
+        '        <tr>' +
+        '            <td class="col-md-2 text-center image">' +
+        '                <img src="https://www.french-weekendbreaks.co.uk/sites/uk.picardiev3/themes/picardiev3/img_v2/user-default.jpg" class="img-topic">' +
+        '                <br />' +
+        '                <small class="">01/05/2018 05:04:00</small>' +
+        '            </td>' +
+        '            <td class="col-md-10">' +
+        '                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>' +
+        '            </td>' +
+        '        </tr>' +
+        '    </tbody>' +
+        '</table>' +
+        '</div>');
+    $('#ipcreator-board-area').append(div);
+    cIndex++;
 });
 
 $('#creator-ip-save').on('click', function () {
@@ -208,7 +237,8 @@ interact('.draggable')
 $.contextMenu({
     selector: '.context-menu-one',
     build: function ($trigger, e) {
-        selectObject = $trigger[0];
+        
+        selectedObject = $trigger[0];
         item_type = 'contextmenu';
 
         var dynamicItems = {
@@ -266,6 +296,12 @@ $.contextMenu({
             'seperator-05': '-----------',
             'delete': { name: 'Delete', icon: 'delete' }
         };
+        if ($(selectedObject).hasClass('title-ip-comment')) {
+            dynamicItems = {
+                'change-comment-title': { name: 'Change title', icon: '' },
+                'delete-comment': { name: 'Delete', icon: 'delete' },
+            };
+        }
 
         return {
             callback: function (key, options) {
@@ -276,7 +312,7 @@ $.contextMenu({
 
                 if (key == 'delete') {
                     item.remove();
-                } else if (key == 'deleteIPComment') {
+                } else if (key == 'delete-comment') {
                     $(item).parent().remove();
                 } else if (key == 'back') {
                     if (index > 10) {
@@ -284,8 +320,10 @@ $.contextMenu({
                     }
                 } else if (key == 'front') {
                     $(item).css('z-index', ++index);
-                } else if (key == 'titleIpComment') {
-
+                } else if (key == 'change-comment-title') {
+                    selectedObject = $(item);
+                    item_type = key;
+                    openUrl();
                 } else if (key == 'fixvideo') {
 
                 } else if (key == 'link') {
@@ -480,6 +518,8 @@ $('.txt-url').keyup(function (event) {
         if (item_type == 'link') {
             selectedObject.attr('onclick', 'GoToLink(0, "' + val + '")');
             $('.txt-url').val('');
+        } else if (item_type == 'change-comment-title') {
+            selectedObject.html(val);
         }
         closeUrl();
     } else if (event.keyCode == 27) {
