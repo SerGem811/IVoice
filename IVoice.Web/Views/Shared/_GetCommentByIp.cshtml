@@ -1,0 +1,25 @@
+﻿@model IVoice.Models.IP.IPCommentsViewModel
+
+<table class="table table-dark table-striped table-hover table-ip-comment">
+    <tbody>
+        @foreach (var item in Model._list)
+        {
+            <tr>
+                <td class="col-md-2 text-center image">
+                    <img src="@item._image" class="img-topic">
+                    <br />
+                    <small class="">@item._date</small>
+                </td>
+                <td class="col-md-10">
+                    <p> @item._text</p>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+@if (Model._user.Id > 0 && Model._type != "main")
+{
+    <fieldset id="commentfieldset">
+        <textarea id="ip-comment-area" class="form-control" onkeydown="CommentsKeyDown(this, 'inner')" data-ipid="@Model._id" placeholder="Write comment..."></textarea>
+    </fieldset>
+}

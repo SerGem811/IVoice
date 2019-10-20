@@ -91,6 +91,10 @@ namespace IVoice
             builder.RegisterType<WhisperRepository>()
                 .As(typeof(IWhisperRepository))
                 .InstancePerRequest();
+
+            builder.RegisterType<UsersIPCommentsRepository>()
+                .As(typeof(IUsersIPCommentsRepository))
+                .InstancePerRequest();
         }
     }
 }

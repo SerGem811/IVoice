@@ -109,6 +109,7 @@ namespace IVoice.Database
         public bool isPublic { get; set; }
         public bool ActiveEP { get; set; }
         public bool ActiveConnect { get; set; }
+        public bool ActiveDI { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Category> Categories { get; set; }

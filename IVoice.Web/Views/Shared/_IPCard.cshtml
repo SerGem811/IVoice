@@ -5,6 +5,7 @@
     var user_url = Url.Action("Details", "User", new { Id = Model._user_id });
     var full_url = HttpContext.Current.Request.Url.AbsoluteUri.Replace(HttpContext.Current.Request.Url.AbsolutePath, "") + url;
     var currentUserID = (ViewBag.currentUserID > 0) ? ViewBag.currentUserID : -1;
+    var comment_url = Url.Action("Comments", "IP");
 }
 
 <div class="box-default pd-20 ip-card-content">
@@ -62,7 +63,7 @@
                     }
                 </span>
             }
-            <span onclick="OpenComments(@Model._id)" class="text-small blue-link padding-left-10">
+            <span onclick="OpenComments('@comment_url', @Model._id)" class="text-small blue-link padding-left-10">
                 <i class="fa fa-comment-alt"></i>&nbsp;@(Model._comments)&nbsp;Comments
             </span>
 

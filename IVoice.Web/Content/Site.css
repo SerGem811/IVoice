@@ -455,7 +455,6 @@ body {
     border-radius: 1px;
     color: #fff;
 }
-
     .btn-search:hover,
     .btn-search:focus,
     .btn-search:active
@@ -489,4 +488,20 @@ table.table-ip-comment small {
 table.table-ip-comment p {
     font-size: 13px;
     text-align:justify;
+}
+
+.datepicker {
+    color: #000;
+}
+
+#ip-comment-area {
+    resize:none;
+    min-height:60px;
+    overflow-y:hidden;
+    word-wrap:break-word;
+}
+#comment-list {
+    overflow-y: auto;
+    min-height: 200px!important;
+    height: calc(100% - 55px);
 }

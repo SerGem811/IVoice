@@ -13,3 +13,54 @@
         @Html.Raw(Model._body)
     </div>
 </div>
+
+<script>
+    function loadComments() {
+        $.each($('.ip-comment'), function (index, value) {
+            $(value).find('.table-ip-comment').remove();
+            $(value).find('#commentfieldset').remove();
+            $(value).css('overflow', 'auto');
+        });
+
+        $.each($('.ip-comment'), function (index, value) {
+            $.ajax({
+                url: '@Url.Action("GetCommentByIp", "IP")',
+                data: {
+                    type: 'ipcomments',
+                    pos: index + 1,
+                    id: @Model.id
+                },
+                type: 'POST',
+                complete: function (request, status) {
+                    $(value).append(request.responseText);
+                    //$(value).scrollTop($(value)[0].scrollHeight);
+                }
+            });
+        });
+    }
+
+    function postInnerComment(obj) {
+        var message = $(obj).val();
+        var pos = $(obj).parent().parent().attr('id').replace('ipcomments-', '');
+        $(obj).val('');
+
+        $.ajax({
+            url: '@Url.Action("PostComment", "IP")',
+            data: {
+                type: 'ipcomments',
+                pos: pos,
+                ipid: @Model.id,
+                comment: message,
+            },
+            type: 'POST',
+            complete: function (request, status) {
+                loadComments();
+            }
+        });
+    }
+
+    $(document).ready(function () {
+        loadComments();
+    });
+
+</script>

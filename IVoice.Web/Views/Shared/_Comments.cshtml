@@ -1,0 +1,13 @@
+﻿@using IVoice.Models.IP
+@model IPCommentsViewModel
+
+<div id="comment-list">
+    @Html.Partial("_GetCommentByIp", Model)
+</div>
+
+@if(Model._user.Id > 0)
+{
+    <fieldset id="comment-field-wrapper" class="padding-top-10">
+        <textarea id="ip-comment-area" class="form-control" onkeydown="CommentsKeyDown(this, 'main')" data-ipid="@Model._id" placeholder="Write comment..."></textarea>
+    </fieldset>
+}

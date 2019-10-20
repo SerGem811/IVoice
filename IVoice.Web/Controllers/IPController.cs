@@ -27,6 +27,7 @@ namespace IVoice.Controllers
         protected IGenericRepository<Country> _countryRepository { get; }
         protected IGenericRepository<UsersHobby> _hobbyRepository { get; }
         protected IGenericRepository<UsersOccupation> _occupationRepository { get; }
+        protected IUsersIPCommentsRepository _usersIPCommentsRepository { get; }
 
         public IPController(IUserRepository userRepository,
                                 IUsersConnectionRepository usersConnectionRepository,
@@ -38,7 +39,8 @@ namespace IVoice.Controllers
                                 IGenericRepository<UsersIPEPPoint> usersIPEPRepository,
                                 IGenericRepository<UsersIPSurf> usersIPSurfRepository,
                                 IUsersActivityRepository usersActivityRepository,
-                                IUsersIPRepository usersIPRepository) : base(userRepository)
+                                IUsersIPRepository usersIPRepository,
+                                IUsersIPCommentsRepository usersIPCommentsRepository) : base(userRepository)
         {
             _usersConnectionRepository = usersConnectionRepository;
             _usersIPLikesRepository = usersIPLikesRepository;
@@ -51,6 +53,8 @@ namespace IVoice.Controllers
             _countryRepository = countryRepository;
             _hobbyRepository = hobbyRepository;
             _occupationRepository = occupationRepository;
+
+            _usersIPCommentsRepository = usersIPCommentsRepository;
         }
 
         // id : feature, secondid : categoryid, thirdid: userid
@@ -69,8 +73,6 @@ namespace IVoice.Controllers
             
             return View(model);
         }
-
-        
 
         [HttpPost]
         public PartialViewResult _GetList(string Name, int PageNum, int CategoryId, int FeatureId, int UserId)
@@ -312,6 +314,51 @@ namespace IVoice.Controllers
 
             FillBaseModel(model);
             return View(model);
+        }
+
+        [HttpPost]
+        public PartialViewResult GetCommentByIp(string type, int pos, int id)
+        {
+            IPCommentsViewModel model = new IPCommentsViewModel();
+            model._list = _usersIPCommentsRepository.GetAllComments(type, pos, id);
+            model._id = id;
+            model._type = type;
+            FillBaseModel(model);
+
+            return PartialView("_GetCommentByIp", model);
+        }
+
+        [HttpPost]
+        public PartialViewResult Comments(string type, int pos, int id)
+        {
+            IPCommentsViewModel model = new IPCommentsViewModel();
+            model._list = _usersIPCommentsRepository.GetAllComments(type, pos, id);
+            model._id = id;
+            model._type = type;
+            FillBaseModel(model);
+            
+            return PartialView("_Comments", model); 
+        }
+
+        [HttpPost]
+        public JsonResult PostComment(string type, int pos, int ipid, string comment)
+        {
+            _usersIPCommentsRepository.Save(new UsersIPComment()
+            {
+                Comment = comment,
+                Date = DateTime.Now,
+                Pos = pos,
+                Type = type,
+                UserId = _userID,
+                UsersIPId = ipid
+            });
+
+            if(_userID > 0)
+            {
+                _usersActivityRepository.SetActivity("ACTIVITY", "COMMENT", _userID, ipid);
+            }
+
+            return Json(new Message(TMessage.TRUE), JsonRequestBehavior.AllowGet);
         }
 
         public void FillViewData()

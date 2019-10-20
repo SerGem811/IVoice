@@ -26,7 +26,7 @@
                 @Html.CheckBoxFor(m => m._pub_birthday)
             </div>
         }
-        @Html.TextBoxFor(m => m._birthday, new { @class = "form-control" })
+        @Html.TextBoxFor(m => m._birthday, new { @class = "form-control voicer-date" })
     </div>
     <!-- Gender -->
     <div class="form-group col-md-6 col-xs-12">
@@ -133,6 +133,7 @@
 <script>
     $(document).ready(function () {
         $('.selectpicker').selectpicker();
+        $('.voicer-date').datepicker();
     });
     
 </script>

@@ -59,13 +59,13 @@ $('#creator-background-url').on('click', function () {
 });
 
 $('#creator-ip-comment').on('click', function () {
-    var div = $('<div id="IPComments-' + cIndex + '" class="resize-drag box-default ip-comment" data-x="0" data-y="0" style="transform: translate(0px, 0px); width: 300px; height: 400px; background-color: #424242;">' +
+    var div = $('<div id="ipcomments-' + cIndex + '" class="resize-drag box-default ip-comment" data-x="0" data-y="0" style="transform: translate(0px, 0px); width: 300px; height: 400px; background-color: #424242;">' +
         '<H2 class="context-menu-one title-ip-comment margin-left-10">Options: smartphone hold, pc right click</H2>' +
         '<table class="table table-dark table-striped table-hover table-ip-comment">' +
         '    <tbody>' +
         '        <tr>' +
         '            <td class="col-md-2 text-center image">' +
-        '                <img src="https://www.french-weekendbreaks.co.uk/sites/uk.picardiev3/themes/picardiev3/img_v2/user-default.jpg" class="img-topic">' +
+        '                <img src="/images/icons/user.png" class="img-topic">' +
         '                <br/>' +
         '                <small class="">01/05/2018 05:04:00</small>' +
         '            </td>' +
@@ -75,7 +75,7 @@ $('#creator-ip-comment').on('click', function () {
         '        </tr>' +
         '        <tr>' +
         '            <td class="col-md-2 text-center image">' +
-        '                <img src="https://www.french-weekendbreaks.co.uk/sites/uk.picardiev3/themes/picardiev3/img_v2/user-default.jpg" class="img-topic">' +
+        '                <img src="/images/icons/user.png" class="img-topic">' +
         '                <br />' +
         '                <small class="">01/05/2018 05:04:00</small>' +
         '            </td>' +

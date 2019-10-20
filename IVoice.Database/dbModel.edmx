@@ -188,6 +188,7 @@
           <Property Name="CPMPoints" Type="decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="FullAdActiveUntil" Type="datetime" />
           <Property Name="isPublic" Type="bit" Nullable="false" />
+          <Property Name="ActiveDI" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="UsersActivity">
           <Key>
@@ -1888,6 +1889,7 @@
           <NavigationProperty Name="Whispers1" Relationship="eoneModel.FK_Whisper_Users1" FromRole="User" ToRole="Whisper" />
           <Property Name="ActiveEP" Type="Boolean" Nullable="false" />
           <Property Name="ActiveConnect" Type="Boolean" Nullable="false" />
+          <Property Name="ActiveDI" Type="Boolean" Nullable="false" />
         </EntityType>
         <EntityType Name="UsersActivity">
           <Key>
@@ -3045,6 +3047,7 @@
           <EntitySetMapping Name="Users">
             <EntityTypeMapping TypeName="eoneModel.User">
               <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="ActiveDI" ColumnName="ActiveDI" />
                 <ScalarProperty Name="ActiveConnect" ColumnName="ActiveConnect" />
                 <ScalarProperty Name="ActiveEP" ColumnName="ActiveEP" />
                 <ScalarProperty Name="isPublic" ColumnName="isPublic" />

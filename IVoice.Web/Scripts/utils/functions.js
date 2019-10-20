@@ -97,12 +97,11 @@ function popupBootstrap(title, urlContent, textContent, postArgs, showOkButton, 
     if (setMaxHeightScreen == null || setMaxHeightScreen == false) {
         $('.modalBootstrapShared div.modal-body').css('height', '')
     } else {
-        $('.modalBootstrapShared div.modal-body').css('heigh', 'calc(100vh - 200px)');
+        $('.modalBootstrapShared div.modal-body').css('height', 'calc(100vh - 350px)');
     }
     
     if (callbackFinishAjax)
         callbackFinishAjax();
-
 }
 
 function performOk() {
@@ -111,4 +110,24 @@ function performOk() {
 
 function alertMessage(title, msg) {
     popupBootstrap(title, null, msg, {}, true, 'Ok', performOk, false, '', null, '30%', null, '30%');
+}
+
+function CommentsKeyDown(obj, type) {
+    if (event.keyCode == 13 && event.shiftKey) {
+        // shift + Enter
+        obj.style.height = (obj.scrollHeight > obj.clientHeight) ? (obj.scrollHeight) + 'px' : '60px';
+    }
+    else if (event.keyCode == 13) {
+        try {
+            // post commit
+            if (type === 'main') {
+                postMainComment(obj);
+            } else {
+                postInnerComment(obj);
+            }
+
+        } catch (err) {
+            obj.style.height = (obj.scrollHeight > obj.clientHeight) ? (obj.scrollHeight) + 'px' : '60px';
+        }
+    }
 }
