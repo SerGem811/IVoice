@@ -1,0 +1,44 @@
+﻿@model IVoice.Models.FileUpload.UploadModel
+
+
+<link href="/Scripts/fileupload/css/style.css" rel="stylesheet" />
+<script src="/Scripts/fileupload/js/jquery.knob.js"></script>
+
+<!-- jQuery File Upload Dependencies -->
+<script src="/Scripts/fileupload/js/jquery.ui.widget.js"></script>
+<script src="/Scripts/fileupload/js/jquery.iframe-transport.js"></script>
+<script src="/Scripts/fileupload/js/jquery.fileupload.js"></script>
+
+
+<div class="panel with-nav-tabs panel-default">
+    <div class="panel-heading">
+        <ul class="nav nav-tabs">
+            <li class="active"><a href="#tabAttachements" data-toggle="tab">Attachements</a></li>
+        </ul>
+    </div>
+    <div class="panel-body">
+        <div class="tab-content">
+            <div class="tab-pane fade in active" id="tabAttachements">
+                <form id="upload" method="post" action="@Url.Action("FileUpload", new { Id= 0})" enctype="multipart/form-data">
+                    @Html.HiddenFor(m => m.UniqueId)
+                    <input type="file" name="file" id="file" class="form-control form-input form-style-base" accept="image/*">
+                </form>
+                <table class="table table-dark table-striped table-hover box-default table-no-padding" id="tblFileUpload">
+                    <thead>
+                        <tr>
+                            <th scope="col">Name</th>
+                            <th class="col-md-2" scope="col"></th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+
+<script src="~/Scripts/fileupload/js/uploadMultiple.js"></script>
+

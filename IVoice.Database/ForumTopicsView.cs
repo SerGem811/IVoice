@@ -12,7 +12,7 @@ namespace IVoice.Database
     using System;
     using System.Collections.Generic;
     
-    public partial class ForumTopicsView
+    public partial class ForumTopicsView : IVoice.Helpers.IEntityBase
     {
         public int Id { get; set; }
         public Nullable<int> UserId { get; set; }

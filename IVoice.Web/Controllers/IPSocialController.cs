@@ -261,7 +261,7 @@ namespace IVoice.Controllers
             {
                 return Json("Select the feature please", JsonRequestBehavior.AllowGet);
             }
-            if((model._category_id == null || model._category_id <= 0) && model._feature_id != EVENT_ID)
+            if((model._category_id == null || model._category_id <= 0) && (model._feature_id != EVENT_ID && model._feature_id != URBANDICTIONARY_ID))
             {
                 return Json("Select the category please", JsonRequestBehavior.AllowGet);
             }
@@ -269,7 +269,10 @@ namespace IVoice.Controllers
             {
                 return Json("Select the cover image please", JsonRequestBehavior.AllowGet);
             }
-
+            if(model._feature_id == Constants.URBANDICTIONARY_ID && (model._tags == "" || model._tags == null))
+            {
+                return Json("Please input the valid tags", JsonRequestBehavior.AllowGet);
+            }
             var user = _userRepository.FirstOrDefault(x => x.Id == _userID);
 
             int UserIpId = _crudRepository.Save(new UsersIP()
@@ -299,7 +302,28 @@ namespace IVoice.Controllers
                 _userRepository.Save(user);
             }
             // save Tags
-            
+            if(model._tags != null && model._tags.Length> 0)
+            {
+                List<string> lst = model._tags.Split(',').ToList();
+                foreach(var item in lst)
+                {
+                    int? iptagid = _ipTagRepository.FirstOrDefault<int?>(x => x.Tag == item, x => x.Id, null);
+                    if(iptagid == null || iptagid == 0)
+                    {
+                        iptagid = _ipTagRepository.Save(new IPTag()
+                        {
+                            Tag = item
+                        });
+                    }
+
+                    _userIPTagRepository.Save(new UsersIPTag()
+                    {
+                        IPTagId = iptagid.Value,
+                        UserIPId = UserIpId
+                    });
+                }
+            }
+
             // event
             if(model._feature_id == EVENT_ID)
             {
@@ -338,7 +362,7 @@ namespace IVoice.Controllers
             SpreadToUsers(UserIpId, userIds);
 
             // set activity
-            _userActivityRepository.SetActivity("Activity", "Spread", _userID, UserIpId);
+            _userActivityRepository.SetActivity(Constants.ActivityType.ACTIVITY.ToString(), "Spread", _userID, UserIpId);
 
             return Json("Success", JsonRequestBehavior.AllowGet);
         }
@@ -452,7 +476,7 @@ namespace IVoice.Controllers
                 SpreadToUsers(model._id, userIds);
 
                 // set activity
-                _userActivityRepository.SetActivity("Activity", "Spread", _userID, model._id);
+                _userActivityRepository.SetActivity(Constants.ActivityType.ACTIVITY.ToString(), Constants.ActivityOperationType.SPREAD.ToString(), _userID, model._id);
 
                 return Json("Success", JsonRequestBehavior.AllowGet);
             }

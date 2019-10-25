@@ -95,6 +95,8 @@ $(function () {
             alert("error");
             // Something has gone wrong!
             data.context.addClass('error');
+            console.log(e);
+            console.log(data);
         }
     });
 

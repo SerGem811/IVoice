@@ -12,7 +12,7 @@ namespace IVoice.Database
     using System;
     using System.Collections.Generic;
     
-    public partial class ForumTopic
+    public partial class ForumTopic : IVoice.Helpers.IEntityBase
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public ForumTopic()

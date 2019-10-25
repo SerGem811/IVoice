@@ -1,0 +1,44 @@
+﻿@model IVoice.Models.ForumTopic.SearchModel
+@{
+    Layout = "~/Views/Shared/_Forum.cshtml";
+}
+
+<div class="row overflow-hidden">
+    <!-- content -->
+    <div class="content content-layout  ">
+        <div class="container">
+            <div class="panel with-nav-tabs panel-default margin-top-10">
+                <div class="panel-heading">
+                    <ul class="nav nav-tabs">
+                        <li class="pull-left"><a href="@Url.Action("Index", "Forum")"><i class="fa fa-chevron-circle-left"></i>&nbsp;</a></li>
+                        <li class="text-white"><h3>@Model.SearchText</h3></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="row">
+                <table class="table table-dark table-striped table-hover box-default table-area">
+                    <thead>
+                        <tr>
+                            <th scope="col"></th>
+                            <th class="col-md-1"></th>
+                            <th class="col-md-1"></th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+@section scripts {
+    <script>
+    var GetTableListURL = '@Url.Action("GetTableList")';
+    var areaIdSearch = 0;
+    </script>
+
+    <script src="~/Scripts/view/ForumTopicList.js"></script>
+
+}

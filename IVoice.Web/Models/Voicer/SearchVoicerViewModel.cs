@@ -75,7 +75,10 @@ namespace IVoice.Models.Voicer
                 if (CountryId != null && CountryId > 0)
                     filter = filter.And(x => x.CountryId == CountryId);
                 if (!OccupationId.IsEmpty())
+                {
                     filter = filter.And(x => x.UsersOccupationsUsers.Any(y => OccupationId.Contains(y.UsersOccupationsId)));
+                }
+                    
                 if (!InterestHobbyId.IsEmpty())
                     filter = filter.And(x => x.UsersHobbyUsers.Any(y => InterestHobbyId.Contains(y.UsersHobbyId)));
                 if (!string.IsNullOrEmpty(Region))
@@ -118,13 +121,25 @@ namespace IVoice.Models.Voicer
                     filter = filter.And(x => x.UsersIPFilters.FirstOrDefault().CountryId == CountryId);
                 if (OccupationId != null && OccupationId.Count > 0)
                 {
-                    var val = string.Join(", ", OccupationId);
-                    filter = filter.And(x => x.UsersIPFilters.FirstOrDefault().OccupationByComma.Contains(val));
+                    foreach (var occ_id in OccupationId)
+                    {
+                        var item = occ_id.ToString();
+                        filter = filter.And(x => (x.UsersIPFilters.FirstOrDefault().OccupationByComma.Contains(", " + item + ","))
+                        || (x.UsersIPFilters.FirstOrDefault().OccupationByComma.StartsWith(item + ", "))
+                        || (x.UsersIPFilters.FirstOrDefault().OccupationByComma == item)
+                        || (x.UsersIPFilters.FirstOrDefault().OccupationByComma.EndsWith(", " + item)));
+                    }
                 }
                 if (InterestHobbyId != null && InterestHobbyId.Count > 0)
                 {
-                    var val = string.Join(", ", InterestHobbyId);
-                    filter = filter.And(x => x.UsersIPFilters.FirstOrDefault().HobbiesByComma.Contains(val));
+                    foreach (var hobby_id in InterestHobbyId)
+                    {
+                        var item = hobby_id.ToString();
+                        filter = filter.And(x => (x.UsersIPFilters.FirstOrDefault().HobbiesByComma.Contains(", " + item + ","))
+                        || (x.UsersIPFilters.FirstOrDefault().HobbiesByComma.StartsWith(item + ", "))
+                        || (x.UsersIPFilters.FirstOrDefault().HobbiesByComma == item)
+                        || (x.UsersIPFilters.FirstOrDefault().HobbiesByComma.EndsWith(", " + item)));
+                    }
                 }
                 if (!string.IsNullOrEmpty(Region))
                     filter = filter.And(x => x.UsersIPFilters.FirstOrDefault().Region.ToUpper().Contains(Region.ToUpper()));

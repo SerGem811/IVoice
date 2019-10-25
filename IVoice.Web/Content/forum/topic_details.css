@@ -1,0 +1,28 @@
+﻿@media screen and (max-width: 600px) {
+    .col-sm-12 {
+        padding: 0px !important;
+    }
+
+    .panel-body {
+        padding: 0px !important;
+    }
+}
+
+
+.img-topic {
+    border-radius: 25px;
+    width: 50px;
+    height: 50px;
+}
+
+.text-topic {
+    font-size: 14px !important;
+    font-family: Arial, Helvetica, sans-serif !important;
+    line-height: 20px !important;
+    padding: 35px !important;
+    text-align: justify;
+}
+
+.td-image {
+    padding: 40px !important;
+}

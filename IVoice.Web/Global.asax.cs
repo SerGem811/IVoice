@@ -56,8 +56,32 @@ namespace IVoice
 
         private void RegisterServices(ContainerBuilder builder)
         {
+            builder.RegisterType<CategoryRepository>()
+                .As(typeof(ICategoryRepository))
+                .InstancePerRequest();
+
+            builder.RegisterType<ForumAnswerRepository>()
+                .As(typeof(IForumAnswerRepository))
+                .InstancePerRequest();
+
+            builder.RegisterType<ForumAnswersAttachRepository>()
+                .As(typeof(IForumAnswersAttachRepository))
+                .InstancePerRequest();
+
+            builder.RegisterType<ForumAnswerVotesRepository>()
+                .As(typeof(IForumAnswerVotesRepository))
+                .InstancePerRequest();
+
+            builder.RegisterType<ForumTopicsViewRepository>()
+                .As(typeof(IForumTopicsViewRepository))
+                .InstancePerRequest();
+
             builder.RegisterGeneric(typeof(GenericRepository<>))
                 .As(typeof(IGenericRepository<>))
+                .InstancePerRequest();
+
+            builder.RegisterType<TopicRepository>()
+                .As(typeof(ITopicRepository))
                 .InstancePerRequest();
 
             builder.RegisterType<UserRepository>()

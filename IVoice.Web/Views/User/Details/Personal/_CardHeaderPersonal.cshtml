@@ -12,8 +12,21 @@
         }
         <span>&nbsp;@Model._title._label</span>
     </a>
+    <a href="#" class="pull-right white-link" title="Direct Index" onclick="ondiip('@Model._diip')">DI IP</a>
     @if (Model._diip != null)
     {
-        <a href="@Model._diip._link" class="pull-right white-link" title="@Model._diip._tooltip">@Model._diip._label</a>
+
     }
 </div>
+
+    <script>
+        function ondiip(diip) {
+            if (diip === 'None') {
+                alertMessage("Notice", "No direct index");
+            } else if (diip === 'Inactive') {
+                alertMessage("Notice", "Direct Index is inactive");
+            } else {
+                window.location = diip;
+            }
+        }
+    </script>

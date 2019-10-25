@@ -12,7 +12,7 @@ namespace IVoice.Database
     using System;
     using System.Collections.Generic;
     
-    public partial class ForumAnswersAttach
+    public partial class ForumAnswersAttach : IVoice.Helpers.IEntityBase
     {
         public int Id { get; set; }
         public Nullable<int> AnswerId { get; set; }

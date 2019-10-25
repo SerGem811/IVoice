@@ -6,6 +6,7 @@ namespace IVoice.Models.Components.PersonalCard
     {
         public CardHeaderModel _title;
         public string _title_img = "";
-        public CardHeaderModel _diip;
+        //public CardHeaderModel _diip;
+        public string _diip;
     }
 }

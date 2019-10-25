@@ -42,8 +42,7 @@ namespace IVoice.Services
                                 _user_id = x.UserId,
                                 _current_like_dislike = x.UsersIPLikes.FirstOrDefault(y => y.UserId == CurrentUserId).Row,
                                 _current_added_surf_id = x.UsersIPSurfs.FirstOrDefault(y => y.UserId == CurrentUserId).Id,
-                                _is_updated = (x.IsUpdated != null) ? (bool)x.IsUpdated : false
-
+                                _is_updated = (x.IsUpdated != null) ? (bool)x.IsUpdated : false,
                             });
 
             var elements = list.ToList();

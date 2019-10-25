@@ -80,7 +80,14 @@ namespace IVoice.Models.Users
                 ImageURL = "/Images/icons/user.png",
                 OnlyAdult = _onlyadult,
                 Type = "PROFILE",
-                EPPoints = 10
+                EPPoints = 10,
+                ActiveDI = true,
+                ActiveGallery = true,
+                ActiveConnect = false,
+                ActiveEP = true,
+                ActiveSpread = true,
+                ActiveVoicer = true,
+                isPublic = true,
             };
         }
     }

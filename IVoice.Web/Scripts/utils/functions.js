@@ -95,9 +95,11 @@ function popupBootstrap(title, urlContent, textContent, postArgs, showOkButton, 
     }
 
     if (setMaxHeightScreen == null || setMaxHeightScreen == false) {
-        $('.modalBootstrapShared div.modal-body').css('height', '')
-    } else {
+        $('.modalBootstrapShared div.modal-body').css('height', '');
+    } else if (setMaxHeightScreen == true) {
         $('.modalBootstrapShared div.modal-body').css('height', 'calc(100vh - 350px)');
+    } else {
+        $('.modalBootstrapShared div.modal-body').css('height', setMaxHeightScreen);
     }
     
     if (callbackFinishAjax)
@@ -109,7 +111,7 @@ function performOk() {
 }
 
 function alertMessage(title, msg) {
-    popupBootstrap(title, null, msg, {}, true, 'Ok', performOk, false, '', null, '30%', null, '30%');
+    popupBootstrap(title, null, msg, {}, true, 'Ok', performOk, false, '', null, '30%', null, false);
 }
 
 function CommentsKeyDown(obj, type) {

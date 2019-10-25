@@ -1,0 +1,93 @@
+﻿@model IVoice.Models.ForumAnswers.Index
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Forum.cshtml";
+}
+
+@section header_scripts{
+    <link href="/Content/forum/topic_details.css" rel="stylesheet">
+
+}
+
+<div class="row overflow-hidden">
+    <!-- content -->
+    <div class="content content-layout  ">
+        <div class="container">
+            <div class="panel with-nav-tabs panel-default margin-top-10">
+                <div class="panel-heading">
+                    <ul class="nav nav-tabs">
+                        <li class="pull-left"><a href="@Url.RouteUrl("TopicList", new { id = Model.AreaId } )"><i class="fa fa-chevron-circle-left"></i>&nbsp;</a></li>
+                        <li class="text-white"><h3>@Model.TopicName v</h3></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="row margin-bottom-25">
+                <table class="table-area width-100">
+                    <thead>
+                        <tr>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+            <div class="row margin-bottom-25">
+                @using (Ajax.BeginForm(
+                        "Create",
+                        "ForumAnswer",
+                        new AjaxOptions
+                        {
+                                //HttpMethod = "Post",
+                                OnComplete = "onPostFunction"
+                        }
+                        , new
+                        {
+                            id = $"AnswerTopic"
+                        }
+                        ))
+                {
+                    @Html.AntiForgeryToken();
+                    @Html.HiddenFor(m => m.UniqueId);
+                    @Html.HiddenFor(m => m.TopicId);
+
+                    <div class="panel with-nav-tabs panel-default">
+                        <div class="panel-heading">
+                            <ul class="nav nav-tabs">
+                                <li class="active"><a href="#tab1default" data-toggle="tab">Answer</a></li>
+                            </ul>
+                        </div>
+                        <div class="panel-body">
+                            <div class="tab-content">
+                                <div class="tab-pane fade in active" id="tab1default">
+                                    <div class="form-group col-md-12">
+                                        <label for="bodymail"><span class="req">* </span> Answer: </label>
+                                        @Html.TextAreaFor(m => m.Answer, new { @class = "form-control", required = "required" })
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+                @Html.Partial("_UploadFileForum", new IVoice.Models.FileUpload.UploadModel() { UniqueId = Model.UniqueId })
+
+                <div class="form-group col-md-12">
+                    <input class="btn btn-success pull-right" id="submitForm" type="submit" name="submit_reg" value="Response">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts {
+    <script src="https://cloud.tinymce.com/stable/tinymce.min.js?apiKey=7daytolk6jeltjfjw3x2dy01texvksndtbxn8f9u2j4syqoi"></script>
+    <script>
+        var urlArea = '@Url.RouteUrl("AnswerList", new { id = Model.TopicId })';
+        var LoggedUserId = @Model.LoggedUserId;
+        var PostLikeDislikeURL = '@Url.Action("PostActionLike")';
+        var TopicId = @Model.TopicId;
+        var GetTableListURL = '@Url.Action("GetTableList")';
+        var SetViewPageURL = '@Url.Action("SetViewPage")';
+    </script>
+
+    <script src="~/Scripts/views/ForumAnswerIndex.js"></script>
+}

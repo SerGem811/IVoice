@@ -1,0 +1,220 @@
+﻿@model IVoice.Models.Users.BiographyViewModel
+@using IVoice.Models.Components.Common
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section hrefs {
+    <link href="~/Content/CardView.css" rel="stylesheet" />
+    <link href="~/Content/User.css" rel="stylesheet" />
+}
+
+<div class="fluid-content">
+    <div class="container margin-top-20">
+        <div class="row">
+            <div class="col-md-8">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="box-default">
+                            @Html.Partial("~/Views/User/Details/Common/_CardHeader.cshtml", new CardHeaderModel() { _class = "active", _label = Model._entity.Nickname })
+                            <div class="panel-body">
+                                <div class="tab-content">
+                                    <a href="#"><img class="w-100" src="@Model._entity.ImageURL" /></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="box-default">
+                            @Html.Partial("~/Views/User/Details/Common/_CardHeader.cshtml", new CardHeaderModel() { _class = "active", _label = "Personal info", _icon = "fa fa-user" })
+                            <div class="panel-body">
+                                <div class="tab-content">
+                                    @if ((Model._entity.BirthDatePublic || Model._entity.Id == Model._user.Id) && !string.IsNullOrEmpty(Model._entity.BirthDate))
+                                    {
+                                        <div class="row">
+                                            <div class="col-md-5" style="padding-right:5px">
+                                                <p class="form-control">Birth date</p>
+                                            </div>
+                                            <div class="col-md-7" style="padding-left:5px">
+                                                <p class="form-control">@Model._entity.BirthDate</p>
+                                            </div>
+                                        </div>
+                                    }
+                                    @if ((Model._entity.GenderPublic || Model._entity.Id == Model._user.Id) && Model._entity.GenderId.HasValue)
+                                    {
+                                        <div class="row">
+                                            <div class="col-md-5" style="padding-right:5px">
+                                                <p class="form-control">Gender</p>
+                                            </div>
+                                            <div class="col-md-7" style="padding-left:5px">
+                                                <p class="form-control">@Model._entity.Gender.Gender1</p>
+                                            </div>
+                                        </div>
+                                    }
+                                    @if ((Model._entity.CountryPublic || Model._entity.Id == Model._user.Id) && Model._entity.CountryId.HasValue)
+                                    {
+                                        <div class="row">
+                                            <div class="col-md-5" style="padding-right:5px">
+                                                <p class="form-control">Country</p>
+                                            </div>
+                                            <div class="col-md-7" style="padding-left:5px; overflow:auto;">
+                                                <p class="form-control" style="height: auto">@Model._entity.Country.Name</p>
+                                            </div>
+                                        </div>
+                                    }
+                                    @if ((Model._entity.RegionPublic || Model._entity.Id == Model._user.Id) && !string.IsNullOrEmpty(Model._entity.Region))
+                                    {
+                                        <div class="row">
+                                            <div class="col-md-5" style="padding-right:5px">
+                                                <p class="form-control">Region</p>
+                                            </div>
+                                            <div class="col-md-7" style="padding-left:5px; overflow:auto;">
+                                                <p class="form-control" style="height: auto">@Model._entity.Region</p>
+                                            </div>
+                                        </div>
+                                    }
+                                    @if ((Model._entity.OccupationPublic || Model._entity.Id == Model._user.Id) && !string.IsNullOrEmpty(string.Join(", ", Model._entity.UsersOccupationsUsers.Select(x => x.UsersOccupation.Occupation))))
+                                    {
+                                        <div class="row">
+                                            <div class="col-md-5" style="padding-right:5px">
+                                                <p class="form-control">Occupation/Profession</p>
+                                            </div>
+                                            <div class="col-md-7" style="padding-left:5px; overflow:auto;">
+                                                <p class="form-control" style="height: auto">@string.Join(", ", Model._entity.UsersOccupationsUsers.Select(x => x.UsersOccupation.Occupation))</p>
+                                            </div>
+                                        </div>
+                                    }
+                                    @if ((Model._entity.RelationshipStatusPublic || Model._entity.Id == Model._user.Id) && !string.IsNullOrEmpty(Model._entity.RelationshipStatus)) 
+                                    {
+                                        <div class="row">
+                                            <div class="col-md-5" style="padding-right:5px">
+                                                <p class="form-control">Relationship status</p>
+                                            </div>
+                                            <div class="col-md-7" style="padding-left:5px; overflow:auto;">
+                                                <p class="form-control" style="height: auto">@Model._entity.RelationshipStatus</p>
+                                            </div>
+                                        </div>
+                                    }
+                                    @if ((Model._entity.InterestHobbyPublic || Model._entity.Id == Model._user.Id) && !string.IsNullOrEmpty(string.Join(", ", Model._entity.UsersHobbyUsers.Select(x => x.UsersHobby.HobbyName))))
+                                    {
+                                        <div class="row">
+                                            <div class="col-md-5" style="padding-right:5px">
+                                                <p class="form-control">Interest and hobbies</p>
+                                            </div>
+                                            <div class="col-md-7" style="padding-left:5px; overflow:auto;">
+                                                <p class="form-control" style="height: auto">@string.Join(", ", Model._entity.UsersHobbyUsers.Select(x => x.UsersHobby.HobbyName))</p>
+                                            </div>
+                                        </div>
+                                    }
+                                    @if ((Model._entity.LanguagePublic || Model._entity.Id == Model._user.Id) && !string.IsNullOrEmpty(Model._entity.Language))
+                                    {
+                                        <div class="row">
+                                            <div class="col-md-5" style="padding-right:5px">
+                                                <p class="form-control">Language</p>
+                                            </div>
+                                            <div class="col-md-7" style="padding-left:5px; overflow:auto;">
+                                                <p class="form-control" style="height: auto">@Model._entity.Language</p>
+                                            </div>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 margin-top-20">
+                        <div class="box-default">
+                            @Html.Partial("~/Views/User/Details/Common/_CardHeader.cshtml", new CardHeaderModel() { _class = "active", _label = "Favourites", _icon = "fa fa-star" })
+                            <div class="panel-body">
+                                <div class="tab-content">
+                                    @if ((Model._entity.FavouriteMusicPublic || Model._entity.Id == Model._user.Id) && !string.IsNullOrEmpty(Model._entity.FavouriteMusic))
+                                    {
+                                        <div class="form-group col-md-6 col-xs-12">
+                                            <label for="favmusic">Favourite music : </label>
+                                            <p name="favmusic" class="form-control">@Model._entity.FavouriteMusic</p>
+                                        </div>
+                                    }
+                                    @if ((Model._entity.FavouriteTVPublic || Model._entity.Id == Model._user.Id) && !string.IsNullOrEmpty(Model._entity.FavouriteTV))
+                                    {
+                                        <div class="form-group col-md-6 col-xs-12">
+                                            <label for="favtv">Favourite TV : </label>
+                                            <p name="favtv" class="form-control">@Model._entity.FavouriteTV</p>
+                                        </div>
+                                    }
+                                    @if ((Model._entity.FavouriteGamesPublic || Model._entity.Id == Model._user.Id) && !string.IsNullOrEmpty(Model._entity.FavouriteGames))
+                                    {
+                                        <div class="form-group col-md-6 col-xs-12">
+                                            <label for="favgame">Favourite games/console : </label>
+                                            <p name="favgame" class="form-control">@Model._entity.FavouriteGames</p>
+                                        </div>
+                                    }
+                                    @if ((Model._entity.FavouriteRestaurantPublic || Model._entity.Id == Model._user.Id) && !string.IsNullOrEmpty(Model._entity.FavouriteRestaurant))
+                                    {
+                                        <div class="form-group col-md-6 col-xs-12">
+                                            <label for="favres">Favourite restaurant : </label>
+                                            <p name="favres" class="form-control">@Model._entity.FavouriteRestaurant</p>
+                                        </div>
+                                    }
+                                    @if ((Model._entity.FavouriteSportsPublic || Model._entity.Id == Model._user.Id) && !string.IsNullOrEmpty(Model._entity.FavouriteSports))
+                                    {
+                                        <div class="form-group col-md-6 col-xs-12">
+                                            <label for="favsport">Favourite Sports/Team/Player : </label>
+                                            <p name="favsport" class="form-control">@Model._entity.FavouriteSports</p>
+                                        </div>
+                                    }
+                                    @if ((Model._entity.FavouriteFilmPublic || Model._entity.Id == Model._user.Id) && !string.IsNullOrEmpty(Model._entity.FavouriteFilm))
+                                    {
+                                        <div class="form-group col-md-6 col-xs-12">
+                                            <label for="favfilm">Favourite film : </label>
+                                            <p name="favfilm" class="form-control">@Model._entity.FavouriteFilm</p>
+                                        </div>
+                                    }
+                                    @if ((Model._entity.FavouriteVehiclePublic || Model._entity.Id == Model._user.Id) && !string.IsNullOrEmpty(Model._entity.FavouriteVehicle))
+                                    {
+                                        <div class="form-group col-md-6 col-xs-12">
+                                            <label for="favvehicle">Favourite vehicle : </label>
+                                            <p name="favvehicle" class="form-control">@Model._entity.FavouriteVehicle</p>
+                                        </div>
+                                    }
+                                    @if ((Model._entity.FavouriteBrandPublic || Model._entity.Id == Model._user.Id) && !string.IsNullOrEmpty(Model._entity.FavouriteBrand))
+                                    {
+                                        <div class="form-group col-md-6 col-xs-12">
+                                            <label for="favbrand">Favourite Brand/Product : </label>
+                                            <p name="favbrand" class="form-control">@Model._entity.FavouriteBrand</p>
+                                        </div>
+                                    }
+                                    @if ((Model._entity.FavouriteOtherPublic || Model._entity.Id == Model._user.Id) && !string.IsNullOrEmpty(Model._entity.FavouriteOther))
+                                    {
+                                        <div class="form-group col-md-12 col-xs-12 float-left">
+                                            <label for="favother">Other favourites : </label>
+                                            <p name="favother" class="form-control">@Model._entity.FavouriteOther</p>
+                                        </div>
+                                    }
+                                    @if ((Model._entity.FavouriteAboutYoupublic || Model._entity.Id == Model._user.Id) && !string.IsNullOrEmpty(Model._entity.FavouriteAboutYou))
+                                    {
+                                        <div class="form-group col-md-12 col-xs-12 float-left">
+                                            <label for="favabout">Tell us about you : </label>
+                                            <p name="favabout" class="form-control">@Model._entity.FavouriteAboutYou</p>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="box-default">
+                    @Html.Partial("~/Views/User/Details/Common/_CardHeader.cshtml", (IVoice.Models.Components.Common.CardHeaderModel)Model._spreadBox.header)
+                    @Html.Partial("~/Views/User/Details/Common/_CardBody.cshtml", (IVoice.Models.Components.Common.CardBodyModel)Model._spreadBox.body)
+                </div>
+                <div class="box-default margin-top-20">
+                    @Html.Partial("~/Views/User/Details/Common/_CardHeader.cshtml", (IVoice.Models.Components.Common.CardHeaderModel)Model._chatWing.header)
+                    @Html.Partial("~/Views/User/Details/Common/_CardBody.cshtml", (IVoice.Models.Components.Common.CardBodyModel)Model._chatWing.body)
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

@@ -23,6 +23,7 @@ namespace IVoice.Helpers.Extensions
             return result;
         }
 
+        
 
         public static Expression<T> Compose<T>(this Expression<T> first, Expression<T> second, Func<Expression, Expression, Expression> merge)
         {

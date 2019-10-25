@@ -152,6 +152,9 @@
     <Compile Include="Controllers\CategoryController.cs" />
     <Compile Include="Controllers\CrudForumController.cs" />
     <Compile Include="Controllers\FeaturesController.cs" />
+    <Compile Include="Controllers\ForumAnswerController.cs" />
+    <Compile Include="Controllers\ForumController.cs" />
+    <Compile Include="Controllers\ForumTopicController.cs" />
     <Compile Include="Controllers\GalleryController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\IPController.cs" />
@@ -165,8 +168,14 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Interfaces\ICategoryRepository.cs" />
+    <Compile Include="Interfaces\IForumAnswerRepository.cs" />
+    <Compile Include="Interfaces\IForumAnswersAttachRepository.cs" />
+    <Compile Include="Interfaces\IForumAnswerVotesRepository.cs" />
+    <Compile Include="Interfaces\IForumTopicsViewRepository.cs" />
     <Compile Include="Interfaces\IGenericRepository.cs" />
     <Compile Include="Interfaces\IGenericTableRepository.cs" />
+    <Compile Include="Interfaces\ITopicRepository.cs" />
     <Compile Include="Interfaces\IUserAttachmentsRepository.cs" />
     <Compile Include="Interfaces\IUserIPAdsRepository.cs" />
     <Compile Include="Interfaces\IUserIPSpreadsRepository.cs" />
@@ -193,6 +202,17 @@
     <Compile Include="Models\Components\Common\CardHeaderModel.cs" />
     <Compile Include="Models\Components\Tabs\CardHeaderTabsModel.cs" />
     <Compile Include="Models\Features\FeatureList.cs" />
+    <Compile Include="Models\FileUpload\UploadModel.cs" />
+    <Compile Include="Models\ForumAnswers\Create.cs" />
+    <Compile Include="Models\ForumAnswers\ForumAnswerVoteModel.cs" />
+    <Compile Include="Models\ForumAnswers\Index.cs" />
+    <Compile Include="Models\ForumAnswers\TableRowModel.cs" />
+    <Compile Include="Models\ForumTopic\Create.cs" />
+    <Compile Include="Models\ForumTopic\Index.cs" />
+    <Compile Include="Models\ForumTopic\SearchModel.cs" />
+    <Compile Include="Models\ForumTopic\TableRowModel.cs" />
+    <Compile Include="Models\Forum\Create.cs" />
+    <Compile Include="Models\Forum\TableRowModel.cs" />
     <Compile Include="Models\Gallery\GalleryCardModel.cs" />
     <Compile Include="Models\Gallery\GalleryItemModel.cs" />
     <Compile Include="Models\Gallery\GalleryViewModel.cs" />
@@ -209,6 +229,7 @@
     <Compile Include="Models\Components\PersonalCard\CardBodyPersonalModel.cs" />
     <Compile Include="Models\Components\PersonalCard\CardHeaderPersonalModel.cs" />
     <Compile Include="Models\Users\AccountModel.cs" />
+    <Compile Include="Models\Users\BiographyViewModel.cs" />
     <Compile Include="Models\Users\DetailsViewModel.cs" />
     <Compile Include="Models\Users\LoginModel.cs" />
     <Compile Include="Models\Common\VoicerModel.cs" />
@@ -221,8 +242,14 @@
     <Compile Include="Models\Whisper\DetailViewModel.cs" />
     <Compile Include="Models\Whisper\WhisperRowModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\CategoryRepository.cs" />
+    <Compile Include="Services\ForumAnswerRepository.cs" />
+    <Compile Include="Services\ForumAnswersAttachRepository.cs" />
+    <Compile Include="Services\ForumAnswerVotesRepository.cs" />
+    <Compile Include="Services\ForumTopicsViewRepository.cs" />
     <Compile Include="Services\GenericRepository.cs" />
     <Compile Include="Services\GenericTableRepository.cs" />
+    <Compile Include="Services\TopicRepository.cs" />
     <Compile Include="Services\UserActivityRepository.cs" />
     <Compile Include="Services\UserAttachmentsRepository.cs" />
     <Compile Include="Services\UserConnectionsRepository.cs" />
@@ -234,6 +261,8 @@
     <Compile Include="Services\WhisperRepository.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\forum\Shared.css" />
+    <Content Include="Content\forum\topic_details.css" />
     <Content Include="Scripts\bootstrap-datepicker\bootstrap-datepicker.min.css" />
     <Content Include="Scripts\bootstrap-tagsinput\bootstrap-tagsinput-typeahead.css" />
     <Content Include="Scripts\bootstrap-tagsinput\bootstrap-tagsinput.css" />
@@ -613,12 +642,14 @@
     <Content Include="Scripts\tinymce\tinymce.min.js" />
     <Content Include="Scripts\vanilla\vanilla-picker.js" />
     <Content Include="Scripts\vanilla\vanilla-picker.min.js" />
+    <Content Include="Scripts\views\ForumAnswerIndex.js" />
+    <Content Include="Scripts\views\ForumTopicList.js" />
     <Content Include="Scripts\views\gallery\gallery_upload.js" />
     <Content Include="Scripts\views\ip\ipcreate.js" />
     <Content Include="Scripts\views\ip\iplist.js" />
     <Content Include="Scripts\views\ip\ipview.js" />
     <Content Include="Scripts\views\user\avatar_upload.js" />
-    <Content Include="Scripts\views\whisper\whisper_upload.js" />
+    <Content Include="Scripts\fileupload\js\uploadMultiple.js" />
     <Content Include="Scripts\fileupload\js\uploadAvatar.js" />
     <Content Include="Scripts\fileupload\js\uploadFileIP.js" />
     <Content Include="Scripts\fileupload\js\uploadIPCover.js" />
@@ -2343,6 +2374,16 @@
     <Content Include="Scripts\tinymce\skins\lightgray\fonts\tinymce.woff" />
     <Content Include="Views\Shared\_Comments.cshtml" />
     <Content Include="Views\Shared\_GetCommentByIp.cshtml" />
+    <Content Include="Views\User\DetailsBio.cshtml" />
+    <Content Include="Views\IP\TagIndex.cshtml" />
+    <Content Include="Views\Shared\_Forum.cshtml" />
+    <Content Include="Views\Forum\Index.cshtml" />
+    <Content Include="Views\ForumTopic\Create.cshtml" />
+    <Content Include="Views\ForumTopic\Index.cshtml" />
+    <Content Include="Views\ForumTopic\Search.cshtml" />
+    <Content Include="Views\ForumAnswer\Index.cshtml" />
+    <Content Include="Views\Forum\Create.cshtml" />
+    <Content Include="Views\Shared\_UploadFileForum.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

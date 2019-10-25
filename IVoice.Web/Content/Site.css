@@ -505,3 +505,9 @@ table.table-ip-comment p {
     min-height: 200px!important;
     height: calc(100% - 55px);
 }
+
+
+/* For the tags input*/
+.bootstrap-tagsinput {
+    width: 100% !important;
+}

@@ -1,0 +1,106 @@
+﻿@using IVoice.Extensions
+@using IVoice.Models.Components.Common
+@using IVoice.Models.Common
+@model IVoice.Models.IP.IPListModel
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section hrefs {
+    <link href="~/Content/IP.css" rel="stylesheet" />
+}
+
+<div class="container fluid-content">
+    <div class="row margin-top-20 margin-bottom-20">
+        <div class="search col-md-8 col-md-offset-2 col-xs-12">
+            <div class="w-100 center-item">
+                @Html.TextBoxFor(m => m._search_content, new { @class = "form-control", placeholder = "Tags", id= "tagInput" })
+                @Html.HiddenFor(m => m._category_id)
+                @Html.HiddenFor(m => m._feature_id)
+                @Html.HiddenFor(m => m._user_id)
+                <button id="btn-ip-search" class="btn btn-default btn-search box-default margin-left-10">Search</button>
+            </div>
+        </div>
+
+        <div class="container" id="ip-container">
+
+        </div>
+
+        <div class="center-item margin-bottom-10">
+            <button id="btn-ip-more" class="btn btn-primary btn-ip-more margin-top-30">Load more...</button>
+        </div>
+    </div>
+</div>
+
+@section scripts {
+    <script>
+        var pageNum = 0;
+        var categoryId = @Model._category_id;
+        var featureId = @Model._feature_id;
+        var ipTags = "";
+        var userID = @Model._user_id;
+
+        var urlGetMore = '@Url.Action("GetNextIPS", "IP")';
+        var urlLikeDislike = '@Url.Action("SetLikeDislike", "IP")';
+        var urlSpread = '@Url.Action("_SpreadIP", "IPSocial")';
+        var urlAddEP = '@Url.Action("AddPoint", "IP")';
+        var urlSurf = '@Url.Action("SurfIP", "IP")';
+        var urlPostComment = '@Url.Action("PostComment", "IP")';
+        var urlGetCommentByIp = '@Url.Action("GetCommentByIp", "IP")';
+
+        $(document).ready(function () {
+            $('#tagInput').tagsinput({});
+
+            $('#btn-ip-more').click();
+        })
+
+        $('#btn-ip-more').on('click', function () {
+            ipTags = $('[name="_search_content"]')[0].value;
+            $.ajax({
+                url: '@Url.Action("_GetTagList", "IP")',
+                data: {
+                    Tags: ipTags,
+                    PageNum: pageNum,
+                    CategoryId: categoryId,
+                    FeatureId: featureId,
+                    UserID: userID
+                },
+                type: 'POST',
+                complete: function (request, status) {
+                    if (request.responseText == null || request.responseText == "") {
+                        return;
+                    }
+                    pageNum++;
+                    $("#ip-container").append(request.responseText);
+                }
+            });
+        });
+
+        $('#btn-ip-search').on('click', function () {
+            pageNum = 0;
+            ipTags = $('[name="_search_content"]')[0].value;
+            $('#ip-container').html('');
+            $.ajax({
+                url: '@Url.Action("_GetTagList", "IP")',
+                data: {
+                    Tags : ipTags,
+                    PageNum: pageNum,
+                    CategoryId: categoryId,
+                    FeatureId: featureId,
+                    UserID: userID
+                },
+                type: 'POST',
+                complete: function (request, status) {
+                    if (request.responseText == null || request.responseText == "") {
+                        return;
+                    }
+                    pageNum++;
+                    $("#ip-container").html(request.responseText);
+                }
+            });
+        });
+
+    </script>
+    <script src="~/Scripts/views/ip/iplist.js"></script>
+}

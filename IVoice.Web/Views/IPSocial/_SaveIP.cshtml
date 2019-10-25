@@ -53,12 +53,14 @@
 
     <div class="form-group col-md-12" id="frmTag" style="display:none;">
         Tab<br />
-        <input type="text" class="form-control input-sm" id="tagInput" placeholder="Insert Tag" />
+        @Html.TextBoxFor(m => m._tags, new { @class="form-control input-sm", id="tagInput", placeholder="Insert Tag"})
+        
     </div>
 
     <div class="form-group col-md-12 row">
         <div class="col-md-4 col-sm-6">
-            Public<br />
+            <span id="public-label">Public</span>
+            <br />
             @Html.CheckBoxFor(m => m._public, new { @class = "form-control toggle-options" })
         </div>
         <div class="col-md-4 col-sm-6">
@@ -179,9 +181,10 @@
         if ($(element).val() == @IVoice.Helpers.Constants.EVENT_ID) {
             $("#frmEvent").show();
             $("#frmCategory").hide();   
-        }
-        if ($(element).val() == 25) {
-
+        } else if ($(element).val() == @IVoice.Helpers.Constants.JOURNAL_ID || $(element).val() == @IVoice.Helpers.Constants.WAVE_ID || $(element).val() == @IVoice.Helpers.Constants.NOTEBOOK_ID) {
+            $("#public-label").html("Open");
+        } else {
+            $("#public-label").html("Public");
         }
     }
 

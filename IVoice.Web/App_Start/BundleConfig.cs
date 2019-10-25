@@ -32,7 +32,6 @@ namespace IVoice
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                 "~/Content/bootstrap.css",
-                "~/Content/site.css",
                 "~/Scripts/datatable/datatables.min.css",
                 "~/Scripts/bootstrap-toggle/bootstrap-toggle.min.css",
                 "~/Scripts/bootstrap-select/css/bootstrap-select.min.css",

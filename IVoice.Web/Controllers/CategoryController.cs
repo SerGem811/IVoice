@@ -41,6 +41,10 @@ namespace IVoice.Controllers
             {
                 return RedirectToAction("FilterIndex", "IP", new { FeatureId = FeatureId, UserId = UserId });
             }
+            if (FeatureId != null && (int)FeatureId == IVoice.Helpers.Constants.URBANDICTIONARY_ID)
+            {
+                return RedirectToAction("TagIndex", "IP", new { FeatureId = FeatureId, UserId = UserId });
+            }
 
             var list = _categoryRepository.LoadAndSelect(x => x.Active, x => x, false).OrderBy(x => x.Name).ToList();
 
@@ -63,6 +67,11 @@ namespace IVoice.Controllers
         public ActionResult FilterIndex(int FeatureId, int? UserId)
         {
             return RedirectToAction("FilterIndex", "IP", new { FeatureId = FeatureId, UserId = UserId});
+        }
+
+        public ActionResult TagIndex(int FeatureId, int? UserId)
+        {
+            return RedirectToAction("TagIndex", "IP", new { FeatureId = FeatureId, UserId = UserId });
         }
     }
 }

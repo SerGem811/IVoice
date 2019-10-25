@@ -22,7 +22,7 @@
         @if (Model._frm_type == 1)
         {
             <div class="pull-right">
-                <span>Public : </span>
+                <span>Open Field : </span>
                 @Html.CheckBoxFor(m => m._pub_birthday)
             </div>
         }
@@ -34,7 +34,7 @@
         @if (Model._frm_type == 1)
         {
             <div class="pull-right">
-                <span>Public : </span>
+                <span>Open Field : </span>
                 @Html.CheckBoxFor(m => m._pub_gender)
             </div>
         }
@@ -46,7 +46,7 @@
         @if (Model._frm_type == 1)
         {
             <div class="pull-right">
-                <span>Public : </span>
+                <span>Open Field : </span>
                 @Html.CheckBoxFor(m => m._pub_country)
             </div>
         }
@@ -58,7 +58,7 @@
         @if (Model._frm_type == 1)
         {
             <div class="pull-right">
-                <span>Public : </span>
+                <span>Open Field : </span>
                 @Html.CheckBoxFor(m => m._pub_region)
             </div>
         }
@@ -70,7 +70,7 @@
         @if (Model._frm_type == 1)
         {
             <div class="pull-right">
-                <span>Public : </span>
+                <span>Open Field : </span>
                 @Html.CheckBoxFor(m => m._pub_language)
             </div>
         }
@@ -82,7 +82,7 @@
         @if (Model._frm_type == 1)
         {
             <div class="pull-right">
-                <span>Public : </span>
+                <span>Open Field : </span>
                 @Html.CheckBoxFor(m => m._pub_occupations)
             </div>
         }
@@ -94,7 +94,7 @@
         @if (Model._frm_type == 1)
         {
             <div class="pull-right">
-                <span>Public : </span>
+                <span>Open Field : </span>
                 @Html.CheckBoxFor(m => m._pub_relation)
             </div>
         }
@@ -106,7 +106,7 @@
         @if (Model._frm_type == 1)
         {
             <div class="pull-right">
-                <span>Public : </span>
+                <span>Open Field : </span>
                 @Html.CheckBoxFor(m => m._pub_hobby)
             </div>
         }
@@ -133,7 +133,9 @@
 <script>
     $(document).ready(function () {
         $('.selectpicker').selectpicker();
-        $('.voicer-date').datepicker();
+        $('.voicer-date').datepicker({
+            format: 'dd/mm/yy'
+        });
     });
     
 </script>

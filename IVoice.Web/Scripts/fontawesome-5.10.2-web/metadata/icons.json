@@ -8836,7 +8836,7 @@
     "ligatures": [],
     "search": {
       "terms": [
-        "activity",
+        Constants.ActivityType.ACTIVITY.ToString(),
         "analytics",
         "chart",
         "dashboard",
@@ -25827,7 +25827,7 @@
     "ligatures": [],
     "search": {
       "terms": [
-        "activity",
+        Constants.ActivityType.ACTIVITY.ToString(),
         "backpack",
         "fall",
         "fitness",
@@ -42637,7 +42637,7 @@
     "ligatures": [],
     "search": {
       "terms": [
-        "activity",
+        Constants.ActivityType.ACTIVITY.ToString(),
         "figure skating",
         "fitness",
         "ice",
@@ -42714,7 +42714,7 @@
     "ligatures": [],
     "search": {
       "terms": [
-        "activity",
+        Constants.ActivityType.ACTIVITY.ToString(),
         "downhill",
         "fast",
         "fitness",
@@ -42756,7 +42756,7 @@
     "ligatures": [],
     "search": {
       "terms": [
-        "activity",
+        Constants.ActivityType.ACTIVITY.ToString(),
         "cross country",
         "fitness",
         "outdoors",
@@ -43612,7 +43612,7 @@
     "ligatures": [],
     "search": {
       "terms": [
-        "activity",
+        Constants.ActivityType.ACTIVITY.ToString(),
         "fitness",
         "olympics",
         "outdoors",

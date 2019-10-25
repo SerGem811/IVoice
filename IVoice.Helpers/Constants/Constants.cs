@@ -29,8 +29,8 @@
 
         public enum ActivityType
         {
-            Activity,
-            Updates
+            ACTIVITY,
+            UPDATES
         }
 
         public enum ActivityOperationType
@@ -51,5 +51,8 @@
 
         public static int EVENT_ID = 4;
         public static int URBANDICTIONARY_ID = 8;
+        public static int WAVE_ID = 11;
+        public static int JOURNAL_ID = 12;
+        public static int NOTEBOOK_ID = 13;
     }
 }

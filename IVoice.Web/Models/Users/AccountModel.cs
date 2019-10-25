@@ -30,6 +30,7 @@ namespace IVoice.Models.Users
         public bool _active_spread { get; set; }
         public bool _active_ep { get; set; }
         public bool _active_connect { get; set; }
+        public bool _active_di { get; set; }
         public string _first { get; set; }
         public string _last { get; set; }
         public bool _is_adult { get; set; }
@@ -54,6 +55,7 @@ namespace IVoice.Models.Users
             _active_voicer = wrapper.ActiveVoicer;
             _active_spread = wrapper.ActiveSpread;
             _active_ep = wrapper.ActiveEP;
+            _active_di = wrapper.ActiveDI;
             _active_connect = wrapper.ActiveConnect;
             _first = wrapper.FirstName;
             _last = wrapper.LastName;
@@ -76,6 +78,7 @@ namespace IVoice.Models.Users
             model.ActiveVoicer = _active_voicer;
             model.ActiveSpread = _active_spread;
             model.ActiveEP = _active_ep;
+            model.ActiveDI = _active_di;
             model.ActiveConnect = _active_connect;
             model.FirstName = _first;
             model.LastName = _last;

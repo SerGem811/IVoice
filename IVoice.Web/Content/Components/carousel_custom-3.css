@@ -1,5 +1,5 @@
 ﻿.carousel-inner.vertical {
-    height: 100%; /*Note: set specific height here if not, there will be some issues with IE browser*/
+    max-height: calc(100vh - 100px)!important; /*Note: set specific height here if not, there will be some issues with IE browser*/
 }
 
     .carousel-inner.vertical > .item {

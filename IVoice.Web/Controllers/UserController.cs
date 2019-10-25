@@ -34,7 +34,7 @@ namespace IVoice.Controllers
 
         protected IUsersConnectionRepository _usersConnectionRepository { get; }
         protected IUsersActivityRepository _usersActivityRepository { get; }
-        protected IGenericRepository<Database.Feature> _featureRepository { get; }
+        protected IGenericRepository<Feature> _featureRepository { get; }
         protected IUserIPSpreadsRepository _userIPSpreadsRepository { get; }
         protected IGenericRepository<UsersAttachmentsAlbum> _userAttachmentsAlbumRepository { get; }
         protected IGenericRepository<UsersAttachment> _usersAttachmentRepository { get; }
@@ -134,34 +134,46 @@ namespace IVoice.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [AllowAnonymous]
-        public ActionResult Register(RegisterModel model)
+        public JsonResult Register(RegisterModel model)
         {
             if (ModelState.IsValid)
             {
-                if (model.IsValid())
+                if (!model.IsValid())
+                {
+                    //ViewBag.error = "Invalid input";
+                    return Json("Invalid input", JsonRequestBehavior.AllowGet);
+                }
+                else if (_userRepository.FirstOrDefault(x => x.Nickname == model._voicer, x => x, null) != null)
+                {
+                    //ViewBag.error = "Voicer name is already taken";
+                    return Json("Voicer name is already taken", JsonRequestBehavior.AllowGet);
+                }
+                else if (_userRepository.FirstOrDefault(x => x.Email == model._email, x => x, null) != null)
+                {
+                    //ViewBag.error = "Email is already taken";
+                    return Json("Email is already taken", JsonRequestBehavior.AllowGet);
+                } 
+                else
                 {
                     MD5 md5 = new MD5CryptoServiceProvider();
                     model._pwd = BitConverter.ToString(md5.ComputeHash(ASCIIEncoding.Default.GetBytes(model._pwd)));
                     if (_userRepository.Save(model.ToEntity()) > 0)
                     {
                         // register
-                        return RedirectToAction("Index", "Home");
+                        //return RedirectToAction("Index", "Home");
+                        return Json("Success", JsonRequestBehavior.AllowGet);
                     }
                     else
                     {
-                        ViewBag.error = "Error while saving data";
+                        //ViewBag.error = "Error while saving data";
+                        return Json("Error while saving data, try again later", JsonRequestBehavior.AllowGet);
                     }
                 }
-                if (!model.IsValid())
-                    ViewBag.error = "Invalid input";
-                if (_userRepository.FirstOrDefault(x => x.Nickname == model._voicer, x => x, null) != null)
-                    ViewBag.error = "Voicer name is already taken";
-                if (_userRepository.FirstOrDefault(x => x.Email == model._email, x => x, null) != null)
-                    ViewBag.error = "Email is already taken";
             }
+            return Json("Invalid input", JsonRequestBehavior.AllowGet);
 
-            FillBaseModel(model);
-            return View(model);
+//             FillBaseModel(model);
+//             return View(model);
         }
         #endregion
 
@@ -187,13 +199,13 @@ namespace IVoice.Controllers
             
             if(Id == _userID)
             {
-                lastActivityList = _usersActivityRepository.LoadSortAndSelect(x => x.Type == "Activity" && x.UsersIP.UserId == userRepo.Id,
+                lastActivityList = _usersActivityRepository.LoadSortAndSelect(x => x.Type == Constants.ActivityType.ACTIVITY.ToString() && x.UsersIP.UserId == userRepo.Id,
                                                                                         x => x, 9, Sorter<UsersActivity>.Get(x => x.Id, false))
                                                                                         .Select(x => FormatActivityForDetails(x)).ToList();
             }
             else
             {
-                lastActivityList = _usersActivityRepository.LoadSortAndSelect(x => x.Type == "Activity" && x.UsersIP.UserId == userRepo.Id && x.UsersIP.Public,
+                lastActivityList = _usersActivityRepository.LoadSortAndSelect(x => x.Type == Constants.ActivityType.ACTIVITY.ToString() && x.UsersIP.UserId == userRepo.Id && x.UsersIP.Public,
                                                                                         x => x, 9, Sorter<UsersActivity>.Get(x => x.Id, false))
                                                                                         .Select(x => FormatActivityForDetails(x)).ToList();
             }
@@ -211,9 +223,22 @@ namespace IVoice.Controllers
             CardHeaderPersonalModel pHeader = new CardHeaderPersonalModel();
             pHeader._title = new CardHeaderModel() { _label = userRepo.Nickname, _link = Url.Action("Personal", "User", new { Id = userRepo.Id }) };
             pHeader._title_img = "/Images/icons/profile.png";
-            if(userRepo.UsersIP != null)
+
+
+            if (userRepo.UsersIP != null && (userRepo.ActiveDI || Id == _userID))
             {
-                pHeader._diip = new CardHeaderModel() { _label = "DI IP", _link = Url.Action("View", "IP", new { Id = userRepo.UsersIP.Id }), _tooltip = "Directory Index" };
+                pHeader._diip = Url.Action("View", "IP", new { Id = userRepo.UsersIP.Id });
+            }
+            else
+            {
+                if(Id == _userID || userRepo.ActiveDI)
+                {
+                    pHeader._diip = "None";
+                }
+                else
+                {
+                    pHeader._diip = "Inactive";
+                }
             }
             pCard.header = pHeader;
             CardBodyPersonalModel pBody = new CardBodyPersonalModel();
@@ -303,6 +328,32 @@ namespace IVoice.Controllers
             return View(model);
         }
 
+        [HttpGet]
+        public ActionResult DetailsBio(int UserId)
+        {
+            var item = _userRepository.FirstOrDefault(x => x.Id == UserId, x => x, null);
+            if (item == null)
+                return RedirectToAction("Index", "Home");
+
+            BiographyViewModel model = new BiographyViewModel();
+            model._entity = item;
+
+            // Spread Box
+            dynamic spreadBox = new ExpandoObject();
+            spreadBox.header = new CardHeaderModel() { _icon = "fa fa-share-alt", _label = "Spread box", _link = "#", _tooltip = "Spread box" };
+            spreadBox.body = new CardBodyModel() { _text = "spread item" };
+            model._spreadBox = spreadBox;
+
+            // Chat Wing
+            dynamic chatWing = new ExpandoObject();
+            chatWing.header = new CardHeaderModel() { _label = "Chat Wings", _tooltip = "Chat Wings", _link = "#" };
+            chatWing.body = new CardBodyModel() { _text = "Chat you've bought" };
+            model._chatWing = chatWing;
+
+            FillBaseModel(model);
+            return View(model);
+        }
+
         private string FormatIPForDetails(IPViewModel x)
         {
             string url_ip = Url.Action("View", "IP", new { Id = x._id });
@@ -315,13 +366,20 @@ namespace IVoice.Controllers
         private string FormatActivityForDetails(UsersActivity x)
         {
             //string url_ip = Url.Action("View", "IP", new { Id = x.UsersIP.route, secondid = x.UsersIPId });
-            string url_ip = Url.Action("View", "IP", new { Id = x.UsersIPId });
-            string url_voicer = Url.Action("Details", "User", new { Id = x.User.Id });
+            try
+            {
+                string url_ip = Url.Action("View", "IP", new { Id = x.UsersIPId });
+                string url_voicer = Url.Action("Details", "User", new { Id = x.User.Id });
 
-            var v=  "<a href='" + url_voicer + "' class='link-text'>" + Extension.Truncate(x.User.Nickname, 10) + "</a>&nbsp;" 
-                            + x.RowText.ToLower() + " <a href='" + url_ip + "' class='link-text'>" + Extension.Truncate(x.UsersIP.Name, 20) + "</a>&nbsp;on&nbsp;<small>" + x.Date.ToLongDateString() + "</small>";
+                var v = "<a href='" + url_voicer + "' class='link-text'>" + Extension.Truncate(x.User.Nickname, 10) + "</a>&nbsp;"
+                                + x.RowText.ToLower() + " <a href='" + url_ip + "' class='link-text'>" + Extension.Truncate(x.UsersIP.Name, 20) + "</a>&nbsp;on&nbsp;<small>" + x.Date.ToLongDateString() + "</small>";
 
-            return v;
+                return v;
+            } catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+            return "";
         }
         #endregion
 

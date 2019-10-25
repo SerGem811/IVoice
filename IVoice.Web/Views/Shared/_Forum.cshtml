@@ -1,0 +1,124 @@
+﻿@model IVoice.Models.BaseModel
+<!DOCTYPE html>
+<html>
+<head>
+    <title>@ViewBag.Title - EOne Forum</title>
+
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - EOne</title>
+    <link rel="stylesheet" href="~/Scripts/fontawesome-5.10.2-web/css/all.css" />
+    
+    <link href="/Scripts/bootstrap-select/css/bootstrap-select.min.css" rel="stylesheet" />
+    <link href="/Scripts/bootstrap-toggle/bootstrap-toggle.min.css" rel="stylesheet" />
+    <link href="/Content/bootstrap.css" rel="stylesheet">
+    <link href="/Content/forum/shared.css" rel="stylesheet">
+    <link href="/scripts/datatable/dataTables.min.css" rel="stylesheet" />
+
+    <script src="/scripts/datatable/dataTables.min.js"></script>
+    <script src="/Scripts/jquery.validate.min.js"></script>
+    <script src="/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    <script src="/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+    <script src="/Scripts/modernizr-2.6.2.js"></script>
+    <script src="/Scripts/bootstrap.min.js"></script>
+    <script src="/Scripts/bootstrap-select/js/bootstrap-select.min.js"></script>
+    <script src="/Scripts/bootstrap-toggle/bootstrap-toggle.min.js"></script>
+
+
+    <script src="/Scripts/utils/functions.js"></script>
+    <script src="/Scripts/utils/ajaxEvents.js"></script>
+    @RenderSection("header_scripts", required: false)
+
+</head>
+
+<body>
+    <div id="overlay" style="display:none">
+        <div class="fa fa-spinner fa-spin"></div>
+    </div>
+    <div id="main-container">
+        <div class="row row-header">
+            <div class="login">
+                <div class="titleHeader  pull-left">
+                    <h3> E1 | Yabber</h3>
+                </div>
+                <div class="pull-left">
+                    <a href="@Url.Action("Index","Features")" class="hoverHeader padding-left-10 padding-right-10"><i class="fa fa-book"></i>&nbsp;<span class="d-none d-md-inline-block">Public magazine</span></a>
+                </div>
+
+                <div class="col-md-5">
+                    <input type="text" class="form-control input-sm" placeholder="Search inside yabber" id="forumGlobalSearch" />
+                </div>
+
+                <div class="pull-right">
+
+                    @{
+                        if (Model._user.Id == 0)
+                        {
+                            <a href="@Url.Action("Login","User", new { layout = "_LayoutForum" })" class="login-btn hoverHeader"><i class="fa fa-sign-in-alt"></i>&nbsp;<span class="d-none d-md-inline-block">Sign In</span></a>
+                            <a href="@Url.Action("Register","User", new { layout = "_LayoutForum" })" class="signup-btn hoverHeader padding-left-10 padding-right-10"><i class="fa fa-user"></i>&nbsp;<span class="d-none d-md-inline-block">Sign Up</span></a>
+                        }
+                        else
+                        {
+                            <a href="@Url.Action("Index","User")" class="hoverHeader padding-left-10 padding-right-10"><i class="fa fa-user-circle"></i>&nbsp;<span class="d-none d-md-inline-block">Account &amp; Settings</span></a>
+                            <a href="@Url.Action("Logout","User")" class="hoverHeader padding-left-10 padding-right-10"><i class="fa fa-sign-out-alt"></i>&nbsp;<span class="d-none d-md-inline-block">Log out</span></a>
+                        }
+                    }
+                </div>
+            </div>
+        </div>
+        <div class="container-fluid body-content">
+            @RenderBody()
+        </div>
+        <div id="footer">
+            <p> <a href="@Url.Action("index","forum")">Community forum</a> | <a href="@Url.Action("Payments","pages")">Payments</a> | <a href="@Url.Action("Contact","pages")">Contact</a> | <a href="@Url.Action("TermsConditions","pages")">Terms and contitions</a>  </p>
+        </div>
+    </div>
+
+
+    <div class="modal fade modalBootstrapShared" data-backdrop="static" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Title</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+
+                </div>
+                <div class="modal-footer">
+                    <span class="errorMsg ErrorMsgNoWrap"></span>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" id="btnSuccessBootstrapShared">Cerca</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" id="btnDismissBootstrapShared">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    @RenderSection("scripts", required: false)
+
+
+    <script>
+
+
+        $(document).ready(function () {
+            $("#forumGlobalSearch").on("keypress", function (e) {
+                var code = e.keyCode || e.which;
+                var textSearch = $("#forumGlobalSearch").val();
+                if (code == 13 && textSearch.length > 0) {
+                    $.ajax({
+                        url: '@Url.Action("SetSearchParams")',
+                        data: { SearchText: textSearch },
+                        type: 'POST',
+                        complete: function (request, status) {
+                            if (request.responseJSON == "TRUE") {
+                                window.location.href = '@Url.RouteUrl("TopicListSearch")';
+                            }
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

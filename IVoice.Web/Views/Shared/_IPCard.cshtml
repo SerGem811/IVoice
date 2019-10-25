@@ -47,19 +47,19 @@
                 <span>
                     @if (Model._current_like_dislike == "like")
                     {
-                        <span class="text-small no-link-text"><i class="fa fa-thumbs-up">&nbsp;@Model._likes&nbsp;You liked</i></span>
+                        <span class="text-small no-link-text"><i class="fa fa-thumbs-up"></i>&nbsp;@Model._likes&nbsp;You liked</span>
                     }
                     else
                     {
-                        <span class="text-small blue-link" onclick="LikeDislikeIP('like', @Model._id, this)"><i class="fa fa-thumbs-up">&nbsp;@Model._likes&nbsp;Like</i></span>
+                        <span class="text-small blue-link" onclick="LikeDislikeIP('like', @Model._id, this)"><i class="fa fa-thumbs-up"></i>&nbsp;@Model._likes&nbsp;Like</span>
                     }
                     @if (Model._current_like_dislike == "dislike")
                     {
-                        <span class="text-small no-link-text padding-left-10"><i class="fa fa-thumbs-down">&nbsp;@Model._dislikes&nbsp;You disliked</i></span>
+                        <span class="text-small no-link-text padding-left-10"><i class="fa fa-thumbs-down"></i>&nbsp;@Model._dislikes&nbsp;You disliked</span>
                     }
                     else
                     {
-                        <span class="text-small blue-link padding-left-10" onclick="LikeDislikeIP('dislike', @Model._id, this)"><i class="fa fa-thumbs-down">&nbsp;@Model._dislikes&nbsp;Dislike</i></span>
+                        <span class="text-small blue-link padding-left-10" onclick="LikeDislikeIP('dislike', @Model._id, this)"><i class="fa fa-thumbs-down"></i>&nbsp;@Model._dislikes&nbsp;Dislike</span>
                     }
                 </span>
             }

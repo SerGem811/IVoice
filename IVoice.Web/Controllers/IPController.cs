@@ -57,7 +57,6 @@ namespace IVoice.Controllers
             _usersIPCommentsRepository = usersIPCommentsRepository;
         }
 
-        // id : feature, secondid : categoryid, thirdid: userid
         public ActionResult Index(int? FeatureId, int? CategoryId, int? UserId)
         {
             IPListModel model = new IPListModel()
@@ -70,7 +69,7 @@ namespace IVoice.Controllers
             FillBaseModel(model);
 
             ViewBag.currentUserID = _userID;
-            
+
             return View(model);
         }
 
@@ -86,16 +85,16 @@ namespace IVoice.Controllers
             else
                 filter = filter.And(x => x.FeatureId == FeatureId && x.UserId == UserId);
 
-            if(CategoryId > 0)
+            if (CategoryId > 0)
             {
                 filter = filter.And(x => x.CategoryId == CategoryId);
             }
-            if(UserId == -1 || (_userModel._account._is_adult))
+            if (UserId == -1 || (_userModel._account._is_adult))
             {
                 filter = filter.And(x => !x.AdultOnly);
             }
 
-            if(!String.IsNullOrEmpty(Name))
+            if (!String.IsNullOrEmpty(Name))
             {
                 filter = filter.And(x => x.Name.Contains(Name));
             }
@@ -108,7 +107,6 @@ namespace IVoice.Controllers
         }
 
         // Filter View : this is for Event
-        // id : fetureId 
         public ActionResult FilterIndex(int? FeatureId, int? UserId)
         {
             IPListModel model = new IPListModel()
@@ -137,37 +135,49 @@ namespace IVoice.Controllers
 
             if (model._filter != null)
             {
-                if(!string.IsNullOrEmpty(model._filter._birthday))
+                if (!string.IsNullOrEmpty(model._filter._birthday))
                 {
                     filter = filter.And(x => x.UsersIPFilters.FirstOrDefault().BirthDate == model._filter._birthday);
                 }
-                if(model._filter._gender_id != null && model._filter._gender_id > 0)
+                if (model._filter._gender_id != null && model._filter._gender_id > 0)
                 {
                     filter = filter.And(x => x.UsersIPFilters.FirstOrDefault().GenderId == model._filter._gender_id);
                 }
-                if(model._filter._country_id != null && model._filter._country_id > 0)
+                if (model._filter._country_id != null && model._filter._country_id > 0)
                 {
                     filter = filter.And(x => x.UsersIPFilters.FirstOrDefault().CountryId == model._filter._country_id);
                 }
-                if(model._filter._occupation_ids != null && model._filter._occupation_ids.Count > 0)
+                if (model._filter._occupation_ids != null && model._filter._occupation_ids.Count > 0)
                 {
-                    var val = string.Join(",", model._filter._occupation_ids);
-                    filter = filter.And(x => x.UsersIPFilters.FirstOrDefault().OccupationByComma.Contains(val));
+                    foreach (var occ_id in model._filter._occupation_ids)
+                    {
+                        var item = occ_id.ToString();
+                        filter = filter.And(x => (x.UsersIPFilters.FirstOrDefault().OccupationByComma.Contains(", " + item + ","))
+                        || (x.UsersIPFilters.FirstOrDefault().OccupationByComma.StartsWith(item + ", "))
+                        || (x.UsersIPFilters.FirstOrDefault().OccupationByComma == item)
+                        || (x.UsersIPFilters.FirstOrDefault().OccupationByComma.EndsWith(", " + item)));
+                    }
                 }
-                if(model._filter._hobby_ids != null && model._filter._hobby_ids.Count > 0)
+                if (model._filter._hobby_ids != null && model._filter._hobby_ids.Count > 0)
                 {
-                    var val = string.Join(",", model._filter._hobby_ids);
-                    filter = filter.And(x => x.UsersIPFilters.FirstOrDefault().HobbiesByComma.Contains(val));
+                    foreach (var hobby_id in model._filter._hobby_ids)
+                    {
+                        var item = hobby_id.ToString();
+                        filter = filter.And(x => (x.UsersIPFilters.FirstOrDefault().HobbiesByComma.Contains(", " + item + ","))
+                        || (x.UsersIPFilters.FirstOrDefault().HobbiesByComma.StartsWith(item + ", "))
+                        || (x.UsersIPFilters.FirstOrDefault().HobbiesByComma == item)
+                        || (x.UsersIPFilters.FirstOrDefault().HobbiesByComma.EndsWith(", " + item)));
+                    }
                 }
-                if(!string.IsNullOrEmpty(model._filter._region))
+                if (!string.IsNullOrEmpty(model._filter._region))
                 {
                     filter = filter.And(x => x.UsersIPFilters.FirstOrDefault().Region.ToUpper().Contains(model._filter._region.ToUpper()));
                 }
-                if(!string.IsNullOrEmpty(model._filter._language))
+                if (!string.IsNullOrEmpty(model._filter._language))
                 {
                     filter = filter.And(x => x.UsersIPFilters.FirstOrDefault().Language.ToUpper().Contains(model._filter._language.ToUpper()));
                 }
-                if(!string.IsNullOrEmpty(model._filter._relation))
+                if (!string.IsNullOrEmpty(model._filter._relation))
                 {
                     filter = filter.And(x => x.UsersIPFilters.FirstOrDefault().RelationshipStatus.ToUpper().Contains(model._filter._relation.ToUpper()));
                 }
@@ -185,6 +195,50 @@ namespace IVoice.Controllers
             return PartialView("_GetIPList", lst);
         }
 
+        // Tag View : this is for Urban Dictionary
+        public ActionResult TagIndex(int? FeatureId, int? UserId)
+        {
+            IPListModel model = new IPListModel()
+            {
+                _category_id = -1,
+                _feature_id = (int)FeatureId,
+                _user_id = (UserId != null) ? (int)UserId : -1,
+            };
+
+            FillBaseModel(model);
+            return View(model);
+        }
+
+        [HttpPost]
+        public PartialViewResult _GetTagList(string Tags, int PageNum, int CategoryId, int FeatureId, int UserId)
+        {
+            IEnumerable<IPViewModel> lst = null;
+
+            Expression<Func<UsersIP, bool>> filter = x => true;
+
+            if (UserId == -1)
+                filter = filter.And(x => x.Public && x.FeatureId == FeatureId);
+            else
+                filter = filter.And(x => x.FeatureId == FeatureId && x.UserId == UserId);
+
+            if (UserId == -1 || (_userModel._account._is_adult))
+            {
+                filter = filter.And(x => !x.AdultOnly);
+            }
+
+            if (!String.IsNullOrEmpty(Tags))
+            {
+                List<string> tagslist = Tags.Split(',').ToList();
+                filter = filter.And(x => tagslist.Any(y => x.UsersIPTags.Select(z => z.IPTag.Tag).Contains(y)));
+            }
+
+            lst = _usersIPRepository.GetAllIPSForUser(filter, PageNum, 9, _userID);
+
+            ViewBag.currentUserID = _userID;
+
+            return PartialView("_GetIPList", lst);
+        }
+
         [HttpPost]
         public JsonResult SetLikeDislike(int IpId, string Type)
         {
@@ -197,7 +251,7 @@ namespace IVoice.Controllers
             {
                 like.Type = Type;
                 _usersIPLikesRepository.Save(like);
-                if(Type == "like")
+                if (Type == "like")
                 {
                     ip.Dislikes--;
                     ip.Likes++;
@@ -222,7 +276,7 @@ namespace IVoice.Controllers
                     UserId = _userID
                 });
 
-                if(Type == "like")
+                if (Type == "like")
                 {
                     nLike++;
                 }
@@ -233,7 +287,7 @@ namespace IVoice.Controllers
             }
 
             var span = "";
-            
+
             if (Type == "like")
             {
                 span = "<span class='text-small no-link-text'><i class='fa fa-thumbs-up'>&nbsp;" + nLike.ToString() + "&nbsp;You liked</i></span>";
@@ -251,7 +305,7 @@ namespace IVoice.Controllers
         [HttpPost]
         public JsonResult AddPoint(int IpId)
         {
-            if(_userID > 0 && _userRepository.FirstOrDefault(x => x.Id == _userID, x => x.EPPoints, null) > 0)
+            if (_userID > 0 && _userRepository.FirstOrDefault(x => x.Id == _userID, x => x.EPPoints, null) > 0)
             {
                 _usersIPEPRepository.Save(new UsersIPEPPoint()
                 {
@@ -271,10 +325,10 @@ namespace IVoice.Controllers
         [HttpPost]
         public JsonResult SurfIP(int IpId)
         {
-            if(_userID > 0)
+            if (_userID > 0)
             {
                 var item = _usersIPSurfRepository.FirstOrDefault(x => x.UsersIPId == IpId && x.UserId == _userID);
-                if(item == null)
+                if (item == null)
                 {
                     // add to surf
                     _usersIPSurfRepository.Save(new UsersIPSurf()
@@ -285,13 +339,13 @@ namespace IVoice.Controllers
                     });
 
                     // save activity
-                    _usersActivityRepository.SetActivity("Activity", "Add SURF", _userID, IpId);
+                    _usersActivityRepository.SetActivity(Constants.ActivityType.ACTIVITY.ToString(), "Add SURF", _userID, IpId);
                 }
                 else
                 {
                     // remove from surf
                     _usersIPSurfRepository.Remove(item);
-                    _usersActivityRepository.SetActivity("Activity", "Remove SURF", _userID, IpId);
+                    _usersActivityRepository.SetActivity(Constants.ActivityType.ACTIVITY.ToString(), "Remove SURF", _userID, IpId);
                 }
                 return Json(_usersIPRepository.FirstOrDefault(x => x.Id == IpId, x => x.Surfs, null).ToString(), JsonRequestBehavior.AllowGet);
             }
@@ -299,14 +353,15 @@ namespace IVoice.Controllers
             {
                 return Json("Failed", JsonRequestBehavior.AllowGet);
             }
-            
+
         }
 
         public ActionResult View(int id)
         {
             var item = _usersIPRepository.FirstOrDefault(x => x.Id == id, x => x, null);
 
-            var model = new IPModel() {
+            var model = new IPModel()
+            {
                 id = id,
                 _body = item.BodyHtml,
                 _style = item.BodyStyle
@@ -336,8 +391,8 @@ namespace IVoice.Controllers
             model._id = id;
             model._type = type;
             FillBaseModel(model);
-            
-            return PartialView("_Comments", model); 
+
+            return PartialView("_Comments", model);
         }
 
         [HttpPost]
@@ -353,9 +408,9 @@ namespace IVoice.Controllers
                 UsersIPId = ipid
             });
 
-            if(_userID > 0)
+            if (_userID > 0)
             {
-                _usersActivityRepository.SetActivity("ACTIVITY", "COMMENT", _userID, ipid);
+                _usersActivityRepository.SetActivity(Constants.ActivityType.ACTIVITY.ToString(), Constants.ActivityOperationType.COMMENT.ToString(), _userID, ipid);
             }
 
             return Json(new Message(TMessage.TRUE), JsonRequestBehavior.AllowGet);

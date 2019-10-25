@@ -73,6 +73,10 @@
             }
         });
 
+        $('#voicer-filter-search').on('click', function () {
+            document.getElementsByName('_pageNum')[0].value = 0;
+        });
+
         function onFilterSearch(result) {
             if (result.responseText == "Failed" || result.responseText == "") {
 

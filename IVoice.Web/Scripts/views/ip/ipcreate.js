@@ -11,7 +11,7 @@ $('#ipcreator-board-area').on('click', function (e) {
 });
 
 $('#creator-panel-shape').on('click', function () {
-    addBox(false, '', null, 'square', true);
+    addBox(true, '', null, 'triangle-up', false);
 });
 
 $('#creator-panel-file').on('click', function () {
@@ -32,7 +32,7 @@ $('.context-menu-one').on('click', function (e) {
 });
 
 $('#creator-panel-text').on('click', function () {
-    addBox(false, 'Double click on me!', { 'background-color': '#999' }, 'dblclick-text', true)
+    addBox(false, 'Double click on me!', { 'background-color': 'inherit' }, 'dblclick-text', true)
     bindDblClickToDiv();
 });
 
@@ -196,7 +196,7 @@ interact('.resize-drag')
     .resizable({
         edges: { left: true, right: true, bottom: true, top: true },
         restrictSize: {
-            min: { width: 100, height: 100 }
+            min: { width: 30, height: 30}
         },
         inertia: false,
     })
@@ -358,7 +358,7 @@ $.contextMenu({
                         $(item).css('width', '100px');
                         $(item).css('height', '100px');
                     } else if (key.indexOf('trapezoid') > 0) {
-                        $(item).addClass('trapzoid draggable');
+                        $(item).addClass('trapezoid draggable');
                     } else if (key.indexOf('triangle-up') > 0) {
                         $(item).addClass('triangle-up draggable');
                     } else if (key.indexOf('triangle-down') > 0) {
@@ -399,14 +399,18 @@ function addBox(onlyDraggable, html, plainCssObject, CssClass, addDimensions) {
         .html(html)
         .attr('id', 'box' + eIndex);
 
-    if (addDimensions)
+    if (addDimensions) {
+
         $(d).css('height', '220px')
             .css('width', '220px');
+    }
+        
 
     if (plainCssObject)
         $(d).css(plainCssObject);
 
-    $(d).addClass('zIndex-default');
+    //$(d).addClass('zIndex-default');
+    $(d).css('z-index', 100);
     $(d).appendTo('#ipcreator-board-area');
 
     eIndex++;

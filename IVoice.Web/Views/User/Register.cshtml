@@ -9,7 +9,7 @@
     <div class="login-form margin-top-30 margin-bottom-20">
         <div class="col-md-4">
             <div class="box-default">
-                @using (Html.BeginForm("Register", "User"))
+                @using (Ajax.BeginForm("Register", "User", new AjaxOptions { OnComplete = "onPostFunction" }))
                 {
                     @Html.AntiForgeryToken();
                     <fieldset>
@@ -35,7 +35,7 @@
                             @Html.ValidationMessageFor(m => m._email, "", new { @class = "text-danger" })
                         </div>
                         <div class="form-group">
-                            <label for="_email"><span>*Voier Name</span></label>
+                            <label for="_email"><span>*Voicer Name</span></label>
                             @Html.TextBoxFor(m => m._voicer, new { @class = "form-control login-input", required = "required", placeholder = "Example : JohnV" })
                             @Html.ValidationMessageFor(m => m._voicer, "", new { @class = "text-danger" })
                         </div>
@@ -60,12 +60,12 @@
                             @Html.ValidationMessageFor(m => m._question, "", new { @class = "text-danger" })
                         </div>
                         <div class="form-group">
-                            @Html.CheckBoxFor(m => m._onlyadult)
+                            @Html.CheckBoxFor(m => m._onlyadult, new { id = "_onlyadult" })
                             <label for="_onlyadult">Add over 18 Age restriction</label>
                             @Html.ValidationMessageFor(m => m._onlyadult, "", new { @class = "text-danger" })
                         </div>
                         <div class="form-group">
-                            @Html.CheckBoxFor(m => m._agree, new { required = "required" })
+                            @Html.CheckBoxFor(m => m._agree, new { required = "required", id = "terms" })
                             <label for="terms">I agree with the <a href="#" title="You may read our terms and conditions by clicking on this link">terms and conditions</a> for registration.</label><span class="req">* </span>
                             @Html.ValidationMessageFor(m => m._agree, "", new { @class = "text-danger" })
                         </div>
@@ -88,3 +88,15 @@
         </div>
     </div>
 </div>
+
+@section scripts {
+    <script>
+        function onPostFunction(e) {
+            if (e.responseJSON === 'Success') {
+                alertMessage('Success', 'You have received an e-mail please control your inbox and click on link to continue activation.');
+            } else {
+                alertMessage('Error', e.responseJSON);
+            }
+        }
+    </script>
+}
