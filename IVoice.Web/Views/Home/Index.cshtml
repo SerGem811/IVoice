@@ -7,7 +7,7 @@
     <link href="~/Content/Components/carousel_custom-3.css" rel="stylesheet" />
 }
 <div class="full-content">
-    <div class="home-side col-md-3">
+    <div class="slider-side col-md-3">
         @Html.Partial("~/Views/Shared/Components/Carousel/_Carousel.cshtml", Model._lst)
     </div>
     <div class="home-back col-md-9">
@@ -17,7 +17,7 @@
 
 @section scripts {
     <script type="text/javascript">
-        $(".home-side img").hover(function () { $("#home-image").attr("src", $(this).attr('src')); });
+        $(".slider-side img").hover(function () { $("#home-image").attr("src", $(this).attr('src')); });
     </script>
     <script src="~/Scripts/views/common/carousel_custom.js"></script>
 }

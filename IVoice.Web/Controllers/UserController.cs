@@ -199,17 +199,26 @@ namespace IVoice.Controllers
             
             if(Id == _userID)
             {
-                lastActivityList = _usersActivityRepository.LoadSortAndSelect(x => x.Type == Constants.ActivityType.ACTIVITY.ToString() && x.UsersIP.UserId == userRepo.Id,
-                                                                                        x => x, 9, Sorter<UsersActivity>.Get(x => x.Id, false))
+                lastActivityList = _usersActivityRepository.LoadSortAndSelect(x => x.RowText == "Spread"  && x.UsersIP.UserId == userRepo.Id && x.UserId == _userID,
+                                                                                        x => x, 9, Sorter<UsersActivity>.Get(x => x.Date, false))
                                                                                         .Select(x => FormatActivityForDetails(x)).ToList();
             }
             else
             {
-                lastActivityList = _usersActivityRepository.LoadSortAndSelect(x => x.Type == Constants.ActivityType.ACTIVITY.ToString() && x.UsersIP.UserId == userRepo.Id && x.UsersIP.Public,
-                                                                                        x => x, 9, Sorter<UsersActivity>.Get(x => x.Id, false))
+                lastActivityList = _usersActivityRepository.LoadSortAndSelect(x => x.RowText == "Spread" && x.UsersIP.UserId == userRepo.Id && x.UsersIP.Public && x.UserId == userRepo.Id,
+                                                                                        x => x, 9, Sorter<UsersActivity>.Get(x => x.Date, false))
                                                                                         .Select(x => FormatActivityForDetails(x)).ToList();
             }
-            
+
+            List<int> connectedIds = _usersConnectionRepository.LoadAndSelect(x => x.UserId == userRepo.Id && x.Type == "CONNECTED", x => x.ConnectedUserId, false);
+
+            List<string> ipSpreadList = _userIPSpreadsRepository.GetAllIPSForUser(x => x.UserId == userRepo.Id && !connectedIds.Contains(x.UserSentId), 0, int.MaxValue, _userID)
+                                            .Select(x => FormatIPForDetails(x)).ToList();
+
+            List<string> voicerSpreadList = _userIPSpreadsRepository.GetAllIPSForUser(x => x.UserId == userRepo.Id && connectedIds.Contains(x.UserSentId), 0, int.MaxValue, _userID)
+                                            .Select(x => FormatIPForDetails(x)).ToList();
+
+
 
             List<string> lastVoicerUpdateList = _usersConnectionRepository.LoadAndSelectMany(x => x.UserId == userRepo.Id,
                                                                                             x => x.User1.UsersActivities.Select(y => y), null).Select(x => FormatActivityForDetails(x)).ToList();
@@ -279,22 +288,22 @@ namespace IVoice.Controllers
             // Ad Card
             dynamic ads = new ExpandoObject();
             ads.header = new CardHeaderModel() { _label = "Ad Box", _icon = "fa fa-ad" } ;
-            ads.body = new CardBodyModel() { _style = "height:350px" };
+            ads.body = new CardBodyModel() { _style = "height:330px" };
             model._ads = ads;
 
             // Tab
             dynamic tabs = new ExpandoObject();
             CardHeaderModel action_update_header = new CardHeaderModel() { _label = "Activity & Updates", _icon = "fa fa-flag", _num = lastActivityList.Count().ToString(),
                                                                             _class ="active", _link = "#tab_1", _open_folder = true, _open_folder_link = Url.Action("ActiveUpdateView", "IPSocial") };
-            CardHeaderModel voicer_update_header = new CardHeaderModel() { _label = "Voicer Updates", _icon = "fa fa-flag", _num = lastVoicerUpdateList.Count().ToString(), _link = "#tab_2",
+            CardHeaderModel voicer_update_header = new CardHeaderModel() { _label = "Voicer Updates", _icon = "fa fa-flag", _num = voicerSpreadList.Count().ToString(), _link = "#tab_2",
                                                                             _open_folder = true, _open_folder_link = Url.Action("VoicerUpdateView", "IPSocial")};
-            CardHeaderModel ip_feeds_header = new CardHeaderModel() { _label = "IP Feeds", _icon = "fa fa-flag", _num = lastSpreadList.Count().ToString(), _link = "#tab_3",
+            CardHeaderModel ip_feeds_header = new CardHeaderModel() { _label = "IP Feeds", _icon = "fa fa-flag", _num = ipSpreadList.Count().ToString(), _link = "#tab_3",
                                                                             _open_folder = true, _open_folder_link = Url.Action("IPFeedView", "IPSocial")};
             tabs.header = new CardHeaderTabsModel() { _header = new List<CardHeaderModel>() { action_update_header, voicer_update_header, ip_feeds_header } };
 
             CardBodyListModel action_update_body = new CardBodyListModel() { _lst = lastActivityList, _class = "tab-pane active" };
-            CardBodyListModel voicer_update_body = new CardBodyListModel() { _lst = lastVoicerUpdateList, _class = "tab-pane" };
-            CardBodyListModel ip_feeds_body = new CardBodyListModel() { _lst = lastSpreadList, _class = "tab-pane" };
+            CardBodyListModel voicer_update_body = new CardBodyListModel() { _lst = voicerSpreadList, _class = "tab-pane" };
+            CardBodyListModel ip_feeds_body = new CardBodyListModel() { _lst = ipSpreadList, _class = "tab-pane" };
             tabs.body = new List<CardBodyListModel>() { action_update_body, voicer_update_body, ip_feeds_body };
             model._tabs = tabs;
 
@@ -493,7 +502,7 @@ namespace IVoice.Controllers
             ViewData["genders"] = _genderRepository.LoadAndSelect(x => true, x => new SelectListItem_Custom { Id = x.Id, Description = x.Gender1 }, false).ToSelectList(x => x.Description);
             ViewData["hobbies"] = _hobbyRepository.LoadAndSelect(x => true, x => new SelectListItem_Custom { Id = x.Id, Description = x.HobbyName }, false).ToSelectList(x => x.Description);
             ViewData["occupations"] = _occupationRepository.LoadSortAndSelect(x => true, x => new SelectListItem_Custom { Id = x.Id, Description = x.Occupation },
-                                                                                    Helpers.External.Sorter<UsersOccupation>.Get(x => x.OrderBy, true)).ToSelectList<SelectListItem_Custom>(null);
+                                                                                    Helpers.External.Sorter<UsersOccupation>.Get(x => x.Occupation, true)).ToSelectList<SelectListItem_Custom>(null);
         }
     }
 }

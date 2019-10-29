@@ -33,6 +33,7 @@ namespace IVoice.Services
                                 _route = x.UsersIP.route,
                                 _title = x.UsersIP.Name,
                                 _voicer = x.User1.Nickname,
+                                _spreader = x.UsersIP.User.Nickname,
                                 _date_add = x.Date,
                                 _comments = x.UsersIP.Comments,
                                 _dislikes = x.UsersIP.Dislikes,

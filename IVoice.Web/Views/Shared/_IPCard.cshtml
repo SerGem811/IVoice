@@ -19,13 +19,27 @@
         }
         else
         {
-            <a class="blue-link" href="@user_url">@Model._voicer</a>
+            if (!string.IsNullOrEmpty(Model._spreader) && Model._spreader != Model._voicer)
+            {
+                <a class="blue-link" href="@user_url">@Model._spreader</a>
+                <span class="no-link-text margin-left-10"><i class="fa fa-share-alt margin-right-5"></i>@Model._voicer</span>
+            }
+            else
+            {
+                <a class="blue-link" href="@user_url">@Model._voicer</a>
+            }
             <button type="submit" class="btn btn-default btn-search btn-sm box-default pull-right" onclick="spreadIp(@Model._id)">
                 <i class="fa fa-share-alt"></i>&nbsp;<span>Spread</span>
             </button>
         }
 
         <div class="margin-top-10 text-large"><a class="@(Model._is_updated ? "green-link" : "blue-link")" href="@url">@Model._title</a></div>
+        @if (!string.IsNullOrEmpty(Model._tags))
+        {
+            <div class="ip-card-body-line">
+                <span class="text-small no-link-text">@Model._tags</span>
+            </div>
+        }
 
         <div class="ip-card-body-line">
             <a class="blue-link" href="@url">View IP</a>

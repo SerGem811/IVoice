@@ -16,47 +16,47 @@
                         <legend class="text-center text-light">Register</legend>
                         <div class="form-group">
                             <label for="_phone"><span>*Phone Number</span></label>
-                            @Html.TextBoxFor(m => m._phone, new { @class = "form-control login-input", required = "required", placeholder = "Not used for marketing" })
+                            @Html.TextBoxFor(m => m._phone, new { @class = "form-control login-input", required = "required", placeholder = "Not used for marketing", id="PhoneNum" })
                             @Html.ValidationMessageFor(m => m._phone, "", new { @class = "text-danger" })
                         </div>
                         <div class="form-group">
                             <label for="_first"><span>*First Name</span></label>
-                            @Html.TextBoxFor(m => m._first, new { @class = "form-control login-input", required = "required", placeholder = "Example : John" })
+                            @Html.TextBoxFor(m => m._first, new { @class = "form-control login-input", required = "required", placeholder = "Example : John", id="FirstName" })
                             @Html.ValidationMessageFor(m => m._first, "", new { @class = "text-danger" })
                         </div>
                         <div class="form-group">
                             <label for="_last"><span>*Last Name</span></label>
-                            @Html.TextBoxFor(m => m._last, new { @class = "form-control login-input", required = "required", placeholder = "Example : Volten" })
+                            @Html.TextBoxFor(m => m._last, new { @class = "form-control login-input", required = "required", placeholder = "Example : Volten", id="LastName" })
                             @Html.ValidationMessageFor(m => m._last, "", new { @class = "text-danger" })
                         </div>
                         <div class="form-group">
                             <label for="_email"><span>*Email</span></label>
-                            @Html.TextBoxFor(m => m._email, new { @class = "form-control login-input", required = "required", placeholder = "Example : admin@admin.com" })
+                            @Html.TextBoxFor(m => m._email, new { @class = "form-control login-input", required = "required", placeholder = "Example : admin@admin.com", id="Email" })
                             @Html.ValidationMessageFor(m => m._email, "", new { @class = "text-danger" })
                         </div>
                         <div class="form-group">
                             <label for="_email"><span>*Voicer Name</span></label>
-                            @Html.TextBoxFor(m => m._voicer, new { @class = "form-control login-input", required = "required", placeholder = "Example : JohnV" })
+                            @Html.TextBoxFor(m => m._voicer, new { @class = "form-control login-input", required = "required", placeholder = "Example : JohnV", id="Voicer" })
                             @Html.ValidationMessageFor(m => m._voicer, "", new { @class = "text-danger" })
                         </div>
                         <div class="form-group">
                             <label for="_email"><span>*Password</span></label>
-                            @Html.TextBoxFor(m => m._pwd, new { type = "password", @class = "form-control login-input", required = "required", placeholder = "" })
+                            @Html.TextBoxFor(m => m._pwd, new { type = "password", @class = "form-control login-input", required = "required", placeholder = "", id="Password" })
                             @Html.ValidationMessageFor(m => m._pwd, "", new { @class = "text-danger" })
                         </div>
                         <div class="form-group">
                             <label for="_email"><span>*Confirm Password</span></label>
-                            @Html.TextBoxFor(m => m._confirm, new { type = "password", @class = "form-control login-input", required = "required", placeholder = "" })
+                            @Html.TextBoxFor(m => m._confirm, new { type = "password", @class = "form-control login-input", required = "required", placeholder = "", id="Confirm" })
                             @Html.ValidationMessageFor(m => m._confirm, "", new { @class = "text-danger" })
                         </div>
                         <div class="form-group">
                             <label for="_email"><span>*Secret Question</span></label>
-                            @Html.TextBoxFor(m => m._question, new { @class = "form-control login-input", required = "required", placeholder = "Make your own security question" })
+                            @Html.TextBoxFor(m => m._question, new { @class = "form-control login-input", required = "required", placeholder = "Make your own security question", id="Question" })
                             @Html.ValidationMessageFor(m => m._question, "", new { @class = "text-danger" })
                         </div>
                         <div class="form-group">
                             <label for="_email"><span>*Secret Answer</span></label>
-                            @Html.TextBoxFor(m => m._answer, new { @class = "form-control login-input", required = "required", placeholder = "Make your own security answer" })
+                            @Html.TextBoxFor(m => m._answer, new { @class = "form-control login-input", required = "required", placeholder = "Make your own security answer", id="Answer" })
                             @Html.ValidationMessageFor(m => m._question, "", new { @class = "text-danger" })
                         </div>
                         <div class="form-group">
@@ -94,6 +94,15 @@
         function onPostFunction(e) {
             if (e.responseJSON === 'Success') {
                 alertMessage('Success', 'You have received an e-mail please control your inbox and click on link to continue activation.');
+                $('#PhoneNum').val('');
+                $('#FirstName').val('');
+                $('#LastName').val('');
+                $('#Email').val('');
+                $('#Voicer').val('');
+                $('#Password').val('');
+                $('#Confirm').val('');
+                $('#Question').val('');
+                $('#Answer').val('');
             } else {
                 alertMessage('Error', e.responseJSON);
             }

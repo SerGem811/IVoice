@@ -2,10 +2,6 @@
 
 @{ 
     var clone_count = 2;
-    if(Model.Count() > 4)
-    {
-        clone_count = 3;
-    }
 }
 
 <div id="carousel-pager" class="carousel slide" data-ride="carousel" data-interval="2000" style="height:100%;">
@@ -16,7 +12,7 @@
         @foreach (var item in Model)
         {
             <div class="item @(index== 0 ? "active": "" )">
-                <a href="@item._link"><img src="@item._img" class="img-responsive" data-slide-to="@index" style="padding:2px;"/></a>
+                <a href="@item._link"><img src="@item._img" class="img-responsive" data-slide-to="@index" style="padding:0px;"/></a>
             </div>
             index++;
         }

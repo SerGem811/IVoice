@@ -171,15 +171,15 @@ namespace IVoice.Controllers
                 }
                 if (!string.IsNullOrEmpty(model._filter._region))
                 {
-                    filter = filter.And(x => x.UsersIPFilters.FirstOrDefault().Region.ToUpper().Contains(model._filter._region.ToUpper()));
+                    filter = filter.And(x => x.UsersIPFilters.FirstOrDefault().Region.ToUpper() == model._filter._region.ToUpper());
                 }
                 if (!string.IsNullOrEmpty(model._filter._language))
                 {
-                    filter = filter.And(x => x.UsersIPFilters.FirstOrDefault().Language.ToUpper().Contains(model._filter._language.ToUpper()));
+                    filter = filter.And(x => x.UsersIPFilters.FirstOrDefault().Language.ToUpper() == model._filter._language.ToUpper());
                 }
                 if (!string.IsNullOrEmpty(model._filter._relation))
                 {
-                    filter = filter.And(x => x.UsersIPFilters.FirstOrDefault().RelationshipStatus.ToUpper().Contains(model._filter._relation.ToUpper()));
+                    filter = filter.And(x => x.UsersIPFilters.FirstOrDefault().RelationshipStatus.ToUpper() == model._filter._relation.ToUpper());
                 }
             }
 
@@ -339,13 +339,13 @@ namespace IVoice.Controllers
                     });
 
                     // save activity
-                    _usersActivityRepository.SetActivity(Constants.ActivityType.ACTIVITY.ToString(), "Add SURF", _userID, IpId);
+                    _usersActivityRepository.SetActivity("ACTIVITY", "Add SURF", _userID, IpId);
                 }
                 else
                 {
                     // remove from surf
                     _usersIPSurfRepository.Remove(item);
-                    _usersActivityRepository.SetActivity(Constants.ActivityType.ACTIVITY.ToString(), "Remove SURF", _userID, IpId);
+                    _usersActivityRepository.SetActivity("ACTIVITY", "Remove SURF", _userID, IpId);
                 }
                 return Json(_usersIPRepository.FirstOrDefault(x => x.Id == IpId, x => x.Surfs, null).ToString(), JsonRequestBehavior.AllowGet);
             }
@@ -410,7 +410,7 @@ namespace IVoice.Controllers
 
             if (_userID > 0)
             {
-                _usersActivityRepository.SetActivity(Constants.ActivityType.ACTIVITY.ToString(), Constants.ActivityOperationType.COMMENT.ToString(), _userID, ipid);
+                _usersActivityRepository.SetActivity("ACTIVITY", "Comment", _userID, ipid);
             }
 
             return Json(new Message(TMessage.TRUE), JsonRequestBehavior.AllowGet);
@@ -422,7 +422,7 @@ namespace IVoice.Controllers
             ViewData["genders"] = _genderRepository.LoadAndSelect(x => true, x => new SelectListItem_Custom { Id = x.Id, Description = x.Gender1 }, false).ToSelectList(x => x.Description);
             ViewData["hobbies"] = _hobbyRepository.LoadAndSelect(x => true, x => new SelectListItem_Custom { Id = x.Id, Description = x.HobbyName }, false).ToSelectList(x => x.Description);
             ViewData["occupations"] = _occupationRepository.LoadSortAndSelect(x => true, x => new SelectListItem_Custom { Id = x.Id, Description = x.Occupation },
-                                                                                                Helpers.External.Sorter<UsersOccupation>.Get(x => x.OrderBy, true)).ToSelectList<SelectListItem_Custom>(null);
+                                                                                                Helpers.External.Sorter<UsersOccupation>.Get(x => x.Occupation, true)).ToSelectList<SelectListItem_Custom>(null);
         }
     }
 }

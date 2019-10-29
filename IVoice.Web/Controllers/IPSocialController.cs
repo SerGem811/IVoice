@@ -334,19 +334,13 @@ namespace IVoice.Controllers
             // spread to connected
             var connected = _connectionRepository.GetAllVoicerModelsByFilter(x => x.User1.Active && x.User1.ActiveIPFeeds && x.UserId == _userID && x.Type == VoicerConnectionType.CONNECTED.ToString(),
                                                                                 Sorter<UsersConnection>.Get(x => x.DateConnected, false));
-            var index = 0;
+            
 
             var userIds = new List<int>();
-            foreach(var item in connected)
-            {
-                if (model._selected[index])
-                {
-                    userIds.Add(item.Id);
-                }
-                index++;
-            }
 
-            if(model._filter != null)
+            
+
+            if(model._filter != null && !model._filter.isEmpty())
             {
                 var filter = model._filter.GetFilter(_connectionRepository.GetAllBlockedUsers(_userID));
                 filter = filter.And(x => x.ActiveIPFeeds);
@@ -359,10 +353,20 @@ namespace IVoice.Controllers
                     }
                 }
             }
+
+            var index = 0;
+            foreach (var item in connected)
+            {
+                if (model._selected[index] && !userIds.Contains(item.Id))
+                {
+                    userIds.Add(item.Id);
+                } 
+                index++;
+            }
             SpreadToUsers(UserIpId, userIds);
 
             // set activity
-            _userActivityRepository.SetActivity(Constants.ActivityType.ACTIVITY.ToString(), "Spread", _userID, UserIpId);
+            _userActivityRepository.SetActivity("ACTIVITY", "Spread", _userID, UserIpId);
 
             return Json("Success", JsonRequestBehavior.AllowGet);
         }
@@ -389,8 +393,10 @@ namespace IVoice.Controllers
                 CountryList = _countryRepository.LoadAndSelect(x => true, x => new SelectListItem_Custom { Id = x.Id, Description = x.Name }, false).ToSelectList(x => x.Description),
                 GenderList = _genderRepository.LoadAndSelect(x => true, x => new SelectListItem_Custom { Id = x.Id, Description = x.Gender1 }, false).ToSelectList(x => x.Description),
                 HobbyList = _hobbyRepository.LoadAndSelect(x => true, x => new SelectListItem_Custom { Id = x.Id, Description = x.HobbyName }, false).ToSelectList(x => x.Description),
-                OccupationProfessionList = _occupationRepository.LoadAndSelect(x => true, x => new SelectListItem_Custom { Id = x.Id, Description = x.Occupation }, false).ToSelectList(x => x.Description),
-                SearchFormType = searchFormType,
+                //OccupationProfessionList = _occupationRepository.LoadAndSelect(x => true, x => new SelectListItem_Custom { Id = x.Id, Description = x.Occupation }, false).ToSelectList(x => x.Description),
+                OccupationProfessionList = _occupationRepository.LoadSortAndSelect(x => true, x => new SelectListItem_Custom { Id = x.Id, Description = x.Occupation },
+                                                                                    Helpers.External.Sorter<UsersOccupation>.Get(x => x.Occupation, true)).ToSelectList(x => x.Description),
+            SearchFormType = searchFormType,
                 UserIpId = UserIpId
             };
         }
@@ -401,7 +407,7 @@ namespace IVoice.Controllers
             ViewData["genders"] = _genderRepository.LoadAndSelect(x => true, x => new SelectListItem_Custom { Id = x.Id, Description = x.Gender1 }, false).ToSelectList(x => x.Description);
             ViewData["hobbies"] = _hobbyRepository.LoadAndSelect(x => true, x => new SelectListItem_Custom { Id = x.Id, Description = x.HobbyName }, false).ToSelectList(x => x.Description);
             ViewData["occupations"] = _occupationRepository.LoadSortAndSelect(x => true, x => new SelectListItem_Custom { Id = x.Id, Description = x.Occupation },
-                                                                                    Helpers.External.Sorter<UsersOccupation>.Get(x => x.OrderBy, true)).ToSelectList<SelectListItem_Custom>(null);
+                                                                                    Helpers.External.Sorter<UsersOccupation>.Get(x => x.Occupation, true)).ToSelectList<SelectListItem_Custom>(null);
         }
 
         [HttpPost]
@@ -449,17 +455,9 @@ namespace IVoice.Controllers
             {
                 var connected = _connectionRepository.GetAllVoicerModelsByFilter(x => x.User1.Active && x.User1.ActiveIPFeeds && x.UserId == _userID && x.Type == VoicerConnectionType.CONNECTED.ToString(),
                                                                                 Sorter<UsersConnection>.Get(x => x.DateConnected, false));
-                var index = 0;
                 var userIds = new List<int>();
-                foreach (var item in connected)
-                {
-                    if (model._selected[index])
-                    {
-                        userIds.Add(item.Id);
-                    }
-                    index++;
-                }
-                if (model._filter != null)
+                
+                if (model._filter != null && !model._filter.isEmpty())
                 {
                     var filter = model._filter.GetFilter(_connectionRepository.GetAllBlockedUsers(_userID));
                     filter = filter.And(x => x.ActiveIPFeeds);
@@ -473,10 +471,20 @@ namespace IVoice.Controllers
                     }
                 }
 
+                var index = 0;
+                foreach (var item in connected)
+                {
+                    if (model._selected[index] && !userIds.Contains(item.Id))
+                    {
+                        userIds.Add(item.Id);
+                    }
+                    index++;
+                }
+
                 SpreadToUsers(model._id, userIds);
 
                 // set activity
-                _userActivityRepository.SetActivity(Constants.ActivityType.ACTIVITY.ToString(), Constants.ActivityOperationType.SPREAD.ToString(), _userID, model._id);
+                _userActivityRepository.SetActivity("ACTIVITY", "Spread", _userID, model._id);
 
                 return Json("Success", JsonRequestBehavior.AllowGet);
             }

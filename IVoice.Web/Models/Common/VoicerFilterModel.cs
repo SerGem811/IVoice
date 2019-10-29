@@ -59,6 +59,26 @@ namespace IVoice.Models.Common
             _hobby_ids = new List<int>();
         }
 
+        public bool isEmpty()
+        {
+            if (!string.IsNullOrEmpty(_birthday))
+                return false;
+            if (_gender_id != null && _gender_id != -1)
+                return false;
+            if (_country_id != null && _country_id != -1)
+                return false;
+            if (!string.IsNullOrEmpty(_region))
+                return false;
+            if (!string.IsNullOrEmpty(_language))
+                return false;
+            if (_occupation_ids.Count() > 0)
+                return false;
+            if (_hobby_ids.Count() > 0)
+                return false;
+
+            return true;
+        }
+
         public Expression<Func<User, bool>> GetFilter(List<int> blockedUsers)
         {
             Expression<Func<User, bool>> filter = x => !blockedUsers.Contains(x.Id) && x.Active;

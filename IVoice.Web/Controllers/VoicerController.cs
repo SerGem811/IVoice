@@ -150,6 +150,8 @@ namespace IVoice.Controllers
             {
                 var conn1 = makeConnection(_userID, VoicerID, func);
                 _usersConnectionRepository.Save(conn1);
+                var conn2 = makeConnection(VoicerID, _userID, VoicerConnectionType.GOTBLOCKED.ToString());
+                _usersConnectionRepository.Save(conn2);
             }
             else if(func == VoicerConnectionType.REMOVED.ToString())
             {
@@ -232,7 +234,7 @@ namespace IVoice.Controllers
             ViewData["genders"] = _genderRepository.LoadAndSelect(x => true, x => new SelectListItem_Custom { Id = x.Id, Description = x.Gender1 }, false).ToSelectList(x => x.Description);
             ViewData["hobbies"] = _hobbyRepository.LoadAndSelect(x => true, x => new SelectListItem_Custom { Id = x.Id, Description = x.HobbyName }, false).ToSelectList(x => x.Description);
             ViewData["occupations"] = _occupationRepository.LoadSortAndSelect(x => true, x => new SelectListItem_Custom { Id = x.Id, Description = x.Occupation },
-                                                                                    Helpers.External.Sorter<UsersOccupation>.Get(x => x.OrderBy, true)).ToSelectList<SelectListItem_Custom>(null);
+                                                                                    Helpers.External.Sorter<UsersOccupation>.Get(x => x.Occupation, true)).ToSelectList<SelectListItem_Custom>(null);
         }
     }
 }

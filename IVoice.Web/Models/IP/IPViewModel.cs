@@ -10,6 +10,7 @@ namespace IVoice.Models.IP
         public int _id { get; set; }
         public string _image_path { get; set; }
         public string _voicer { get; set; }
+        public string _spreader { get; set; }
         public string _title { get; set; }
         public DateTime _date_add { get; set; }
         public string _time_ago { get; set; }

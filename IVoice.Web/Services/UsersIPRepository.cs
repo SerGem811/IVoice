@@ -40,7 +40,7 @@ namespace IVoice.Services
                                 _surfs = x.Surfs,
                                 _ep = x.EPPoints,
                                 _user_id = x.UserId,
-                                _current_like_dislike = x.UsersIPLikes.FirstOrDefault(y => y.UserId == CurrentUserId).Row,
+                                _current_like_dislike = x.UsersIPLikes.FirstOrDefault(y => y.UserId == CurrentUserId).Type,
                                 _current_added_surf_id = x.UsersIPSurfs.FirstOrDefault(y => y.UserId == CurrentUserId).Id,
                                 _is_updated = (x.IsUpdated != null) ? (bool)x.IsUpdated : false,
                             });
@@ -50,6 +50,8 @@ namespace IVoice.Services
             foreach(var item in elements)
             {
                 item._time_ago = Extension.getElapsedTime(item._date_add);
+                var ip = _dbContext.UsersIPs.FirstOrDefault(x => x.Id == item._id);
+                item._tags = string.Join(", ", ip.UsersIPTags.Select(y => y.IPTag.Tag));
             }
 
             return elements;

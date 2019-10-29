@@ -11,6 +11,7 @@
         public enum VoicerConnectionType
         {
             BLOCKED,
+            GOTBLOCKED,
             CONNECTED,
             WAITING,
             REMOVED,
