@@ -17,7 +17,7 @@
     });
 
     $(document).ajaxError(function (event, xhr, options, exc) {
-        alert('Error on comunication!');
+        alertMessage('Error', 'Error on comunication!');
     });
 
     $(document).ajaxComplete(function (event, xhr, options) {

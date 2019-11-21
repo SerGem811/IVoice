@@ -558,7 +558,7 @@ table.table-ip-comment p {
 
 .slider-side {
     padding: 0;
-    max-height: 100%;
+    height: calc(100vh - 100px);
     overflow: hidden;
 }
 
@@ -572,3 +572,8 @@ table.table-ip-comment p {
             -webkit-animation: flash 1.5s;
             animation: flash 1.5s;
         }
+
+.ip-img {
+    width: 100%;
+    height: 100%;
+}

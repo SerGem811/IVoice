@@ -11,6 +11,7 @@ namespace IVoice.Models.Whisper
         public DateTime Date { get; set; }
         public string Message { get; set; }
         public string VoicerName { get; set; }
+        public string SentByName { get; set; }
         public int VoicerId { get; set; }
     }
 }

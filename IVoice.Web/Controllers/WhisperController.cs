@@ -128,7 +128,7 @@ namespace IVoice.Controllers
             var model = new Create
             {
                 _uniqueId = Guid.NewGuid(),
-                _voicers = _usersConnectionRepository.LoadAndSelect(x => x.UserId == _userID && x.Type == VoicerConnectionType.CONNECTED.ToString(),
+                _voicers = _usersConnectionRepository.LoadAndSelect(x => x.UserId == _userID && x.Type == VoicerConnectionType.CONNECTED.ToString() && x.User1.ActiveWhisper,
                                                                     x => new SelectListItem_Custom { Id = x.User1.Id, Description = x.User1.Nickname }, false)
                                                                     .ToSelectList(x => x.Description)
             };

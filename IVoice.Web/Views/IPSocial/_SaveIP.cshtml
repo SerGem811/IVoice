@@ -224,7 +224,7 @@
             },
 
             fail: function (e, data) {
-                alert("error");
+                alertMessage('Error', 'Error');
             }
         });
 
@@ -255,7 +255,7 @@
             window.location = detailURL;
         } else {
             //alertMessage('notice', e.responseText);
-            alert(v);
+            alertMessage('Notice', v);
         }
     }
 

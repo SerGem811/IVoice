@@ -19,14 +19,19 @@
     <div class="main-container">
         <div class="header">
             <div class="header-left">
-                <a href="@Url.Action("Index", "Home")"><img src="~/Images/icons/logo.png" /></a>
+                <a href="@Url.Action("Index", "Home")"><img src="~/Images/icons/ivoice-logo.png" /></a>
                 @if (Model._user.Id > 0)
                 {
-                    <a href="@Url.Action("Details", "User", new {Id = Model._user.Id})"><img src="~/Images/icons/profile.png" style="height:20px;" /></a>
+                    <a href="@Url.Action("Details", "User", new {Id = Model._user.Id})"><img src="~/Images/icons/profile.png" style="height:20px;margin-left:5px;" /></a>
                 }
             </div>
             <div class="header-right">
-                <div class="collapse navbar-collapse">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#topNav">
+                        <span class="navbar-toggle-icon"></span>
+                    </button>
+                </div>
+                <div class="collapse navbar-collapse" id="topNav">
                     <ul class="nav navbar-nav">
                         <li>
                             <a class="white-link" href="@Url.Action("Index","Features")"><i class="fa fa-book-open"></i>&nbsp;PIP</a>
@@ -77,12 +82,13 @@
             @RenderBody()
         </div>
         <div class="footer">
-            <!--<img src="~/Images/icons/ivoice-logo.png" class="pull-left" />-->
+            <img src="~/Images/icons/logo.png" class="pull-left" style="height:20px; position:absolute; left: 20px;" />
             <div>
                 <a class="white-link" href="@Url.Action("Payments", "Pages")">Payments&nbsp;</a>
                 |<a class="white-link" href="@Url.Action("Contact", "Pages")">&nbsp;Contact&nbsp;</a>
                 |<a class="white-link" href="@Url.Action("TermsConditions", "Pages")">&nbsp;Terms & Conditions</a>
             </div>
+            <img src="~/Images/icons/eco-logo.png" class="pull-right" style="height:20px; position:absolute; right: 20px;" />
         </div>
     </div>
 

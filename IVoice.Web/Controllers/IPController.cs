@@ -249,18 +249,38 @@ namespace IVoice.Controllers
 
             if (like != null)
             {
-                like.Type = Type;
-                _usersIPLikesRepository.Save(like);
-                if (Type == "like")
+                bool update = false;
+                if(Type == "like")
                 {
                     ip.Dislikes--;
                     ip.Likes++;
+                    update = true;
                 }
-                else
+                else if(Type == "w-like")
+                {
+                    ip.Likes--;
+                }
+                else if(Type == "dislike")
                 {
                     ip.Likes--;
                     ip.Dislikes++;
+                    update = true;
                 }
+                else if(Type == "w-dislike")
+                {
+                    ip.Dislikes--;
+                }
+                if(update)
+                {
+                    like.Type = Type;
+                    _usersIPLikesRepository.Save(like);
+                }
+                else
+                {
+                    // remove
+                    _usersIPLikesRepository.Remove(like);
+                }
+                
                 _usersIPRepository.Save(ip);
                 nLike = ip.Likes;
                 nDislike = ip.Dislikes;
@@ -280,7 +300,7 @@ namespace IVoice.Controllers
                 {
                     nLike++;
                 }
-                else
+                else if(Type == "dislike")
                 {
                     nDislike++;
                 }
@@ -290,13 +310,23 @@ namespace IVoice.Controllers
 
             if (Type == "like")
             {
-                span = "<span class='text-small no-link-text'><i class='fa fa-thumbs-up'>&nbsp;" + nLike.ToString() + "&nbsp;You liked</i></span>";
-                span += "<span class='text-small blue-link padding-left-10' onclick='LikeDislikeIP(\"dislike\"," + IpId + ", this)'><i class='fa fa-thumbs-down'>&nbsp;" + nDislike + "&nbsp;Dislike</i></span>";
+                span = "<span class='text-small blue-link' onclick='LikeDislikeIP(\"w-like\", " + IpId + ", this)'><i class='fa fa-thumbs-up'></i>&nbsp;" + nLike.ToString() + "&nbsp;You liked</span>";
+                span += "<span class='text-small blue-link padding-left-10' onclick='LikeDislikeIP(\"dislike\"," + IpId + ", this)'><i class='fa fa-thumbs-down'></i>&nbsp;" + nDislike.ToString() + "&nbsp;Dislike</span>";
+            }
+            else if(Type == "w-like")
+            {
+                span = "<span class='text-small blue-link' onclick='LikeDislikeIP(\"like\", " + IpId + ", this)'><i class='fa fa-thumbs-up'></i>&nbsp;" + nLike.ToString() + "&nbsp;Like</span>";
+                span += "<span class='text-small blue-link padding-left-10' onclick='LikeDislikeIP(\"dislike\"," + IpId + ", this)'><i class='fa fa-thumbs-down'></i>&nbsp;" + nDislike.ToString() + "&nbsp;Dislike</span>";
             }
             else if (Type == "dislike")
             {
-                span = "<span class='text-small blue-link' onclick='LikeDislikeIP(\"like\"," + IpId + ", this)'><i class='fa fa-thumbs-up'>&nbsp;" + nLike + "&nbsp;Like</i></span>";
-                span += "<span class='text-small no-link-text padding-left-10'><i class='fa fa-thumbs-down'>&nbsp;" + nDislike.ToString() + "&nbsp;You disliked</i></span>";
+                span = "<span class='text-small blue-link' onclick='LikeDislikeIP(\"like\"," + IpId + ", this)'><i class='fa fa-thumbs-up'></i>&nbsp;" + nLike.ToString() + "&nbsp;Like</span>";
+                span += "<span class='text-small blue-link padding-left-10' onclick='LikeDislikeIP(\"w-dislike\"," + IpId + ", this)'><i class='fa fa-thumbs-down'></i>&nbsp;" + nDislike.ToString() + "&nbsp;You disliked</span>";
+            }
+            else if(Type == "w-dislike")
+            {
+                span = "<span class='text-small blue-link' onclick='LikeDislikeIP(\"like\", " + IpId + ", this)'><i class='fa fa-thumbs-up'></i>&nbsp;" + nLike.ToString() + "&nbsp;Like</span>";
+                span += "<span class='text-small blue-link padding-left-10' onclick='LikeDislikeIP(\"dislike\"," + IpId + ", this)'><i class='fa fa-thumbs-down'></i>&nbsp;" + nDislike.ToString() + "&nbsp;Dislike</span>";
             }
 
             return Json(span, JsonRequestBehavior.AllowGet);

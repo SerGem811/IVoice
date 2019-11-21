@@ -37,11 +37,12 @@ $('#creator-panel-text').on('click', function () {
 });
 
 $('#creator-panel-url').on('click', function () {
-
+    item_type = 'image_url';
+    openUrl();
 });
 
 $('#creator-background-clear').on('click', function () {
-    $('#ipcreator-board').css('background-color', '#fff');
+    $('#ipcreator-board').css('background-color', '#454545');
     $('#ipcreator-board').css('background-image', '');
 });
 
@@ -56,6 +57,8 @@ $('#creator-background-color').on('click', function () {
 });
 
 $('#creator-background-url').on('click', function () {
+    item_type = 'back_url';
+    openUrl();
 });
 
 $('#creator-ip-comment').on('click', function () {
@@ -388,6 +391,17 @@ $.contextMenu({
     }
 });
 
+function getYTID_fromURL(url) {
+    var regExp = /^.*(youtu\.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+    var match = url.match(regExp);
+    if (match && match[2].length == 11) {
+        return match[2];
+    } else {
+        //error
+    }
+    return '';
+}
+
 function addBox(onlyDraggable, html, plainCssObject, CssClass, addDimensions) {
     var css = 'resize-drag';
     if (onlyDraggable)
@@ -467,6 +481,7 @@ function openUrl() {
 
 function closeUrl() {
     $('.background-mask').hide();
+    $('.txt-url').val('');
     $('.url-input').hide();
 }
 
@@ -524,6 +539,19 @@ $('.txt-url').keyup(function (event) {
             $('.txt-url').val('');
         } else if (item_type == 'change-comment-title') {
             selectedObject.html(val);
+        } else if (item_type == 'image_url') {
+            if (val.indexOf('iframe') >= 0) {
+                addBox(false, val, null, null, true);
+            } else if ((val.indexOf('youtube') >= 0) || (getYTID_fromURL(val) != '')) {
+                addBox(false, '<iframe class="iframeIP" src="https://www.youtube.com/embed/' + getYTID_fromURL(val) + '" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>', null, null, true);
+            } else {
+                addBox(false, '<img class="ip-img" src="' + val + '"></img>', null, null, true);
+            }
+        } else if (item_type == 'back_url') {
+            $('#ipcreator-board').css('background-image', 'url("' + val + '")');
+            $('#ipcreator-board').css('background-position', 'center');
+            $('#ipcreator-board').css('background-repeat', 'no-repeat');
+            $('#ipcreator-board').css('background-size', '100% 100%');
         }
         closeUrl();
     } else if (event.keyCode == 27) {

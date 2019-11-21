@@ -4,7 +4,8 @@
 }
 @section hrefs {
     <link href="~/Content/Home.css" rel="stylesheet" />
-    <link href="~/Content/Components/carousel_custom-3.css" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" media="all" href="~/Scripts/simplyscroll/jquery.simplyscroll.css">
+    <link href="~/Content/Components/carousel.css" rel="stylesheet" />
 }
 <div class="full-content">
     <div class="slider-side col-md-3">
@@ -16,9 +17,22 @@
 </div>
 
 @section scripts {
-    <script type="text/javascript">
-        $(".slider-side img").hover(function () { $("#home-image").attr("src", $(this).attr('src')); });
-    </script>
-    <script src="~/Scripts/views/common/carousel_custom.js"></script>
-}
+    <script type="text/javascript" src="~/Scripts/simplyscroll/jquery.simplyscroll.min.js"></script>
 
+    <script type="text/javascript">
+
+        $(".slider-side img").hover(function () { $("#home-image").attr("src", $(this).attr('src')); });
+
+        (function ($) {
+            $(function () {
+                $('#scroller').simplyScroll({
+                    customClass: 'vertical-slider',
+                    orientation: 'vertical',
+                    auto: true,
+                    manualMode: 'loop',
+                    speed: 3
+                });
+            });
+        }) (jQuery);
+    </script>
+}

@@ -1,32 +1,11 @@
 ﻿@model List<IVoice.Models.Common.CarouselModel>
 
-@{ 
-    var clone_count = 2;
-}
+<ul id="scroller">
+    @foreach (var item in Model)
+    {
+        <li style="height:auto!important;">
+            <a href="@item._link"><img src="@item._img" /></a>
+        </li>
+    }
+</ul>
 
-<div id="carousel-pager" class="carousel slide" data-ride="carousel" data-interval="2000" style="height:100%;">
-    <div class="carousel-inner vertical">
-        @{ 
-            var index = 0;
-        }
-        @foreach (var item in Model)
-        {
-            <div class="item @(index== 0 ? "active": "" )">
-                <a href="@item._link"><img src="@item._img" class="img-responsive" data-slide-to="@index" style="padding:0px;"/></a>
-            </div>
-            index++;
-        }
-    </div>
-    <a class="left carousel-control" href="#carousel-pager" role="button" data-slide="prev">
-        <span class="glyphicon glyphicon-chevron-up" aria-hidden="true"></span>
-        <span class="sr-only">Previous</span>
-    </a>
-    <a class="right carousel-control" href="#carousel-pager" role="button" data-slide="next">
-        <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span>
-        <span class="sr-only">Previous</span>
-    </a>
-</div>
-
-<script>
-    var cc = @clone_count;
-</script>

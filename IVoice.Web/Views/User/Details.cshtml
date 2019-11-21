@@ -5,7 +5,8 @@
 @section hrefs {
     <link href="~/Content/User.css" rel="stylesheet" />
     <link href="~/Content/CardView.css" rel="stylesheet" />
-    <link href="~/Content/Components/carousel_custom-3.css" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" media="all" href="~/Scripts/simplyscroll/jquery.simplyscroll.css">
+    <link href="~/Content/Components/carousel.css" rel="stylesheet" />
     <!-- simply scroll-->
 }
 <div class="fluid-content">
@@ -91,5 +92,19 @@
 
 
 @section scripts {
-    <script src="~/Scripts/views/common/carousel_custom.js"></script>
+    <script type="text/javascript" src="~/Scripts/simplyscroll/jquery.simplyscroll.min.js"></script>
+
+    <script type="text/javascript">
+        (function ($) {
+            $(function () {
+                $('#scroller').simplyScroll({
+                    customClass: 'vertical-slider',
+                    orientation: 'vertical',
+                    auto: true,
+                    manualMode: 'loop',
+                    speed: 5
+                });
+            });
+        })(jQuery);
+    </script>
 }

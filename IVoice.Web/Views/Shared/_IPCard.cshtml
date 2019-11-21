@@ -61,7 +61,7 @@
                 <span>
                     @if (Model._current_like_dislike == "like")
                     {
-                        <span class="text-small no-link-text"><i class="fa fa-thumbs-up"></i>&nbsp;@Model._likes&nbsp;You liked</span>
+                        <span class="text-small blue-link" onclick="LikeDislikeIP('w-like', @Model._id, this)"><i class="fa fa-thumbs-up"></i>&nbsp;@Model._likes&nbsp;You liked</span>
                     }
                     else
                     {
@@ -69,7 +69,7 @@
                     }
                     @if (Model._current_like_dislike == "dislike")
                     {
-                        <span class="text-small no-link-text padding-left-10"><i class="fa fa-thumbs-down"></i>&nbsp;@Model._dislikes&nbsp;You disliked</span>
+                        <span class="text-small blue-link padding-left-10" onclick="LikeDislikeIP('w-dislike', @Model._id, this)"><i class="fa fa-thumbs-down"></i>&nbsp;@Model._dislikes&nbsp;You disliked</span>
                     }
                     else
                     {

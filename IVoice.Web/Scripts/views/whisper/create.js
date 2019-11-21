@@ -2,14 +2,14 @@
     window.location.href = 'Index';
 }
 function onPostFunction(e) {
-    if (e.responseJSON.Text != "FALSE") {
-        //apriPopupBootstrap("Message Sent", null, "The message has been sent", {}, true, "Ok", false, "Ok", redirectToBase, redirectToBase, '70%');
-        alert("The message has been sent");
+    if (e.responseJSON.Text != 'FALSE') {
+        //apriPopupBootstrap('Message Sent', null, 'The message has been sent', {}, true, 'Ok', false, 'Ok', redirectToBase, redirectToBase, '70%');
+        alertMessage('Notice', 'The message has been sent');
         redirectToBase();
     }
     else {
-        //apriPopupBootstrap("Error", null, e.responseJSON.Text, {}, true, "Ok", false, "", null, null, '70%');
-        alert(e.responseJSON.Text);
+        //apriPopupBootstrap('Error', null, e.responseJSON.Text, {}, true, 'Ok', false, '', null, null, '70%');
+        alertMessage('Notice', e.responseJSON.Text);
     }
 }
 
@@ -17,14 +17,14 @@ $(document).ready(function () {
     $('.table').DataTable({
         searching: false,
         ordering: true,
-        "bLengthChange": false,
+        'bLengthChange': false,
         paging: false
     });
 
-    $("#submitForm").on("click", function (e) {
-        $("#_message").html(tinyMCE.activeEditor.getContent());
+    $('#submitForm').on('click', function (e) {
+        $('#_message').html(tinyMCE.activeEditor.getContent());
 
-        $("#CreateWhisper").submit();
+        $('#CreateWhisper').submit();
     });
 
 

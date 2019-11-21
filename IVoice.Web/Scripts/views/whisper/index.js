@@ -91,6 +91,7 @@ $(function () {
             ],
             "order": []
         });
+
     tableSent = $("#table_2")
         .DataTable({
             "iDisplayLength": 10,
